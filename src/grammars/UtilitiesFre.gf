@@ -85,8 +85,12 @@ oper
 
   mkConst = overload {
     mkConst : Str -> Str -> ConstantT
-      = \w, c -> {np = mkName w ; c = c}
+      = \c, w -> {np = mkName w ; c = c} ;
+    mkConst : Str -> NP -> ConstantT
+      = \c, np -> {np = np ; c = c} ;
     } ;
+    
+
     
   mkOper = overload {
     mkOper : L.OperT -> Str -> OperatorT
@@ -102,6 +106,8 @@ oper
   mkCompar = overload {
     mkCompar : Str -> Str -> Str -> ComparisonT
       = \op, s, p -> {rel = mkRel s p ; op = op} ;
+    mkCompar : Str -> A -> Prep -> ComparisonT
+      = \op, a, prep -> {rel = mkRel (mkAP a) prep ; op = op} ;
     mkCompar : Str -> AP -> Prep -> ComparisonT
       = \op, ap, prep -> {rel = mkRel ap prep ; op = op} ;
     } ;
@@ -109,6 +115,8 @@ oper
   mkComparnoun = overload {
     mkComparnoun : Str -> Str -> ComparnounT
       = \op, s -> {cn = mkCN (mkN s) ; prep = possess_Prep ; op = op} ;
+    mkComparnoun : Str -> N -> ComparnounT
+      = \op, n -> {cn = mkCN n ; prep = possess_Prep ; op = op} ;
     mkComparnoun : Str -> CN -> ComparnounT
       = \op, cn -> {cn = cn ; prep = possess_Prep ; op = op} ;
     mkComparnoun : Str -> CN -> Prep -> ComparnounT
@@ -121,5 +129,6 @@ oper
 
   nombre_N : N = mkN "nombre" masculine ;
   type_N = mkN "type" masculine ;
+  ensemble_N = (mkN "ensemble" masculine) ;
 
 }

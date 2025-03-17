@@ -106,4 +106,7 @@ lin
   element_Comparnoun = mkComparnoun L.element_Comparnoun "element" ;
   notelement_Comparnoun = mkComparnoun L.notelement_Comparnoun "non-element" ; ----
 
+  emptyset_Const = mkConst L.emptyset_Const (mkNP the_Det (mkCN (mkA "empty") (mkN "set"))) ;
+  universeset_Const = mkConst L.universeset_Const (mkNP the_Det (mkCN (mkA "universal") (mkN "set"))) ;
+
 }

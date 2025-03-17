@@ -99,6 +99,10 @@ cartesian : Set -> Set -> Set.
 complement : Set -> Set.
 powerset : Set -> Set.
 
+emptyset : Set.
+universeset : Set.
+
+
 subset : Set -> Set -> Prop.
 subseteq : Set -> Set -> Prop.
 superset : Set -> Set -> Prop.

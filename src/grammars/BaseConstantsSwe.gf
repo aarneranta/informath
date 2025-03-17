@@ -96,4 +96,17 @@ lin
   difference_Oper = mkOper L.difference_Oper (mkN "differens") (mkPrep "mellan") ;
   powerset_Oper = mkOper L.powerset_Oper "potensmängd" ;
 
+  subset_Comparnoun = mkComparnoun L.subset_Comparnoun (mkCN (mkA "äkta") (mkN "del" mängd_N)) ;  
+  subseteq_Comparnoun = mkComparnoun L.subseteq_Comparnoun (mkN "del" mängd_N) ;  
+  superset_Comparnoun = mkComparnoun L.superset_Comparnoun (mkCN (mkA "äkta") (mkN "över" mängd_N)) ;  
+  superseteq_Comparnoun = mkComparnoun L.superseteq_Comparnoun (mkN "över" mängd_N) ;  
+  equalset_Compar = mkCompar L.equalset_Compar "lika" "med" ;
+  notequalset_Compar = mkCompar L.notequalset_Compar "inte lika" "med" ; ----
+  element_Comparnoun = mkComparnoun L.element_Comparnoun element_N ;
+  notelement_Comparnoun = mkComparnoun L.notelement_Comparnoun (mkN "icke-" element_N) ; ----
+
+  emptyset_Const = mkConst L.emptyset_Const (mkNP the_Det (mkCN (mkA "tom" "tomt" "tomma" "tommare" "tommast") mängd_N)) ;
+  universeset_Const = mkConst L.universeset_Const (mkNP the_Det (mkCN (mkA "universell") mängd_N)) ;
+
+
 }

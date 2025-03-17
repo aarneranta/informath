@@ -52,6 +52,8 @@ equalset BASE Compar equalset_Compar
 notequalset BASE Compar notequalset_Compar
 element BASE Comparnoun element_Comparnoun
 notelement BASE Comparnoun notelement_Comparnoun
+emptyset BASE Const emptyset_Const
+universeset BASE Const universeset_Const
 
 nat ALIAS matita Nat
 Type0 ALIAS matita Set

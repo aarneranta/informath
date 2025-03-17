@@ -95,4 +95,7 @@ fun
   element_Comparnoun : Comparnoun ;
   notelement_Comparnoun : Comparnoun ;
 
+  emptyset_Const : Const ;
+  universeset_Const : Const ;
+
 }

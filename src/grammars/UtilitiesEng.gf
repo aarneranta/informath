@@ -64,7 +64,9 @@ oper
 
   mkConst = overload {
     mkConst : Str -> Str -> ConstantT
-      = \w, c -> {np = mkName w ; c = c}
+      = \c, w -> {np = mkName w ; c = c} ;
+    mkConst : Str -> NP -> ConstantT
+      = \c, np -> {np = np ; c = c} ;
     } ;
     
   mkOper = overload {

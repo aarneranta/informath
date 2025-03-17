@@ -19,7 +19,6 @@ oper
 
   define_V2 : V2 = mkV2 (mkV "definiera") ;
   assume_VS : VS = mkVS (mkV "anta" "antar" "anta" "antog" "antagit" "antagen") ;
-  element_N : N = mkN "element" "element" ;
   type_CN : CN = mkCN (mkN "typ" "typer") ;
   case_N : N = mkN "fall" "fall" ;
   contradiction_N : N = mkN "kontradiction" "kontradictioner" ;

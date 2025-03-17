@@ -31,7 +31,7 @@ lincat
 
 lin
   type_Noun = mkNoun type_N ;
-  set_Noun = mkNoun (mkN "ensemble" masculine) ;
+  set_Noun = mkNoun ensemble_N ;
   proposition_Noun = mkNoun "proposition" ;
 
   elements_Fun = mkFun type_N "des éléments" ;
@@ -94,7 +94,22 @@ lin
   function_Oper = mkOper L.function_Oper "fonction" ;
   union_Oper = mkOper L.union_Oper "union" ;
   intersection_Oper = mkOper L.intersection_Oper "intersection" ;
+  complement_Oper = mkOper L.complement_Oper (mkN "complément") ;
+  cartesian_Oper = mkOper L.cartesian_Oper (mkCN (mkA "cartésien") (mkN "produit")) ;
   difference_Oper = mkOper L.difference_Oper (mkN "différence") (mkPrep "entre") ;
   powerset_Oper = mkOper L.powerset_Oper "puissance" ; ----
+
+  subset_Comparnoun = mkComparnoun L.subset_Comparnoun (mkCN (mkA "propre") (mkN "sous-ensemble" masculine)) ;  
+  subseteq_Comparnoun = mkComparnoun L.subseteq_Comparnoun  (mkN "sous-ensemble" masculine) ;  
+  superset_Comparnoun = mkComparnoun L.superset_Comparnoun (mkCN (mkA "propre") (mkN "sur-ensemble" masculine)) ;
+  superseteq_Comparnoun = mkComparnoun L.superseteq_Comparnoun  (mkN "sur-ensemble" masculine) ;
+  equalset_Compar = mkCompar L.equalset_Compar (mkA "égal") dative ;
+  notequalset_Compar = mkCompar L.notequalset_Compar (mkA "égal") dative ; ----
+  element_Comparnoun = mkComparnoun L.element_Comparnoun (mkN "élément") ;
+  notelement_Comparnoun = mkComparnoun L.notelement_Comparnoun  (mkN "non-élément") ; ----
+
+  emptyset_Const = mkConst L.emptyset_Const (mkNP the_Det (mkCN (mkA "vide") ensemble_N)) ;
+  universeset_Const = mkConst L.universeset_Const (mkNP the_Det (mkCN (mkA "universel") ensemble_N)) ;
+
 
 }

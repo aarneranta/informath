@@ -83,9 +83,12 @@ oper
 
   mkConst = overload {
     mkConst : Str -> Str -> ConstantT
-      = \w, c -> {np = mkName w ; c = c}
+      = \c, w -> {np = mkName w ; c = c} ;
+    mkConst : Str -> NP -> ConstantT
+      = \c, np -> {np = np ; c = c} ;
     } ;
     
+
   mkOper = overload {
     mkOper : L.OperT -> Str -> OperatorT
       = \op, w -> op ** {f = mkFun w} ;
@@ -107,6 +110,8 @@ oper
   mkComparnoun = overload {
     mkComparnoun : Str -> Str -> ComparnounT
       = \op, s -> {cn = mkCN (mkN s) ; prep = possess_Prep ; op = op} ;
+    mkComparnoun : Str -> N -> ComparnounT
+      = \op, n -> {cn = mkCN n ; prep = possess_Prep ; op = op} ;
     mkComparnoun : Str -> CN -> ComparnounT
       = \op, cn -> {cn = cn ; prep = possess_Prep ; op = op} ;
     mkComparnoun : Str -> CN -> Prep -> ComparnounT
@@ -117,4 +122,7 @@ oper
       = \s -> symb (mkSymb ("$" ++ s ++ "$")) ;
 
   tal_N : N = mkN "tal" "tal" ;
+
+  mängd_N = mkN "mängd" "mängder" ;
+  element_N = mkN "element" "element" ;
 }

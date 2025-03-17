@@ -36,7 +36,7 @@ oper
   intersection_Oper : OperT = mkOper "\\cap" ;
   cartesian_Oper : OperT = mkOper "\\times" ;
   difference_Oper : OperT = mkOper "\\setminus" ;
-  complement_Oper : OperT = mkOper "\\complement" ;
+  complement_Oper : OperT = mkOper "" "" "^{\\complement}" <3 : Prec> ;
   powerset_Oper : OperT = mkOper "\\wp" ;
 
   subset_Comparnoun = "\\subset" ;  
@@ -48,8 +48,11 @@ oper
   element_Comparnoun = "\\in" ;  
   notelement_Comparnoun = "\\notin" ;
 
-  positivePart : OperT = mkOper "" "" "\\^{+}" <4 : Prec> ;
-  negativePart : OperT = mkOper "" "" "\\^{-}" <4 : Prec> ;
+  emptyset_Const = "\\emptyset" ;
+  universeset_Const = "\\mathbb{ U }" ;
+
+  positivePart : OperT = mkOper "" "" "^{+}" <4 : Prec> ;
+  negativePart : OperT = mkOper "" "" "^{-}" <4 : Prec> ;
 
 oper
   OperT : Type = {begin, op, end : Str ; p : Prec} ;
