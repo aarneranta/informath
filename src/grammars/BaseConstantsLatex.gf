@@ -28,6 +28,8 @@ oper
   neg_Oper : OperT = mkOper "\\negated" ;
   logarithm_Oper : OperT = mkOper "\\log_" "{" "}" <3 : Prec> ;
   square_root_Oper : OperT = mkOper "\\sqrt{" "" "}" <4 : Prec> ;
+  factorial_Oper : OperT = mkOper "" "" "\\^{!}" <3 : Prec> ;
+  absolute_value_Oper : OperT = mkOper "\\abs{" "" "}" <4 : Prec> ;
 
   function_Oper : OperT = mkOper "\\rightarrow" ; ---
   union_Oper : OperT = mkOper "\\cup" ;
@@ -37,12 +39,17 @@ oper
   complement_Oper : OperT = mkOper "\\complement" ;
   powerset_Oper : OperT = mkOper "\\wp" ;
 
-  subset_Compar = "\\subset" ;  
-  subseteq_Compar = "\\subseteq" ;
-  superset_Compar = "\\superset" ;  
-  equalset_Compar = "=" ;  
-  element_Compar = "\\in" ;  
-  notelement_Compar = "\\notin" ;
+  subset_Comparnoun = "\\subset" ;  
+  subseteq_Comparnoun = "\\subseteq" ;
+  superset_Comparnoun = "\\superset" ;  
+  superseteq_Comparnoun = "\\superseteq" ;  
+  equalset_Compar = "=" ;
+  notequalset_Compar = "\\neq" ;
+  element_Comparnoun = "\\in" ;  
+  notelement_Comparnoun = "\\notin" ;
+
+  positivePart : OperT = mkOper "" "" "\\^{+}" <4 : Prec> ;
+  negativePart : OperT = mkOper "" "" "\\^{-}" <4 : Prec> ;
 
 oper
   OperT : Type = {begin, op, end : Str ; p : Prec} ;

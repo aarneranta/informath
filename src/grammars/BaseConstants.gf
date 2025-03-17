@@ -15,6 +15,7 @@ cat
   Const ; -- Exp + symbol -- the empty set, Ø
   Oper ;  -- Exp -> Exp -> Exp + symbol -- the sum, +
   Compar ; -- Exp -> Exp -> Prop + symbol -- greater than, >
+  Comparnoun ; -- Exp -> Exp -> Prop + symbol -- subset of, >
 
 fun
   type_Noun : Noun ;
@@ -68,8 +69,8 @@ fun
   square_root_Oper : Oper ;
   
   successor_Fun : Fun ;
-  absolute_value_Fun : Fun ;
-  factorial_Fun : Fun ;
+  absolute_value_Oper : Oper ;
+  factorial_Oper : Oper ;
   gcd_Fun : Fun ;
 
   even_Adj : Adj ;
@@ -85,11 +86,13 @@ fun
   complement_Oper : Oper ;
   powerset_Oper : Oper ;
 
-  subset_Compar : Compar ;  
-  subseteq_Compar : Compar ;  
-  superset_Compar : Compar ;
+  subset_Comparnoun : Comparnoun ;  
+  subseteq_Comparnoun : Comparnoun ;  
+  superset_Comparnoun : Comparnoun ;
+  superseteq_Comparnoun : Comparnoun ;
   equalset_Compar : Compar ;
-  element_Compar : Compar ;
-  notelement_Compar : Compar ;
+  notequalset_Compar : Compar ;
+  element_Comparnoun : Comparnoun ;
+  notelement_Comparnoun : Comparnoun ;
 
 }

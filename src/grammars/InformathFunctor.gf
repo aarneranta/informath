@@ -19,6 +19,7 @@ lin
   SetTerm set = constant set.c ** {isNumber = False} ;
   ConstTerm const = constant const.c ** {isNumber = False} ;
   ComparEqsign compar = compar.op ;
+  ComparnounEqsign compar = compar.op ;
   AppOperTerm op x y =
     let t = infixl op.p op.op x y in t ** {s = op.begin ++ t.s ++ op.end ; isNumber = False} ;
   AppOperOneTerm op x =

@@ -14,6 +14,7 @@ fun
   SetTerm : Set -> Term ;
   ConstTerm : Const -> Term ;
   ComparEqsign : Compar -> Eqsign ;
+  ComparnounEqsign : Comparnoun -> Eqsign ;
   AppOperTerm : Oper -> Term -> Term -> Term ;
   AppOperOneTerm : Oper -> Term -> Term ;
 

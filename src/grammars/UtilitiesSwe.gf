@@ -18,7 +18,8 @@ oper
   ComparisonT : Type = {rel : RelationT ; op :  Str} ;
   SetT : Type = {cn : CN ; c : Str} ;
   LabelT = {np : NP ; isEmpty : Bool} ;
-
+  ComparnounT = {cn : CN ; prep : Prep ; op : Str} ;
+  
   mkNoun = overload {
     mkNoun : Str -> CN
       = \s -> mkCN (mkN s) ;
@@ -87,11 +88,13 @@ oper
     
   mkOper = overload {
     mkOper : L.OperT -> Str -> OperatorT
-      = \op, w -> op ** {f = mkFun w} ; -- lowest Prec
+      = \op, w -> op ** {f = mkFun w} ;
     mkOper : L.OperT -> N -> OperatorT
-      = \op, w -> op ** {f = mkFun w ; p = 0} ; -- lowest Prec
+      = \op, w -> op ** {f = mkFun w} ;
+    mkOper : L.OperT -> CN -> OperatorT
+      = \op, w -> op ** {f = mkFun w} ;
     mkOper : L.OperT -> N -> Prep -> OperatorT
-      = \op, w, prep -> op ** {f = mkFun w prep ; p = 0} ; -- lowest Prec
+      = \op, w, prep -> op ** {f = mkFun w prep} ; 
     } ;
 
   mkCompar = overload {
@@ -99,6 +102,15 @@ oper
       = \op, s, p -> {rel = mkRel s p ; op = op} ;
     mkCompar : Str -> AP -> Prep -> ComparisonT
       = \op, ap, prep -> {rel = mkRel ap prep ; op = op} ;
+    } ;
+    
+  mkComparnoun = overload {
+    mkComparnoun : Str -> Str -> ComparnounT
+      = \op, s -> {cn = mkCN (mkN s) ; prep = possess_Prep ; op = op} ;
+    mkComparnoun : Str -> CN -> ComparnounT
+      = \op, cn -> {cn = cn ; prep = possess_Prep ; op = op} ;
+    mkComparnoun : Str -> CN -> Prep -> ComparnounT
+      = \op, cn, prep -> {cn = cn ; prep = prep ; op = op} ;
     } ;
 
   latexName : Str -> NP

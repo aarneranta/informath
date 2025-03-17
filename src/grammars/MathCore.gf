@@ -106,7 +106,8 @@ fun
   NotVerbProp : Verb -> Exp -> Prop ;
   NotRelverbProp : Relverb -> Exp -> Exp -> Prop ;
   NotRelnounProp : Relnoun -> Exp -> Exp -> Prop ;
-  
+  ComparnounProp : Comparnoun -> Exp -> Exp -> Prop ;
+
 -- coercions, to disappear in Core2Informath
 -- their purpose is to maintain lossless rendering of Dedukti
 -- only few are needed if Number types are identified following Ganesalingam

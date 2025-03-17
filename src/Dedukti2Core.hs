@@ -50,7 +50,7 @@ jmt2jmt jmt = case jmt of
              (GListHypo chypos)
              (funListExp ident (map (GTermExp . GTIdent) (concatMap hypoIdents chypos)))
              (exp2kind kind)
-      ((hypos, kind), c) | elem c ["Reladj", "Compar", "Relverb", "Relnoun"] ->
+      ((hypos, kind), c) | elem c ["Reladj", "Compar", "Relverb", "Relnoun", "Comparnoun"] ->
         let chypos = hypos2hypos  (addVarsToHypos hypos)
         in (maybe (GAxiomPropJmt axiomLabel)
 	        (\exp x y -> GDefPropJmt definitionLabel x y (exp2prop exp)) mexp)
@@ -105,6 +105,8 @@ funListProp ident exps = case ident of
       GRelverbProp (LexRelverb c) (exps !! 0) (exps !! 1)
     Just ("Relnoun", c) | length exps == 2 ->
       GRelnounProp (LexRelnoun c) (exps !! 0) (exps !! 1)
+    Just ("Comparnoun", c) | length exps == 2 ->
+      GComparnounProp (LexComparnoun c) (exps !! 0) (exps !! 1)
     Just ("Compar", c) | length exps == 2 ->
       GAdjProp (GComparAdj (LexCompar c) (exps !! 1)) (exps !! 0)
     _ -> case exps of

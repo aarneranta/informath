@@ -28,7 +28,7 @@ log BASE Oper logarithm_Oper
 sqrt BASE Oper square_root_Oper
 succ BASE Fun successor_Fun
 abs BASE Fun absolute_value_Fun
-factorial BASE Fun factorial_Fun
+factorial BASE Oper factorial_Oper
 gcd BASE Fun gcd_Fun
 even BASE Adj even_Adj
 odd BASE Adj odd_Adj
@@ -44,12 +44,14 @@ difference BASE Oper difference_Oper
 cartesian BASE Oper difference_Oper
 powerset BASE Oper powerset_Oper
 complement BASE Oper complement_Oper
-subset BASE Compar subset_Compar
-subseteq BASE Compar subseteq_Compar
-superset BASE Compar superset_Compar
+subset BASE Comparnoun subset_Comparnoun
+subseteq BASE Comparnoun subseteq_Comparnoun
+superset BASE Comparnoun superset_Comparnoun
+superseteq BASE Comparnoun superset_Comparnoun
 equalset BASE Compar equalset_Compar
-element BASE Compar element_Compar
-notelement BASE Compar notelement_Compar
+notequalset BASE Compar notequalset_Compar
+element BASE Comparnoun element_Comparnoun
+notelement BASE Comparnoun notelement_Comparnoun
 
 nat ALIAS matita Nat
 Type0 ALIAS matita Set

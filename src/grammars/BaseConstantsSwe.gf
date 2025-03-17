@@ -26,6 +26,7 @@ lincat
   Const = ConstantT ;
   Oper = OperatorT ;
   Compar = ComparisonT ;
+  Comparnoun = ComparnounT ;
 
 lin
   type_Noun = mkNoun (mkN "typ" "typer") ;
@@ -74,24 +75,24 @@ lin
   div_Oper = mkOper L.div_Oper "kvot" ;
   pow_Oper = mkOper L.pow_Oper "potens" ; ----
   neg_Oper = mkOper L.neg_Oper "negation" ;
-
   logarithm_Oper = mkOper L.logarithm_Oper "logaritm" ;
   square_root_Oper = mkOper L.square_root_Oper "kvadratrot" ;
 
   successor_Fun = mkFun (mkN "efterföljare" neutrum) ;
-  absolute_value_Fun = mkFun (mkN "absolutbelopp" neutrum) ;
-  factorial_Fun = mkFun "fakultet" ;
+  absolute_value_Oper = mkOper L.absolute_value_Oper (mkN "absolutbelopp" neutrum) ;
+  factorial_Oper = mkOper L.factorial_Oper "fakultet" ;
   gcd_Fun = mkFun "störst" "gemensam" "delare" ;
 
   even_Adj = mkAdj "jämn" ;
   odd_Adj = mkAdj "udda" ;
-  prime_Adj = mkAdj "prim" ;
-
   divisible_Reladj = mkRel "delbar" "med" ;
+  prime_Adj = mkAdj "prim" ;
 
   function_Oper = mkOper L.function_Oper (mkN "funktion" "funktioner") ;
   union_Oper = mkOper L.union_Oper "union" ;
   intersection_Oper = mkOper L.intersection_Oper (mkN "snitt" "snittet") ;
+  complement_Oper = mkOper L.complement_Oper (mkN "komplement" "komplement") ;
+  cartesian_Oper = mkOper L.cartesian_Oper (mkCN (mkA "kartesisk") (mkN "produkt")) ;
   difference_Oper = mkOper L.difference_Oper (mkN "differens") (mkPrep "mellan") ;
   powerset_Oper = mkOper L.powerset_Oper "potensmängd" ;
 

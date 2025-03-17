@@ -44,6 +44,9 @@ formalize t = case t of
     (Just tx, Just ty) ->
       GFormulaProp (GFEquation (GEBinary (GComparEqsign compar) tx ty))
     _ -> GAdjProp (GComparAdj compar (formalize x)) (formalize y)
+  GComparnounProp compar x y -> case (getTerm x, getTerm y) of
+    (Just tx, Just ty) ->
+      GFormulaProp (GFEquation (GEBinary (GComparnounEqsign compar) tx ty))
   GOperListExp oper xy@(GAddExps x (GOneExps y)) -> case (getTerm x, getTerm y) of
     (Just tx, Just ty) -> GTermExp (GAppOperTerm oper tx ty)
     _ -> GOperListExp oper (formalize xy)

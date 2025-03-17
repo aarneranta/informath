@@ -18,7 +18,8 @@ oper
   ComparisonT : Type = {rel : RelationT ; op :  Str} ;
   SetT : Type = {cn : CN ; c : Str} ;
   LabelT = {np : NP ; isEmpty : Bool} ;
-
+  ComparnounT = {cn : CN ; prep : Prep ; op : Str} ;
+  
   mkNoun = overload {
     mkNoun : Str -> CN
       = \s -> mkCN (mkN s) ;
@@ -104,6 +105,16 @@ oper
     mkCompar : Str -> AP -> Prep -> ComparisonT
       = \op, ap, prep -> {rel = mkRel ap prep ; op = op} ;
     } ;
+
+  mkComparnoun = overload {
+    mkComparnoun : Str -> Str -> ComparnounT
+      = \op, s -> {cn = mkCN (mkN s) ; prep = possess_Prep ; op = op} ;
+    mkComparnoun : Str -> CN -> ComparnounT
+      = \op, cn -> {cn = cn ; prep = possess_Prep ; op = op} ;
+    mkComparnoun : Str -> CN -> Prep -> ComparnounT
+      = \op, cn, prep -> {cn = cn ; prep = prep ; op = op} ;
+    } ;
+
 
   latexName : Str -> NP
       = \s -> symb (mkSymb ("$" ++ s ++ "$")) ;

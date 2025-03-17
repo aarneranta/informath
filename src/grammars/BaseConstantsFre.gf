@@ -27,6 +27,7 @@ lincat
   Const = ConstantT ;
   Oper = OperatorT ;
   Compar = ComparisonT ;
+  Comparnoun = ComparnounT ;
 
 lin
   type_Noun = mkNoun type_N ;
@@ -81,8 +82,8 @@ lin
   square_root_Oper = mkOper L.square_root_Oper (mkCN (mkA "carré") (mkN "racine")) ;
 
   successor_Fun = mkFun "successeur" ;
-  absolute_value_Fun = mkFun (mkCN (mkA "absolu") (mkN "valeur" feminine)) ;
-  factorial_Fun = mkFun "factorielle" ;
+  absolute_value_Oper = mkOper L.absolute_value_Oper (mkCN (mkA "absolu") (mkN "valeur" feminine)) ;
+  factorial_Oper = mkOper L.factorial_Oper "factorielle" ;
   gcd_Fun = mkFun "plus grand" "commun" "diviseur" ; ---- should be in this order
 
   even_Adj = mkAdj "pair" ;

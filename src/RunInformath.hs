@@ -140,7 +140,7 @@ loop env = do
   case ss of
     '?':s -> processInformathJmt env s >>= putStrLn
     '=':s -> roundtripDeduktiJmt env s >> return ()
-    _     -> processDeduktiJmt env ss >> return ()
+    _     -> parseDeduktiModule env ss >>= processDeduktiModule env
   loop env
 
 parseDeduktiModule :: Env -> String -> IO Module
@@ -170,12 +170,6 @@ deduktiOpers env =
 processDeduktiModule :: Env -> Module -> IO ()
 processDeduktiModule env mo@(MJmts jmts) = do
   flip mapM_ jmts $ processDeduktiJmtTree env
-
-processDeduktiJmt :: Env -> String -> IO ()
-processDeduktiJmt env cs = do
-  case pJmt (myLexer cs) of
-    Bad e -> putStrLn ("## error: " ++ e)
-    Ok t -> processDeduktiJmtTree env t
 
 roundtripDeduktiJmt :: Env -> String -> IO ()
 roundtripDeduktiJmt env cs = do

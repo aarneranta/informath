@@ -106,6 +106,8 @@ prop2dedukti prop = case prop of
     EApp (EApp (EIdent (QIdent (verb))) (exp2dedukti x)) (exp2dedukti y)
   GRelnounProp (LexRelnoun noun) x y ->
     EApp (EApp (EIdent (QIdent (noun))) (exp2dedukti x)) (exp2dedukti y)
+  GComparnounProp (LexComparnoun noun) x y ->
+    EApp (EApp (EIdent (QIdent (noun))) (exp2dedukti x)) (exp2dedukti y)
   GIndexedFormulaProp (GInt i) -> EIdent (unresolvedIndexIdent i)
   _ -> eUndefined ---- TODO complete Informath2Core
 

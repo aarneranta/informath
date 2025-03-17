@@ -102,6 +102,7 @@ powerset : Set -> Set.
 subset : Set -> Set -> Prop.
 subseteq : Set -> Set -> Prop.
 superset : Set -> Set -> Prop.
+superseteq : Set -> Set -> Prop.
 equalset : Set -> Set -> Prop.
 element : Elem Num -> Set -> Prop.
 notelement : Elem Num -> Set -> Prop.
