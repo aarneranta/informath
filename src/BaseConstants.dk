@@ -95,7 +95,16 @@ function : Set -> Set -> Set.
 union : Set -> Set -> Set.
 intersection : Set -> Set -> Set.
 difference : Set -> Set -> Set.
+cartesian : Set -> Set -> Set.
+complement : Set -> Set.
 powerset : Set -> Set.
+
+subset : Set -> Set -> Prop.
+subseteq : Set -> Set -> Prop.
+superset : Set -> Set -> Prop.
+equalset : Set -> Set -> Prop.
+element : Elem Num -> Set -> Prop.
+notelement : Elem Num -> Set -> Prop.
 
 positivePart : Set -> Set.
 negativePart : Set -> Set.

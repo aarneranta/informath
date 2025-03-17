@@ -41,8 +41,15 @@ function BASE Oper function_Oper
 union BASE Oper union_Oper
 intersection BASE Oper intersection_Oper
 difference BASE Oper difference_Oper
+cartesian BASE Oper difference_Oper
 powerset BASE Oper powerset_Oper
-same_parity BASE Reladj Dk_same_parity
+complement BASE Oper complement_Oper
+subset BASE Compar subset_Compar
+subseteq BASE Compar subseteq_Compar
+superset BASE Compar superset_Compar
+equalset BASE Compar equalset_Compar
+element BASE Compar element_Compar
+notelement BASE Compar notelement_Compar
 
 nat ALIAS matita Nat
 Type0 ALIAS matita Set

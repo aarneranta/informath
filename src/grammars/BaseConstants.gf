@@ -80,7 +80,16 @@ fun
   function_Oper : Oper ;
   union_Oper : Oper ;
   intersection_Oper : Oper ;
+  cartesian_Oper : Oper ;
   difference_Oper : Oper ;
+  complement_Oper : Oper ;
   powerset_Oper : Oper ;
+
+  subset_Compar : Compar ;  
+  subseteq_Compar : Compar ;  
+  superset_Compar : Compar ;
+  equalset_Compar : Compar ;
+  element_Compar : Compar ;
+  notelement_Compar : Compar ;
 
 }

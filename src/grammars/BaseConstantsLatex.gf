@@ -32,8 +32,17 @@ oper
   function_Oper : OperT = mkOper "\\rightarrow" ; ---
   union_Oper : OperT = mkOper "\\cup" ;
   intersection_Oper : OperT = mkOper "\\cap" ;
+  cartesian_Oper : OperT = mkOper "\\times" ;
   difference_Oper : OperT = mkOper "\\setminus" ;
+  complement_Oper : OperT = mkOper "\\complement" ;
   powerset_Oper : OperT = mkOper "\\wp" ;
+
+  subset_Compar = "\\subset" ;  
+  subseteq_Compar = "\\subseteq" ;
+  superset_Compar = "\\superset" ;  
+  equalset_Compar = "=" ;  
+  element_Compar = "\\in" ;  
+  notelement_Compar = "\\notin" ;
 
 oper
   OperT : Type = {begin, op, end : Str ; p : Prec} ;
