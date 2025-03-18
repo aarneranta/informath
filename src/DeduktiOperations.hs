@@ -55,21 +55,27 @@ identTypes (MJmts jmts) = M.fromList (concatMap idtyp jmts) where
 
 
 applyConstantData :: ConstantData -> Tree a -> Tree a
-applyConstantData cd t = case t of
-  QIdent c -> fst $ lookid t
-  EIdent c -> EIdent $ fst $ lookid c
-  EApp _ _ -> case splitApp t of
-    (EIdent c, xs) -> case lookid c of
-      (ident, com) -> foldl EApp (EIdent ident) (map (applyConstantData cd) (applyCombination com xs))
-    (f, xs) -> foldl EApp f (map (applyConstantData cd) xs)
-  _ -> composOp (applyConstantData cd) t
+applyConstantData cd = appConst []
  where
+   appConst :: [QIdent] -> Tree a -> Tree a
+   appConst bs t = case t of
+    EIdent c | elem c bs -> t
+    EIdent c -> EIdent $ fst $ lookid c
+    EAbs b exp -> EAbs (appConst bs b) (appConst (bind2var b : bs) exp)
+    EFun h exp -> EFun (appConst bs h) (appConst (hypo2vars h ++ bs) exp)
+    EApp _ _ -> case splitApp t of
+      (EIdent c, xs) -> case lookid c of
+        (ident, com) -> foldl EApp (EIdent ident) (map (appConst bs) (applyCombination com xs))
+      (f, xs) -> foldl EApp (appConst bs f) (map (appConst bs) xs)
+    _ -> composOp (appConst bs) t
+ 
    lookid :: QIdent -> (QIdent, Combination)
    lookid f@(QIdent c) = case M.lookup c cd of
      Just (BASE cat fun) -> (gfAnnotate cat fun f, ComALL)
      Just (ALIAS _ dkid com) -> (applyConstantData cd (QIdent dkid), com)
      Just (NEW _ cat fun com) -> (gfAnnotate cat fun f, com)
      _ -> (f, ComALL)
+     
    gfAnnotate :: GFCat -> GFFun -> QIdent -> QIdent
    gfAnnotate cat fun ident@(QIdent c) = QIdent (c ++ "|" ++ cat ++ "|" ++ fun)
 
@@ -236,6 +242,12 @@ bind2var :: Bind -> QIdent
 bind2var bind = case bind of
   BVar v -> v
   BTyped v _ -> v
+
+hypo2vars :: Hypo -> [QIdent]
+hypo2vars hypo = case hypo of
+  HVarExp v _ -> [v]
+  HParVarExp v _ -> [v]
+  HExp v -> []
 
 pattbindIdents :: [Pattbind] -> [QIdent]
 pattbindIdents = concatMap bident where

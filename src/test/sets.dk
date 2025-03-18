@@ -46,3 +46,4 @@ reflSubset : (A : Set) -> Proof (subseteq A A).
 antisymmSubset : (A : Set) -> (B : Set) -> Proof (iff (and (subseteq A B) (subseteq B A)) (equalset A B)).
 transitSubset : (A : Set) -> (B : Set) -> (C : Set) -> Proof (if (and (subseteq A B) (subseteq C C)) (subseteq A C)).
 
+prop7 : (S : Set) -> (A : Set) -> Proof (subseteq A S) -> and (subseteq emptyset A) (subseteq A S).
