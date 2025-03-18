@@ -1,48 +1,48 @@
 (; https://en.wikipedia.org/wiki/Algebra_of_sets ;)
 
-comm_union : (A : Set) -> (B : Set) -> Proof (equalset (union A B) (union B A)).
-comm_intersection : (A : Set) -> (B : Set) -> Proof (equalset (intersection A B) (intersection B A)).
+commUnion : (A : Set) -> (B : Set) -> Proof (equalset (union A B) (union B A)).
+commIntersection : (A : Set) -> (B : Set) -> Proof (equalset (intersection A B) (intersection B A)).
 
-assoc_union : (A : Set) -> (B : Set) -> (C : Set) ->
+assocUnion : (A : Set) -> (B : Set) -> (C : Set) ->
   Proof (equalset (union (union A B) C) (union A (union B C))).
-assoc_intersection : (A : Set) -> (B : Set) -> (C : Set) ->
+assocIntersection : (A : Set) -> (B : Set) -> (C : Set) ->
   Proof (equalset (intersection (intersection A B) C) (intersection A (intersection B C))).
 
-distr_union : (A : Set) -> (B : Set) -> (C : Set) ->
+distrUnion : (A : Set) -> (B : Set) -> (C : Set) ->
   Proof (equalset (union A (intersection B C)) (intersection (union A B) (union A C))).
-distr_intersection : (A : Set) -> (B : Set) -> (C : Set) ->
+distrIntersection : (A : Set) -> (B : Set) -> (C : Set) ->
   Proof (equalset (intersection A (union B C)) (union (intersection A B) (intersection A C))).
 
-union_empty : (A : Set) -> Proof (equalset (union A emptyset) A).
-inters_empty : (A : Set) -> Proof (equalset (intersection A emptyset) emptyset).
+unionEmpty : (A : Set) -> Proof (equalset (union A emptyset) A).
+intersEmpty : (A : Set) -> Proof (equalset (intersection A emptyset) emptyset).
 
-compl_union : (A : Set) -> Proof (equalset (union A (complement A)) universeset).
-compl_intersection : (A : Set) -> Proof (equalset (intersection A (complement A)) emptyset).
+complEnion : (A : Set) -> Proof (equalset (union A (complement A)) universeset).
+complIntersection : (A : Set) -> Proof (equalset (intersection A (complement A)) emptyset).
 
-idem_union : (A : Set) -> Proof (equalset (union A A) A).
-idem_intersection : (A : Set) -> Proof (equalset (intersection A A) A).
+idemUnion : (A : Set) -> Proof (equalset (union A A) A).
+idemIntersection : (A : Set) -> Proof (equalset (intersection A A) A).
 
-domin_universe : (A : Set) -> Proof (equalset (union A universeset) universeset).
-domin_empty : (A : Set) -> Proof (equalset (intersection A emptyset) emptyset).
+dominUniverse : (A : Set) -> Proof (equalset (union A universeset) universeset).
+dominEmpty : (A : Set) -> Proof (equalset (intersection A emptyset) emptyset).
 
-absorb_union : (A : Set) -> (B : Set) -> Proof (equalset (union A (intersection A B)) A).
-absorb_intersection : (A : Set) -> (B : Set) -> Proof (equalset (intersection A (union A B)) A).
+absorbUnion : (A : Set) -> (B : Set) -> Proof (equalset (union A (intersection A B)) A).
+absorbIntersection : (A : Set) -> (B : Set) -> Proof (equalset (intersection A (union A B)) A).
 
-demorgam_union : (A : Set) -> (B : Set) ->
+demorganUnion : (A : Set) -> (B : Set) ->
   Proof (equalset (complement (union A B)) (intersection (complement A) (complement B))).
-demorgam_intersection : (A : Set) -> (B : Set) ->
+demorganIntersection : (A : Set) -> (B : Set) ->
   Proof (equalset (complement (intersection A B)) (union (complement A) (complement B))).
 involution : (A : Set) -> Proof (equalset (complement (complement A)) A).
 
-intersection_as_difference :  (A : Set) -> (B : Set) -> Proof (equalset (intersection A B) (difference A (difference A B))).
+intersectionAsDifference :  (A : Set) -> (B : Set) -> Proof (equalset (intersection A B) (difference A (difference A B))).
 
-compl_empty : Proof (equalset (complement emptyset) universeset).
-compl_universe : Proof (equalset (complement universeset) emptyset).
+complEmpty : Proof (equalset (complement emptyset) universeset).
+complUniverse : Proof (equalset (complement universeset) emptyset).
 
-uniq_complement : (A : Set) -> (B : Set) -> Proof (equalset (union A B) universeset) ->
+uniqComplement : (A : Set) -> (B : Set) -> Proof (equalset (union A B) universeset) ->
   Proof (equalset (intersection A B) emptyset) -> Proof (equalset B (complement A)).
 
-refl_subset : (A : Set) -> Proof (subseteq A A).
-antisymm_subset : (A : Set) -> (B : Set) -> Proof (iff (and (subseteq A B) (subseteq B A)) (equalset A B)).
-transit_subset : (A : Set) -> (B : Set) -> (C : Set) -> Proof (if (and (subseteq A B) (subseteq C C)) (subseteq A C)).
+reflSubset : (A : Set) -> Proof (subseteq A A).
+antisymmSubset : (A : Set) -> (B : Set) -> Proof (iff (and (subseteq A B) (subseteq B A)) (equalset A B)).
+transitSubset : (A : Set) -> (B : Set) -> (C : Set) -> Proof (if (and (subseteq A B) (subseteq C C)) (subseteq A C)).
 

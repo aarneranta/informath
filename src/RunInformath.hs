@@ -41,21 +41,22 @@ helpMsg = unlines [
   "  .dkgf  create UserConstants files to map Dedukti identifiers",
   "  .txt   (or any other) parse as natural language, convert to Dedukti",
   "flags:",
-  "  -help         print this message",
-  "  -to-agda      convert to Agda (with <file>.dk as argument)",
-  "  -to-coq       convert to Coq (with <file>.dk as argument)",
-  "  -to-lean      convert to Lean (with <file>.dk as argument)",
-  "  -to-dedukti   to Dedukti code (typically after changes in <file.dk>)",
-  "  -lang=<lang>  natural language to be targeted; Eng (default), Swe, Fre,...",
-  "  -parallel     a jsonl list with all languages and variations",
-  "  -v            verbose output, e.g. syntax trees and intermediate results",
-  "  -variations   when producing natural language, show all variations",
-  "  -idents       show frequency list of idents in a Dedukti file",
-  "  -dropdefs     drop definition parts of Dedukti code",
-  "  -dropqualifs  strip qualifiers of idents",
-  "  -dropcoercions strip named coercions, only leaving their last arguments",
-  "  -dropfirstargs drop first k arguments of given functions (usually type arguments)",
-  "  -peano2int    convert succ/0 natural numbers to sequences of digits",
+  "  -help           print this message",
+  "  -to-agda        convert to Agda (with <file>.dk as argument)",
+  "  -to-coq         convert to Coq (with <file>.dk as argument)",
+  "  -to-lean        convert to Lean (with <file>.dk as argument)",
+  "  -to-dedukti     to Dedukti code (typically after changes in <file.dk>)",
+  "  -lang=<lang>    natural language to be targeted; Eng (default), Swe, Fre,...",
+  "  -to-latex-file  generate a LaTeX file (used with natural language output)",
+  "  -parallel       generate a jsonl list with all languages and variations",
+  "  -v              verbose output, e.g. syntax trees and intermediate results",
+  "  -variations     when producing natural language, show all variations",
+  "  -idents         show frequency list of idents in a Dedukti file",
+  "  -dropdefs       drop definition parts of Dedukti code",
+  "  -dropqualifs    strip qualifiers of idents",
+  "  -dropcoercions  strip named coercions, only leaving their last arguments",
+  "  -dropfirstargs  drop first k arguments of given functions (usually type arguments)",
+  "  -peano2int      convert succ/0 natural numbers to sequences of digits",
   "output is to stdout and can be redirected to a file to check with",
   "Dedukti or Agda or Coq or Lean when producing one of these."
   ]
@@ -168,8 +169,14 @@ deduktiOpers env =
 -- example: ./RunInformath -idtypes -dropdefs -dropqualifs -dropcoercions test/matita-all.dk
 
 processDeduktiModule :: Env -> Module -> IO ()
-processDeduktiModule env mo@(MJmts jmts) = do
-  flip mapM_ jmts $ processDeduktiJmtTree env
+processDeduktiModule env mo@(MJmts jmts) = 
+  if ifFlag "-to-latexfile" env
+    then do
+      putStrLn latexPreamble
+      flip mapM_ jmts $ processDeduktiJmtTree env --(\j -> processDeduktiJmtTree env j >> putStrLn "")
+      putStrLn "\\end{document}"
+  else
+    flip mapM_ jmts $ processDeduktiJmtTree env
 
 roundtripDeduktiJmt :: Env -> String -> IO ()
 roundtripDeduktiJmt env cs = do
@@ -202,6 +209,7 @@ convertCoreToInformath env ct = do
   flip mapM_ gffts $ \gfft -> do
     ifv env $ putStrLn $ "## Informath: " ++ showExpr [] gfft
     putStrLn $ unlextex $ linearize fgr (lang env) gfft
+    if (ifFlag "-to-latexfile" env) then (putStrLn "") else return ()
 
 processCoreJmt :: Env -> String -> IO ()
 processCoreJmt env s = do
@@ -343,3 +351,11 @@ printFrequencyTable m = do
   let list = sortOn (\ (_, i) -> -i) $ M.toList m
   mapM_ putStrLn ["(" ++ show n ++ ")\t" ++ printTree x | (x, n) <- list]
 
+latexPreamble = unlines [
+  "\\documentclass{article}",
+  "\\usepackage{amsfonts}",
+  "\\usepackage{amssymb}",
+  "\\setlength\\parindent{0pt}",
+  "\\setlength\\parskip{8pt}",
+  "\\begin{document}"
+  ]

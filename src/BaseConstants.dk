@@ -108,8 +108,8 @@ subseteq : Set -> Set -> Prop.
 superset : Set -> Set -> Prop.
 superseteq : Set -> Set -> Prop.
 equalset : Set -> Set -> Prop.
-element : Elem Num -> Set -> Prop.
-notelement : Elem Num -> Set -> Prop.
+element : Elem universeset -> Set -> Prop.
+notelement : Elem universeset -> Set -> Prop.
 
 positivePart : Set -> Set.
 negativePart : Set -> Set.

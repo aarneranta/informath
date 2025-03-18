@@ -32,8 +32,8 @@ oper
   absolute_value_Oper : OperT = mkOper "\\abs{" "" "}" <4 : Prec> ;
 
   function_Oper : OperT = mkOper "\\rightarrow" ; ---
-  union_Oper : OperT = mkOper "\\cup" ;
-  intersection_Oper : OperT = mkOper "\\cap" ;
+  union_Oper : OperT = mkOper "\\cup" <2 : Prec> ;
+  intersection_Oper : OperT = mkOper "\\cap" <3 : Prec> ;
   cartesian_Oper : OperT = mkOper "\\times" ;
   difference_Oper : OperT = mkOper "\\setminus" ;
   complement_Oper : OperT = mkOper "" "" "^{\\complement}" <3 : Prec> ;
