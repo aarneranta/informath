@@ -195,6 +195,9 @@ insitu t = case t of
   GAllProp (GListArgKind [argkind]) (GAdjProp adj exp) -> case subst argkind exp of
     True -> GAdjProp adj (GAllArgKindExp argkind)
     _ -> t
+  GAllProp (GListArgKind [argkind]) (GNotAdjProp adj exp) -> case subst argkind exp of
+    True -> GAdjProp adj (GNoArgKindExp argkind)
+    _ -> t
   _ -> composOp insitu t
 
 subst :: GArgKind -> GExp -> Bool
@@ -205,6 +208,7 @@ subst argkind exp = case (argkind, exp) of
 varless :: Tree a -> Tree a
 varless t = case t of
   GAllArgKindExp (GIdentsArgKind kind (GListIdent [_])) -> GEveryKindExp kind
+  GNoArgKindExp (GIdentsArgKind kind (GListIdent [_])) -> GNoKindExp kind
   _ -> composOp varless t
 
 exps2list :: GExps -> [GExp]

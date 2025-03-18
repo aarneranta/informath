@@ -36,10 +36,6 @@ lin
   AndExp exps = mkNP both7and_DConj exps | mkNP and_Conj exps ;
   OrExp exps = mkNP or_Conj exps ;
 
-  EveryKindExp kind =
-    mkNP every_Det (mkCN kind.cn kind.adv) | mkNP all_Predet (mkNP aPl_Det (mkCN kind.cn kind.adv)) ;
-  AllArgKindExp kind = mkNP all_Predet (mkNP aPl_Det (mkCN kind.cn kind.adv)) ;
-
   BaseAdj a b = mkListAP a b ;
   ConsAdj a bs = mkListAP a bs ;
 
@@ -68,13 +64,20 @@ lin
   AdjKind adj kind = kind ** {cn = mkCN adj kind.cn} ;
   KindProp exp kind = simpleProp (mkS (mkCl exp kind.cn)) ;
 
+  EveryKindExp kind =
+    mkNP every_Det (mkCN kind.cn kind.adv) | mkNP all_Predet (mkNP aPl_Det (mkCN kind.cn kind.adv)) ;
+  AllArgKindExp kind = mkNP all_Predet (mkNP aPl_Det (mkCN kind.cn kind.adv)) ;
+  EveryIdentKindExp ident kind = mkNP every_Det (mkCN (mkCN kind.cn (latexNP (mkSymb ident))) kind.adv) ;
+
   SomeKindExp kind = mkNP someSg_Det (mkCN kind.cn kind.adv) ;
   SomeArgKindExp kind = mkNP somePl_Det (mkCN kind.cn kind.adv) ;
   PostQuantProp prop exp =
     simpleProp (postAdvS prop.s (Syntax.mkAdv for_Prep exp)) ; --- no complexProp in Informath
   IndefKindExp kind = mkNP a_Det (mkCN kind.cn kind.adv) ;
   IndefIdentKindExp ident kind = mkNP a_Det (mkCN (mkCN kind.cn (latexNP (mkSymb ident))) kind.adv) ;
-  EveryIdentKindExp ident kind = mkNP every_Det (mkCN (mkCN kind.cn (latexNP (mkSymb ident))) kind.adv) ;
+  
+  NoArgKindExp kind = mkNP (mkDet no_Quant pluralNum) (mkCN kind.cn kind.adv) ;
+  NoKindExp kind = mkNP no_Quant (mkCN kind.cn kind.adv) ;
 
 
 oper

@@ -30,10 +30,6 @@ fun
   AndExp : [Exp] -> Exp ;
   OrExp : [Exp] -> Exp ;
 
-  EveryKindExp : Kind -> Exp ;
-  AllArgKindExp : ArgKind -> Exp ;
-  EveryIdentKindExp : Ident -> Kind -> Exp ;
-
 -- for indexed parsing (terms in $...$ stored in a dictionary)
 
   IndexedTermExp : Int -> Exp ;
@@ -50,10 +46,17 @@ fun
   AdjKind : Adj -> Kind -> Kind ;
   KindProp : Exp -> Kind -> Prop ;
 
+  EveryKindExp : Kind -> Exp ;
+  AllArgKindExp : ArgKind -> Exp ;
+  EveryIdentKindExp : Ident -> Kind -> Exp ;
+  
   SomeKindExp : Kind -> Exp ;
   SomeArgKindExp : ArgKind -> Exp ;
   PostQuantProp : Prop -> Exp -> Prop ;
   IndefKindExp : Kind -> Exp ;
   IndefIdentKindExp : Ident -> Kind -> Exp ;
+  
+  NoArgKindExp : ArgKind -> Exp ;
+  NoKindExp : Kind -> Exp ;
 
 }
