@@ -170,7 +170,7 @@ deduktiOpers env =
 
 processDeduktiModule :: Env -> Module -> IO ()
 processDeduktiModule env mo@(MJmts jmts) = 
-  if ifFlag "-to-latexfile" env
+  if ifFlag "-to-latex-file" env
     then do
       putStrLn latexPreamble
       flip mapM_ jmts $ processDeduktiJmtTree env --(\j -> processDeduktiJmtTree env j >> putStrLn "")
@@ -209,7 +209,7 @@ convertCoreToInformath env ct = do
   flip mapM_ gffts $ \gfft -> do
     ifv env $ putStrLn $ "## Informath: " ++ showExpr [] gfft
     putStrLn $ unlextex $ linearize fgr (lang env) gfft
-    if (ifFlag "-to-latexfile" env) then (putStrLn "") else return ()
+    if (ifFlag "-to-latex-file" env) then (putStrLn "") else return ()
 
 processCoreJmt :: Env -> String -> IO ()
 processCoreJmt env s = do
