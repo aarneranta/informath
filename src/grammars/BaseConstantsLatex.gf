@@ -29,7 +29,7 @@ oper
   logarithm_Oper : OperT = mkOper "\\log_" "{" "}" <3 : Prec> ;
   square_root_Oper : OperT = mkOper "\\sqrt{" "" "}" <4 : Prec> ;
   factorial_Oper : OperT = mkOper "" "" "\\^{!}" <3 : Prec> ;
-  absolute_value_Oper : OperT = mkOper "\\abs{" "" "}" <4 : Prec> ;
+  absolute_value_Oper : OperT = mkOper "\\mid" "" "\\mid" <4 : Prec> ;
 
   function_Oper : OperT = mkOper "\\rightarrow" ; ---
   union_Oper : OperT = mkOper "\\cup" <2 : Prec> ;

@@ -64,6 +64,7 @@ mkConstantsCncGF lang annots = unlines $ [
   "  Syntax" ++ lang ++ ",",
   "  Paradigms" ++ lang ++ ",",
   "  Symbolic" ++ lang ++ ",",
+  "  (L=BaseConstantsLatex),",
   "  Formal",
   "",
   "in {"

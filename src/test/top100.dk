@@ -1,0 +1,25 @@
+
+Thm01 : (m : Elem Nat) -> (n : Elem Nat) -> Proof (Neq n 0) ->
+  Proof (Neq (pow (div m (plus n 1)) 2) 2).
+Thm01a : (q : Elem Rat) -> Proof (Neq (pow q 2) 2).
+Thm01b : (q : Elem Rat) -> Proof (Neq q (sqrt 2)).
+
+Polynomial : Type.
+degree : (P : Polynomial) -> Elem Nat.
+isRoot : (c : Elem Complex) -> (P : Polynomial) -> Prop. 
+Thm02 : (P : Polynomial) -> Proof (Gt (degree P) 0) ->
+  Proof (exists Complex (c => isRoot c P)).
+
+cardinality : (A : Set) -> Elem Real.
+def denumerable : (A : Set) -> Prop := A => Eq (cardinality A) (cardinality Nat).
+Thm03 : Proof (denumerable Rat).
+Thm03a : Proof (Eq (cardinality Nat) (cardinality Rat)).
+
+Vector : Set.
+length : Elem Vector -> Elem Real.
+perpendicular : Elem Vector -> Elem Vector -> Prop.
+resultant : Elem Vector -> Elem Vector -> Elem Vector.
+def square : Elem Real -> Elem Real := x => pow x 2.
+Thm04 : (u : Elem Vector) -> (v : Elem Vector) -> Proof (perpendicular u v) ->
+  Proof (Eq (sqrt (plus (square (length u)) (square (length v)))) (length (resultant u v))).
+

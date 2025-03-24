@@ -77,9 +77,16 @@ Term ALIAS matita Elem 1
 lift COERCION matita
 Univ COERCION matita
 
-denumerable NEW top100 Adj denumerable_Adj = mkAdj "denumerable"
 Polynomial NEW top100 Noun polynomial_Noun = mkNoun "polynomial"
 degree NEW top100 Fun degree_Fun = mkFun "degree"
 isRoot NEW top100 Relnoun is_root_Relnoun = mkN2 (mkN "root")
+cardinality NEW top100 Fun cardinality_Fun = mkFun "cardinality"
+denumerable NEW top100 Adj denumerable_Adj = mkAdj "denumerable"
+
+Vector NEW top100 Noun vector_Noun = mkNoun "vector"
+length NEW top100 Oper length_Oper = mkOper L.absolute_value_Oper "length"
+perpendicular NEW top100 Compar perpendicular_Compar = mkCompar "\\perp" "perpendicular" "to"
+resultant NEW top100 Oper resultant_Oper = mkOper L.plus_Oper "resultant"
+square NEW top100 Oper square_Oper = mkOper (L.mkOper "" "" "^{ 2 }" <2 : Prec>) "square"
 
 

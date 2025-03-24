@@ -32,6 +32,7 @@ demo:
 	./RunInformath -lang=Eng test/exx.dk
 	./RunInformath -lang=Eng test/exx.dk >exx.txt
 	./RunInformath -lang=Eng exx.txt
+	./RunInformath -lang=Eng test/gflean-data.txt
 	cat BaseConstants.dk test/exx.dk >bexx.dk
 	dk check bexx.dk
 	./RunInformath -to-agda test/exx.dk >exx.agda
@@ -41,7 +42,11 @@ demo:
 	coqc bexx.v
 	./RunInformath -to-lean test/exx.dk >exx.lean
 	cat BaseConstants.lean exx.lean >bexx.lean   
-	lean bexx.lean    
+	lean bexx.lean
+	./RunInformath -to-latex-file -variations test/top100.dk >out/top100.tex
+	echo "consider pdflatex out/top100.tex"
+	./RunInformath -to-latex-file -variations test/sets.dk >out/sets.tex
+	echo "consider pdflatex out/sets.tex"
 
 matita:
 	./RunInformath -alphaconv test/mini-matita.dk

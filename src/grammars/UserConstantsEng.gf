@@ -7,11 +7,18 @@ open
   SyntaxEng,
   ParadigmsEng,
   SymbolicEng,
+  (L=BaseConstantsLatex),
   Formal
 
 in {
-lin denumerable_Adj = mkAdj "denumerable" ; -- top100
 lin polynomial_Noun = mkNoun "polynomial" ; -- top100
 lin degree_Fun = mkFun "degree" ; -- top100
 lin is_root_Relnoun = mkN2 (mkN "root") ; -- top100
+lin cardinality_Fun = mkFun "cardinality" ; -- top100
+lin denumerable_Adj = mkAdj "denumerable" ; -- top100
+lin vector_Noun = mkNoun "vector" ; -- top100
+lin length_Oper = mkOper L.absolute_value_Oper "length" ; -- top100
+lin perpendicular_Compar = mkCompar "\\perp" "perpendicular" "to" ; -- top100
+lin resultant_Oper = mkOper L.plus_Oper "resultant" ; -- top100
+lin square_Oper = mkOper (L.mkOper "" "" "^{ 2 }" <2 : Prec>) "square" ; -- top100
 }
