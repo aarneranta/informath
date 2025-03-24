@@ -38,6 +38,7 @@ fun
   boolean_Noun : Noun ;
   list_Fam : Fam ;
 
+  digit_Noun : Noun ;
   natural_Set : Set ;
   integer_Set : Set ;
   rational_Set : Set ;

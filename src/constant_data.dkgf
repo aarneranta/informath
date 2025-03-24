@@ -5,6 +5,7 @@ false BASE Name absurdity_Name
 Num BASE Noun number_Noun
 bool BASE Noun boolean_Noun
 List BASE Fam list_Fam
+Dig BASE Noun digit_Noun
 Nat BASE Set natural_Set
 Int BASE Set integer_Set
 Rat BASE Set rational_Set
@@ -75,5 +76,10 @@ mem ALIAS matita member 1 2
 Term ALIAS matita Elem 1
 lift COERCION matita
 Univ COERCION matita
+
+denumerable NEW top100 Adj denumerable_Adj = mkAdj "denumerable"
+Polynomial NEW top100 Noun polynomial_Noun = mkNoun "polynomial"
+degree NEW top100 Fun degree_Fun = mkFun "degree"
+isRoot NEW top100 Relnoun is_root_Relnoun = mkN2 (mkN "root")
 
 

@@ -3,7 +3,6 @@
 
 module CommonConcepts where
 
-import Constants (constants)
 import Dedukti.AbsDedukti
 import Informath
 import qualified Data.Map as M
@@ -59,25 +58,20 @@ propPi kind pred = EApp (EApp (EIdent identPi) kind) pred
 propSigma kind pred = EApp (EApp (EIdent identSigma) kind) pred
 
 -- built-in types
-typeProp = EIdent (QIdent "Prop")
-typeType = EIdent (QIdent "Type")
-typeSet = EIdent (QIdent "Set")
+typeProp = EIdent identProp
+typeSet = EIdent identSet
+typeType = EIdent identType 
+
+identProp = QIdent "Prop"
+identSet = QIdent "Set"
+identType = QIdent "Type"
 
 --- needed for typing conclusions of proofs
 expTyped x t = EApp (EApp (EIdent (QIdent "typed")) x) t
 expNegated x = EApp (EIdent (QIdent "neg")) x
 
-
-
--- constants in lexicon
----- TODO: now hardcoded, should be dynamically generated and loaded
-
-constantMap :: M.Map String (String, String)
-constantMap = M.fromList [(c, (cat, fun)) | (c, cat, fun) <- constants]
-
 -- lookup after annotation from dynamically loaded file
 lookupConstant :: String -> Maybe (String, String)
----lookupConstant c = M.lookup c constantMap
 lookupConstant f = case words (map (\c -> if c=='|' then ' ' else c) f) of
   [_, cat, fun] -> return (cat, fun)
   _ -> Nothing
@@ -85,24 +79,9 @@ lookupConstant f = case words (map (\c -> if c=='|' then ' ' else c) f) of
 stripConstant :: String -> String
 stripConstant = takeWhile (/='|')
 
-constantMapBack :: M.Map String String
-constantMapBack = M.fromList [(fun, c) | (c, _, fun) <- constants]
-
-lookupConstantBack :: String -> Maybe String
-lookupConstantBack c = M.lookup c constantMapBack
-
 -- Dedukti representation of digits
 digitFuns :: [String]
 digitFuns = [nn, nd]
 nn = "nn"
 nd = "nd"
-
--- Dedukti ident X becomes GF ident Dk_X
-dk :: String -> String
-dk s = "Dk_" ++ s
-
-undk :: String -> String
-undk s = case s of
-  'D':'k':'_':c -> c
-  _ -> s
 

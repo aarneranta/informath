@@ -10,7 +10,8 @@ open
   Formal
 
 in {
-
-lin Dk_same_parity = mkRel "equal in parity" "with" ; ----
-
+lin denumerable_Adj = mkAdj "denumerable" ; -- top100
+lin polynomial_Noun = mkNoun "polynomial" ; -- top100
+lin degree_Fun = mkFun "degree" ; -- top100
+lin is_root_Relnoun = mkN2 (mkN "root") ; -- top100
 }

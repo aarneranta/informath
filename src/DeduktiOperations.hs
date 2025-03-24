@@ -59,11 +59,12 @@ applyConstantData cd = appConst []
  where
    appConst :: [QIdent] -> Tree a -> Tree a
    appConst bs t = case t of
-    EIdent c | elem c bs -> t
-    EIdent c -> EIdent $ fst $ lookid c
+    QIdent _ | elem t bs -> t
+    c@(QIdent _) -> fst $ lookid c
     EAbs b exp -> EAbs (appConst bs b) (appConst (bind2var b : bs) exp)
     EFun h exp -> EFun (appConst bs h) (appConst (hypo2vars h ++ bs) exp)
     EApp _ _ -> case splitApp t of
+      (EIdent c, xs) | elem c bs -> foldl EApp (EIdent c) (map (appConst bs) xs)
       (EIdent c, xs) -> case lookid c of
         (ident, com) -> foldl EApp (EIdent ident) (map (appConst bs) (applyCombination com xs))
       (f, xs) -> foldl EApp (appConst bs f) (map (appConst bs) xs)
@@ -116,8 +117,8 @@ peano2int t = case t of
    countSucc :: Exp -> (Int, Exp)
    countSucc exp = case exp of
      EApp (EIdent f) x | f == identSucc -> case countSucc x of
+       (0, _) -> (0, exp)
        (n, y) -> (n + 1, y)
-       _ -> (0, exp)
      _ -> (0, exp)
 
 -- deciding the kind of a new constant
@@ -129,19 +130,20 @@ guessCat ident@(QIdent c) typ =
   in case lookupConstant c of
     Just (cat, _) -> cat
     _ -> case splitApp val of
-      (f, _) | f == typeProp -> case arity of
+      (EIdent f, _) | f == identProp -> case arity of
         0 -> "Name" --- not really
         1 -> "Adj"
-        2 -> "Rel"
+        2 -> "Reladj"
         _ -> "Fun"
-      (f, _) | elem f [typeSet, typeType] -> case arity of
-        0 -> "Kind"
+      (EIdent f, _) | elem f [identSet, identType] -> case arity of
+        0 -> "Noun"
         _ -> "Fun"
       (EIdent f, _) | f == identElem -> case arity of
         0 -> "Name"
         _ -> "Fun"
       (EIdent f, _) | f == identProof -> "Label"
-      _ -> "Unknown"
+      _ -> "UnresolvedConstant_" ++ c --- error ("Unresolved constant " ++ c)
+
 
 -- to begin with, to decide how to render a hypo
 catExp :: Exp -> String
@@ -255,7 +257,6 @@ pattbindIdents = concatMap bident where
   bident pattbind = case pattbind of
     PBVar x -> [x]
     PBTyped x _ -> [x]
-    _ -> []
 
 -- strip the qualifier part of an ident
 stripQualifiers :: Tree a -> Tree a

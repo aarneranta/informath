@@ -28,7 +28,7 @@ jmt2jmt jmt = case jmt of
           MEExp exp -> Just exp
           _ -> Nothing
     in case (splitType typ, guessCat ident typ) of
-      ((hypos, kind), c) | elem c ["Label", "Unknown"] -> 
+      ((hypos, kind), c) | elem c ["Label"] -> 
         (maybe GAxiomJmt (\exp x y z -> GThmJmt x y z (exp2proof exp)) mexp)
           (ident2label ident)
           (GListHypo (hypos2hypos hypos))
@@ -38,10 +38,11 @@ jmt2jmt jmt = case jmt of
                (\exp x y -> GDefKindJmt definitionLabel x y (exp2kind exp)) mexp)
             (GListHypo (hypos2hypos hypos))
             (ident2kind ident)
-      ((hypos, kind), c) | elem c ["Name", "Const"] ->
+      ((hypos, kind), c) | elem c ["Name", "Const", "Unknown"] ->
           (maybe (GAxiomExpJmt axiomLabel)
 	         (\exp x y z -> GDefExpJmt definitionLabel x y z (exp2exp exp)) mexp)
-            (GListHypo (hypos2hypos hypos)) (ident2exp ident)
+            (GListHypo (hypos2hypos hypos))
+	    (ident2exp ident)
             (exp2kind kind)
       ((hypos, kind), c) | elem c ["Fun", "Oper"] ->
         let chypos = hypos2hypos (addVarsToHypos hypos)

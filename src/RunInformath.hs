@@ -64,7 +64,7 @@ helpMsg = unlines [
 informathPrefix = "Informath"
 informathPGFFile = "grammars/" ++ informathPrefix ++ ".pgf"
 conversionsFile = "alphaConversions.tsv"
-constantDataFile = "constant_data.txt"
+constantDataFile = "constant_data.dkgf"
 Just jmt = readType "Jmt"
 
 data Env = Env {

@@ -45,6 +45,7 @@ lin
   negation_Fun = mkFun "negation" ;
   equivalence_Fun = mkFun "equivalence" ;
 
+  digit_Noun = mkNoun "digit" ;
   number_Noun = mkNoun "Number" ;
   boolean_Noun = mkNoun "boolean" ;
   list_Fam = mkNoun "list" ;
