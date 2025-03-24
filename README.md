@@ -227,26 +227,57 @@ Consult the [Makefile](./src/Makefile) to see what these commands exactly do.
 
 ## User-defined constants
 
-_Under construction, not guaranteed to work like this_
+_Under construction, not guaranteed always to work like this_
 
-The lexicon part (files Constants*) is expected to give verbalizations to defined constants in .dk files. This part can be dynamically generated with the commands
+The lexicon part part of the GF grammar (files src/grammars/BaseConstants*, UserConstants*) give verbalizations to defined constants in .dk files. The UseConstants* files can be dynamically generated with the command
 ```
-$ ./RunInformath -lang=<Lang>? <file>.dkgf
+$ ./RunInformath -lang=<lang>? constand_data.dkgf
+```
+which with the default lang=Eng generates two files:
+- [UserConstants.gf](src/grammars/UserConstants.gf)
+- [UserConstantsEng.gf](src/grammars/UserConstantsEng.gf)
+
+after which
+```
 $ make Informath.pgf
-$ make RunInformath
 ```
-which for instance from [nat.dkgf](./src/nat.dkgf) generates three files:
-- [Constants.hs](./Constants.hs)
-- [Constants.gf](./Core/Constants.gf)
-- [Constants<lang>.gf](./Core/Constants<lang>.gf)
+and compiles Informath.pgf with them. The format of .dkgf files is a list of lines with data about constants, where user-defined ones have the form
+```
+<dkid> NEW <project> <gfcat> <gffun> <int>* = <word>+
+```
+This generates new entries in the two UserConstants*.gf files (abstract and concrete) and also instructs RunInformath how to handle the constant <dkid> in translations to and from GF. Other languages than English can also be addressed, but at the moment the file format permits linearization rules for only one language at a time. 
 
-and compiles Informath.pgf with them. The format of .dkgf files is a list of lines of one of the following forms:
+The <project> label can be chosen freely by the user; it is appended to each generated GF rule as a comment that can be grepped with.
+
+The <int>* part is a space-separated list of integers telling which arguments (numbered from 0) are sent to GF and in what order. It provides a way to deal with hidden arguments. Leaving it out means that all arguments are sent. 
+
+Users can also map their Dedukti identifiers to already existing ones in [BaseConstants.dk](./src/BaseConstants.dk). This is performed with a simpler form of lines in .dkgf files, 
 ```
-<ident> <cat> <word>+  # Dk_<ident> = mk<cat> "<word>"+ 
-<ident> <cat> = <gf-expr>  # Dk_<ident> = <gf-expr>
-<ident> <cat> -> <gf-ident> 
+<dkid> ALIAS <project> <int>* <dkid>
 ```
-The first two forms generate new entries in the two UserConstants*.gf files, defining functions named `Dk_<ident>` of type `<cat>`and with concrete syntax as shown above. The third form uses a globally defined function from the file [BaseConstants.gf](./src/BaseConstants.gf) and its concrete syntax, without generating new GF rules. Its effect is to map `<ident>` in Dedukti code to `<gf-ident>` in the GF translation of the code.
+stating that the former dkid should be treated like the latter one.
+
+### Categories of user-defined constants
+
+The following categories of new constants are currently supported by the grammar and can appear in the <gfcat> field of .dkgf files:
+```
+  Noun ; -- Kind -- set
+  Fam ; -- Kind -> Kind -- list of integers
+  Set ;  -- Kind + symbol -- integer, Z
+  Adj ;  -- Exp -> Prop -- even
+  Verb ; -- Exp -> Exp -- converge
+  Reladj ;  -- Exp -> Exp -> Prop -- divisible by
+  Relverb ; -- Exp -> Exp -> Exp -- divide
+  Relnoun ; -- Exp -> Exp -> Exp  -- member of
+  Name ; -- Exp -- absurdity
+  Fun ;  -- [Exp] -> Exp -- equivalence of
+  Label ; -- Exp -- theorem 1
+  Const ; -- Exp + symbol -- the empty set, Ø
+  Oper ;  -- Exp -> Exp -> Exp + symbol -- the sum, +
+  Compar ; -- Exp -> Exp -> Prop + symbol -- greater than, >
+  Comparnoun ; -- Exp -> Exp -> Prop + symbol -- subset of, >
+```
+
 
 ## Processing in type theory
 
@@ -299,7 +330,6 @@ This should be made less cumbersome in the future.
 
 ## ToDo
 
-- complete the MathCore-Dedukti conversion
 - complete the Informath-MathCore conversion
 - extend Informath 
 - extend the MathCore-Informath conversion
