@@ -59,12 +59,14 @@ applyCombination com xs = case com of
   ComNONE -> []
   ComONLY ks -> [xs !! k | k <- ks]
 
-lookBackConstantData = M.fromList . map lookback . M.toList
+lookBackConstantData = M.fromList . concatMap lookback . M.toList
   where
     lookback (c, info) = case info of
-      BASE _ fun -> (fun, c) ---- (c, ComALL))
-      ALIAS _ fun com -> (fun, c) ---- (c, com))
-      NEW _ _ fun com -> (fun, c) ---- (c, com))
-      COERCION _ -> (c, c)
+      BASE _ fun -> [(fun, c)] ---- (c, ComALL))
+---      ALIAS _ fun com -> (fun, c) ---- (c, com)) -- not to be included
+      NEW _ _ fun com -> [(fun, c)] ---- (c, com))
+      COERCION _ -> [(c, c)]
+      _ -> []
+
 
     

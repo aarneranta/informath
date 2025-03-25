@@ -24,12 +24,12 @@ oper
   plus_Oper : OperT = mkOper "+" <1 : Prec> <1 : Prec> <2 : Prec> ;
   minus_Oper : OperT = mkOper "-" <1 : Prec> <1 : Prec> <2 : Prec> ;
   times_Oper : OperT = mkOper "\\times"  <2 : Prec> <2 : Prec> <3 : Prec> ;
-  div_Oper : OperT = mkOper "\\frac{" "}{" "}" <3 : Prec> <0 : Prec> <0 : Prec> ;
-  pow_Oper : OperT = mkOper "{" "}^{" "}" <3 : Prec> <4 : Prec> <2 : Prec> ;
+  div_Oper : OperT = mkOper "\\frac{" "} {" "}" <3 : Prec> <0 : Prec> <0 : Prec> ;
+  pow_Oper : OperT = mkOper "" "^ {" "}" <3 : Prec> <4 : Prec> <2 : Prec> ;
   neg_Oper : OperT = mkOper "\\negated" ;
   logarithm_Oper : OperT = mkOper "\\log_" "{" "}" <3 : Prec> ;
   square_root_Oper : OperT = mkOper "\\sqrt{" "}" ;
-  factorial_Oper : OperT = mkOper "" "" "\\^{!}" <3 : Prec> ;
+  factorial_Oper : OperT = mkOper "" "" "!" <3 : Prec> ;
   absolute_value_Oper : OperT = mkOper "|" "|" ;
 
   function_Oper : OperT = mkOper "\\rightarrow" ; ---

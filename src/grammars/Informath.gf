@@ -39,6 +39,7 @@ fun
 -- for Pathak's examples
 
   LetFormulaHypo : Formula -> Hypo ;
+  PostQuantProp : Prop -> Exp -> Prop ;
 
   DefinedAdjJmt : Label -> [Hypo] -> Exp -> Adj -> Prop -> Jmt ;
   WeDefineAdjJmt : Label -> [Hypo] -> Exp -> Adj -> Prop -> Jmt ;
@@ -46,17 +47,17 @@ fun
   AdjKind : Adj -> Kind -> Kind ;
   KindProp : Exp -> Kind -> Prop ;
 
+  AllKindExp : Kind -> Exp ;
+  AllIdentKindExp : Ident -> Kind -> Exp ;
   EveryKindExp : Kind -> Exp ;
-  AllArgKindExp : ArgKind -> Exp ;
   EveryIdentKindExp : Ident -> Kind -> Exp ;
   
   SomeKindExp : Kind -> Exp ;
-  SomeArgKindExp : ArgKind -> Exp ;
-  PostQuantProp : Prop -> Exp -> Prop ;
+  SomeIdentKindExp : Ident -> Kind -> Exp ;
   IndefKindExp : Kind -> Exp ;
   IndefIdentKindExp : Ident -> Kind -> Exp ;
   
-  NoArgKindExp : ArgKind -> Exp ;
+  NoIdentKindExp : Ident -> Kind -> Exp ;
   NoKindExp : Kind -> Exp ;
 
 }

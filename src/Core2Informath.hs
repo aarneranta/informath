@@ -174,13 +174,13 @@ variations tree = case tree of
 
 allExpVariations :: GArgKind -> [GExp]
 allExpVariations argkind = case argkind of
-  GIdentsArgKind kind (GListIdent [x]) -> [GEveryIdentKindExp x kind , GAllArgKindExp argkind]
-  _ -> [GAllArgKindExp argkind]
+  GIdentsArgKind kind (GListIdent [x]) -> [GEveryIdentKindExp x kind , GAllIdentKindExp x kind]
+  _ -> []
 
 existExpVariations :: GArgKind -> [GExp]
 existExpVariations argkind = case argkind of
-----  GIdentsArgKind kind (GListIdent [x]) -> [GEveryIdentKindExp x kind, GSomeArgKindExp argkind]
-  _ -> [GSomeArgKindExp argkind]
+  GIdentsArgKind kind (GListIdent [x]) -> [GIndefIdentKindExp x kind, GSomeIdentKindExp x kind]
+  _ -> []
 
 hypoProp :: [GHypo] -> GProp -> GProp
 hypoProp hypos prop = case hypos of
@@ -193,22 +193,25 @@ hypoProp hypos prop = case hypos of
 insitu :: Tree a -> Tree a
 insitu t = case t of
   GAllProp (GListArgKind [argkind]) (GAdjProp adj exp) -> case subst argkind exp of
-    True -> GAdjProp adj (GAllArgKindExp argkind)
+    Just (x, kind) -> GAdjProp adj (GAllIdentKindExp x kind)
     _ -> t
   GAllProp (GListArgKind [argkind]) (GNotAdjProp adj exp) -> case subst argkind exp of
-    True -> GAdjProp adj (GNoArgKindExp argkind)
+    Just (x, kind) -> GAdjProp adj (GNoIdentKindExp x kind)
     _ -> t
   _ -> composOp insitu t
 
-subst :: GArgKind -> GExp -> Bool
+subst :: GArgKind -> GExp -> Maybe (GIdent, GKind)
 subst argkind exp = case (argkind, exp) of
-  (GIdentsArgKind _ (GListIdent [x]), GTermExp (GTIdent y)) -> x == y
-  _ -> False
+  (GIdentsArgKind kind (GListIdent [x]), GTermExp (GTIdent y)) | x == y -> Just (x, kind)
+  _ -> Nothing
 
 varless :: Tree a -> Tree a
 varless t = case t of
-  GAllArgKindExp (GIdentsArgKind kind (GListIdent [_])) -> GEveryKindExp kind
-  GNoArgKindExp (GIdentsArgKind kind (GListIdent [_])) -> GNoKindExp kind
+  GEveryIdentKindExp _ kind -> GEveryKindExp kind
+  GAllIdentKindExp _ kind -> GAllKindExp kind
+  GNoIdentKindExp _ kind -> GNoKindExp kind
+  GSomeIdentKindExp _ kind -> GSomeKindExp kind
+  GIndefIdentKindExp _ kind -> GSomeKindExp kind
   _ -> composOp varless t
 
 exps2list :: GExps -> [GExp]

@@ -49,6 +49,9 @@ lin
 
   LetFormulaHypo formula = lin Utt {s = let_Str ++ "$" ++ top formula ++ "$"} ;
 
+  PostQuantProp prop exp =
+    simpleProp (postAdvS prop.s (Syntax.mkAdv for_Prep exp)) ; -- ambiguous: there is no complexProp in Informath
+
   DefinedAdjJmt label hypos exp adj prop =
     labelText (label)
       (thenText hypos (
@@ -63,19 +66,19 @@ lin
   AdjKind adj kind = kind ** {cn = mkCN adj kind.cn} ;
   KindProp exp kind = simpleProp (mkS (mkCl exp kind.cn)) ;
 
+  AllKindExp kind = mkNP all_Predet (mkNP aPl_Det (useKind kind)) ;
+  AllIdentKindExp ident kind = mkNP all_Predet (mkNP aPl_Det (mkCN (mkCN kind.cn (latexNP (mkSymb ident))) kind.adv)) ;
+
   EveryKindExp kind =
     mkNP every_Det (mkCN kind.cn kind.adv) | mkNP all_Predet (mkNP aPl_Det (mkCN kind.cn kind.adv)) ;
-  AllArgKindExp kind = mkNP all_Predet (mkNP aPl_Det (mkCN kind.cn kind.adv)) ;
   EveryIdentKindExp ident kind = mkNP every_Det (mkCN (mkCN kind.cn (latexNP (mkSymb ident))) kind.adv) ;
 
   SomeKindExp kind = mkNP someSg_Det (mkCN kind.cn kind.adv) ;
-  SomeArgKindExp kind = mkNP somePl_Det (mkCN kind.cn kind.adv) ;
-  PostQuantProp prop exp =
-    simpleProp (postAdvS prop.s (Syntax.mkAdv for_Prep exp)) ; --- no complexProp in Informath
+  SomeIdentKindExp ident kind = mkNP someSg_Det (mkCN (mkCN kind.cn (latexNP (mkSymb ident))) kind.adv) ;
   IndefKindExp kind = mkNP a_Det (mkCN kind.cn kind.adv) ;
   IndefIdentKindExp ident kind = mkNP a_Det (mkCN (mkCN kind.cn (latexNP (mkSymb ident))) kind.adv) ;
   
-  NoArgKindExp kind = mkNP (mkDet no_Quant pluralNum) (mkCN kind.cn kind.adv) ;
+  NoIdentKindExp ident kind = mkNP no_Quant (mkCN (mkCN kind.cn (latexNP (mkSymb ident))) kind.adv) ;
   NoKindExp kind = mkNP no_Quant (mkCN kind.cn kind.adv) ;
 
 

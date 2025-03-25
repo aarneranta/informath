@@ -8,6 +8,11 @@ import Informath
 data SEnv = SEnv {varlist :: [String]}
 initSEnv = SEnv {varlist = []}
 
+newVar :: SEnv -> (GIdent, SEnv)
+newVar senv = (xi, senv{varlist = x : varlist senv}) where
+  x = head [x | x <- ["_h" ++ show i | i <- [0..]], notElem x (varlist senv)]
+  xi = GStrIdent (GString x)
+  
 semantics :: Tree a -> Tree a
 semantics = addCoercions . addParenth . sem initSEnv . removeFonts
 
@@ -28,6 +33,7 @@ addCoercions t = case t of
   KindArgKind : Kind -> ArgKind ;
   TypedExp : Exp -> Kind -> Exp ;
   -}
+  GPropHypo prop -> GPropHypo (proofProp prop)
   GVarsHypo idents kind -> GVarsHypo idents (GElemKind kind)
   _ -> composOp addCoercions t
  where
@@ -75,10 +81,12 @@ sem env t = case t of
       sem env (GAllProp (GListArgKind [GIdentsArgKind kind (GListIdent [ident])]) prop)
     GIndefIdentKindExp ident kind ->
       sem env (GExistProp (GListArgKind [GIdentsArgKind kind (GListIdent [ident])]) prop)
-    GSomeArgKindExp argkind ->
-      sem env (GExistProp (GListArgKind [argkind]) prop)
-    GAllArgKindExp argkind ->
-      sem env (GAllProp (GListArgKind [argkind]) prop)
+    GSomeIdentKindExp ident kind ->
+      sem env (GExistProp (GListArgKind [GIdentsArgKind kind (GListIdent [ident])]) prop)
+    GAllIdentKindExp ident kind ->
+      sem env (GAllProp (GListArgKind [GIdentsArgKind kind (GListIdent [ident])]) prop)
+    GNoIdentKindExp ident kind ->
+      sem env (GAllProp (GListArgKind [GIdentsArgKind kind (GListIdent [ident])]) (GNotProp prop))
 
   GAllProp argkinds prop -> case argkinds of
     GListArgKind [GIdentsArgKind (GAdjKind adj kind) vars@(GListIdent xs)] ->
@@ -96,6 +104,40 @@ sem env t = case t of
     let (var, nenv) = newVar env
     in GSuchThatKind var (sem nenv kind) (sem nenv (GAdjProp adj (GTermExp (GTIdent var))))
 
+  GAdjProp adj (GAllIdentKindExp x kind) ->
+    sem env (GAllProp (GListArgKind [GIdentsArgKind kind (GListIdent [x])])
+              (GAdjProp adj (GTermExp (GTIdent x))))
+  GAdjProp adj (GEveryIdentKindExp x kind) ->
+    sem env (GAdjProp adj (GAllIdentKindExp x kind))
+  GAdjProp adj (GSomeIdentKindExp x kind) ->
+    sem env (GExistProp (GListArgKind [GIdentsArgKind kind (GListIdent [x])])
+              (GAdjProp adj (GTermExp (GTIdent x))))
+  GAdjProp adj (GIndefIdentKindExp x kind) ->
+    sem env (GAdjProp adj (GSomeIdentKindExp x kind))
+  GAdjProp adj (GNoIdentKindExp x kind) ->
+    sem env (GAllProp (GListArgKind [GIdentsArgKind kind (GListIdent [x])])
+              (GNotAdjProp adj (GTermExp (GTIdent x))))
+	      
+  GAdjProp adj (GEveryKindExp kind) ->
+    let (x, env') = newVar env
+    in sem env'
+      (GAllProp (GListArgKind [GIdentsArgKind kind (GListIdent [x])])
+        (GAdjProp adj (GTermExp (GTIdent x))))
+  GAdjProp adj (GAllKindExp kind) ->
+    sem env (GAdjProp adj (GEveryKindExp kind))
+  GAdjProp adj (GSomeKindExp kind) ->
+    let (x, env') = newVar env
+    in sem env'
+      (GExistProp (GListArgKind [GIdentsArgKind kind (GListIdent [x])])
+        (GAdjProp adj (GTermExp (GTIdent x))))
+  GAdjProp adj (GIndefKindExp kind) ->
+    sem env (GAdjProp adj (GSomeKindExp kind))
+  GAdjProp adj (GNoKindExp kind) ->
+    let (x, env') = newVar env
+    in sem env'
+      (GAllProp (GListArgKind [GIdentsArgKind kind (GListIdent [x])])
+        (GNotAdjProp adj (GTermExp (GTIdent x))))
+	
   GAdjProp (GAndAdj (GListAdj adjs)) x ->
     let sx = sem env x
     in GAndProp (GListProp [GAdjProp adj sx | adj <- adjs])
@@ -150,9 +192,6 @@ hypoVars :: GHypo -> [GIdent]
 hypoVars hypo = case hypo of
   GVarsHypo (GListIdent idents) _ -> idents
   _ -> []
-
-newVar :: SEnv -> (GIdent, SEnv)
-newVar env = (GStrIdent (GString "h_"), env) ---- TODO fresh variables
 
 -- identify exp lists that are just variable lists, possibly bindings
 getJustVars :: SEnv -> GExp -> Maybe [GIdent]
