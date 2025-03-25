@@ -106,7 +106,7 @@ main = do
     _ | ifFlag "-help" env -> do
       putStrLn helpMsg
     filename:_ | isSuffixOf ".dkgf" filename -> do
-      mkConstants (lang env) filename
+      mkConstants filename
     filename:_ | isSuffixOf ".dk" filename -> do
       s <- readFile filename
       mo@(MJmts jmts) <- parseDeduktiModule env s

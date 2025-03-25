@@ -7,38 +7,37 @@ module MkConstants where
 --  RunInformath <file>.dkgf
 --  make Informath.pgf
 --
--- the format of an annotation is
+-- the format of an annotation is one of
 --
---   <dkid> NEW <project> <gfcat> <gfid> <int>* = <gfexp>
+--   <dkid> NEW <project> <gfcat> <gffun>
+--   #LIN <lang> <gffun> = <gfexp>
 --
 -- E.g.
 --
---   Polynomial NEW top100 Noun polynomial_Noun = mkNoun "polynomial"
+--   Polynomial NEW top100 Noun polynomial_Noun
+--   #LIN Eng polynomial_Noun = mkNoun "polynomial"
 --
--- from which it generates lines in three files
+-- from which it generates lines in two files
 --
---   UserConstants.gf             :  fun <gfid> : <gfcat> ; -- <project>
---   grammars/UserConstantsEng.gf :  lin <gfid> = <gfexp> ; -- <project>
+--   grammars/UserConstants.gf       :  fun <gffun> : <gfcat> ; -- <project>
+--   grammars/UserConstants<lang>.gf :  lin <gffun> = <gfexp> ; -- <project>
 --
--- Annotations are written in the file constant_data.dkgf.
+-- Annotations are read from the file constant_data.dkgf.
 -- For the time being, it is a global file
 
-import PGF
-
 import Data.List (intersperse)
+import qualified Data.Map as M
 
 constantsFile langid = "grammars/UserConstants" ++ langid ++ ".gf"
 
-mkConstants :: Language -> FilePath -> IO ()
-mkConstants lang file = do
-  let langid = case showCId lang of
-        cncname -> drop (length cncname - 3) cncname
-  rawannots <- readFile file >>= return . map words . filter (elem '=') . lines
-  let annots = [if head w == '(' then ww else ws | ws@(w:ww) <- rawannots] -- remove (freq)
-  let parts = map (break (== "=")) annots
-  let dkannots = [fun:cat:proj:ws | (_:_:proj:cat:fun:_, _:ws)  <- parts]
-  writeAndReport (constantsFile langid) $ mkConstantsCncGF langid dkannots
-  writeAndReport (constantsFile "") $ mkConstantsGF dkannots
+mkConstants :: FilePath -> IO ()
+mkConstants file = do
+  ls <- readFile file >>= return . map words . lines
+  let absannots = [(fun, cat, proj) | _:"NEW":proj:cat:fun:_ <- ls]
+  let cncannots = M.fromListWith (++) [(lang, [(fun, unwords ws)]) | "#LIN":lang:fun:"=":ws <- ls]
+  writeAndReport (constantsFile "") $ mkConstantsGF absannots
+  mapM_ (\ (lang, lins) -> 
+    writeAndReport (constantsFile lang) $ mkConstantsCncGF lang lins) (M.toList cncannots)
 
 
 mkConstantsGF annots = unlines $ [
@@ -50,7 +49,7 @@ mkConstantsGF annots = unlines $ [
   map mkConstant annots ++
   ["}"]
  where
-   mkConstant (fun:cat:proj:_) =
+   mkConstant (fun, cat, proj) =
      unwords(["fun", fun, ":", cat, ";", "--", proj])
 
 
@@ -72,8 +71,7 @@ mkConstantsCncGF lang annots = unlines $ [
   map mkConstant annots ++
   ["}"]
  where
-   mkConstant (fun:cat:proj:ws) = 
-     unwords(["lin", fun, "=", unwords ws, ";", "--", proj])
+   mkConstant (fun, lin) = unwords ["lin", fun, "=", lin, ";"]
 
 writeAndReport :: FilePath -> String -> IO ()
 writeAndReport file s = do

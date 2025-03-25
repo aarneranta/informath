@@ -7,10 +7,9 @@ open
   SyntaxSwe,
   ParadigmsSwe,
   SymbolicSwe,
+  (L=BaseConstantsLatex),
   Formal
 
 in {
-
-lin Dk_same_parity = mkRel "paritetslik" "med" ; ----
-
+lin rational_Adj = mkAdj "rationell" ;
 }

@@ -77,16 +77,31 @@ Term ALIAS matita Elem 1
 lift COERCION matita
 Univ COERCION matita
 
-Polynomial NEW top100 Noun polynomial_Noun = mkNoun "polynomial"
-degree NEW top100 Fun degree_Fun = mkFun "degree"
-isRoot NEW top100 Relnoun is_root_Relnoun = mkN2 (mkN "root")
-cardinality NEW top100 Fun cardinality_Fun = mkFun "cardinality"
-denumerable NEW top100 Adj denumerable_Adj = mkAdj "denumerable"
+rational NEW top100 Adj rational_Adj
+Polynomial NEW top100 Noun polynomial_Noun
+degree NEW top100 Fun degree_Fun
+isRoot NEW top100 Relnoun is_root_Relnoun
+cardinality NEW top100 Fun cardinality_Fun
+denumerable NEW top100 Adj denumerable_Adj
+Vector NEW top100 Noun vector_Noun
+length NEW top100 Oper length_Oper
+perpendicular NEW top100 Compar perpendicular_Compar
+resultant NEW top100 Oper resultant_Oper
+square NEW top100 Oper square_Oper
+legendre NEW top100 Oper legendre_symbol_Oper
 
-Vector NEW top100 Noun vector_Noun = mkNoun "vector"
-length NEW top100 Oper length_Oper = mkOper L.absolute_value_Oper "length"
-perpendicular NEW top100 Compar perpendicular_Compar = mkCompar "\\perp" "perpendicular" "to"
-resultant NEW top100 Oper resultant_Oper = mkOper L.plus_Oper "resultant"
-square NEW top100 Oper square_Oper = mkOper (L.mkOper "" "" "^{ 2 }" <2 : Prec>) "square"
-legendre NEW top100 Oper legendre_symbol_Oper = mkOper (L.mkOper "\\left(\\frac{" "}{" "}\\right)" <4 : Prec>) "Legendre symbol"
+#LIN Eng rational_Adj = mkAdj "rational"
+#LIN Fre rational_Adj = mkAdj "rationnel"
+#LIN Swe rational_Adj = mkAdj "rationell"
+#LIN Eng polynomial_Noun = mkNoun "polynomial"
+#LIN Eng degree_Fun = mkFun "degree"
+#LIN Eng is_root_Relnoun = mkN2 (mkN "root")
+#LIN Eng cardinality_Fun = mkFun "cardinality"
+#LIN Eng denumerable_Adj = mkAdj "denumerable"
+#LIN Eng vector_Noun = mkNoun "vector"
+#LIN Eng length_Oper = mkOper L.absolute_value_Oper "length"
+#LIN Eng perpendicular_Compar = mkCompar "\\perp" "perpendicular" "to"
+#LIN Eng resultant_Oper = mkOper L.plus_Oper "resultant"
+#LIN Eng square_Oper = mkOper (L.mkOper "" "" "^{ 2 }" <2 : Prec>) "square"
+#LIN Eng legendre_symbol_Oper = mkOper (L.mkOper "\\left(\\frac{" "}{" "}\\right)" <4 : Prec>) "Legendre symbol"
 

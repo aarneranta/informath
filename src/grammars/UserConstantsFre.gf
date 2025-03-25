@@ -7,10 +7,9 @@ open
   SyntaxFre,
   ParadigmsFre,
   SymbolicFre,
+  (L=BaseConstantsLatex),
   Formal
 
 in {
-
-lin Dk_same_parity = mkRel "paritégal" "avec" ; ---- 
-
+lin rational_Adj = mkAdj "rationnel" ;
 }

@@ -11,15 +11,16 @@ open
   Formal
 
 in {
-lin polynomial_Noun = mkNoun "polynomial" ; -- top100
-lin degree_Fun = mkFun "degree" ; -- top100
-lin is_root_Relnoun = mkN2 (mkN "root") ; -- top100
-lin cardinality_Fun = mkFun "cardinality" ; -- top100
-lin denumerable_Adj = mkAdj "denumerable" ; -- top100
-lin vector_Noun = mkNoun "vector" ; -- top100
-lin length_Oper = mkOper L.absolute_value_Oper "length" ; -- top100
-lin perpendicular_Compar = mkCompar "\\perp" "perpendicular" "to" ; -- top100
-lin resultant_Oper = mkOper L.plus_Oper "resultant" ; -- top100
-lin square_Oper = mkOper (L.mkOper "" "" "^{ 2 }" <2 : Prec>) "square" ; -- top100
-lin legendre_symbol_Oper = mkOper (L.mkOper "\\left(\\frac{" "}{" "}\\right)" <4 : Prec>) "Legendre symbol" ; -- top100
+lin legendre_symbol_Oper = mkOper (L.mkOper "\\left(\\frac{" "}{" "}\\right)" <4 : Prec>) "Legendre symbol" ;
+lin square_Oper = mkOper (L.mkOper "" "" "^{ 2 }" <2 : Prec>) "square" ;
+lin resultant_Oper = mkOper L.plus_Oper "resultant" ;
+lin perpendicular_Compar = mkCompar "\\perp" "perpendicular" "to" ;
+lin length_Oper = mkOper L.absolute_value_Oper "length" ;
+lin vector_Noun = mkNoun "vector" ;
+lin denumerable_Adj = mkAdj "denumerable" ;
+lin cardinality_Fun = mkFun "cardinality" ;
+lin is_root_Relnoun = mkN2 (mkN "root") ;
+lin degree_Fun = mkFun "degree" ;
+lin polynomial_Noun = mkNoun "polynomial" ;
+lin rational_Adj = mkAdj "rational" ;
 }

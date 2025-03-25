@@ -29,7 +29,8 @@ data ConstantInfo =
 string2constantData mproj =
   M.fromList .
   filter (isFor mproj) .
-  map (mkConstantInfo . takeWhile (/= "=")) .  -- after =, a possible GF rule
+  map (mkConstantInfo) .  -- after =, a possible GF rule
+  filter ((/='#') . head . head) .
   filter (not . null) .
   map words .
   lines
