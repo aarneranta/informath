@@ -78,6 +78,7 @@ lift COERCION matita
 Univ COERCION matita
 
 rational NEW top100 Adj rational_Adj
+irrational NEW top100 Adj irrational_Adj
 Polynomial NEW top100 Noun polynomial_Noun
 degree NEW top100 Fun degree_Fun
 isRoot NEW top100 Relnoun is_root_Relnoun
@@ -93,15 +94,52 @@ legendre NEW top100 Oper legendre_symbol_Oper
 #LIN Eng rational_Adj = mkAdj "rational"
 #LIN Fre rational_Adj = mkAdj "rationnel"
 #LIN Swe rational_Adj = mkAdj "rationell"
+
+#LIN Eng irrational_Adj = mkAdj "irrational"
+#LIN Fre irrational_Adj = mkAdj "irrationnel"
+#LIN Swe irrational_Adj = mkAdj "irrationell"
+
 #LIN Eng polynomial_Noun = mkNoun "polynomial"
+#LIN Fre polynomial_Noun = mkNoun (mkN "polynôme" masculine)
+#LIN Swe polynomial_Noun = mkNoun (mkN "polynom" "polynom")
+
 #LIN Eng degree_Fun = mkFun "degree"
+#LIN Fre degree_Fun = mkFun (mkN "degré" masculine)
+#LIN Swe degree_Fun = mkFun (mkN "grad" "grader")
+
 #LIN Eng is_root_Relnoun = mkN2 (mkN "root")
+#LIN Fre is_root_Relnoun = mkN2 (mkN "racine") genitive
+#LIN Swe is_root_Relnoun = mkN2 (mkN "rot" "rötter")
+
 #LIN Eng cardinality_Fun = mkFun "cardinality"
+#LIN Fre cardinality_Fun = mkFun "cardinalité"
+#LIN Swe cardinality_Fun = mkFun (mkN "kardinalitet" "kardinaliteter")
+
 #LIN Eng denumerable_Adj = mkAdj "denumerable"
+#LIN Fre denumerable_Adj = mkAdj "dénombrable"
+#LIN Swe denumerable_Adj = mkAdj "upräknelig"
+
 #LIN Eng vector_Noun = mkNoun "vector"
+#LIN Fre vector_Noun = mkNoun "vecteur"
+#LIN Swe vector_Noun = mkNoun (mkN "vektor" "vektorer")
+
 #LIN Eng length_Oper = mkOper L.absolute_value_Oper "length"
-#LIN Eng perpendicular_Compar = mkCompar "\\perp" "perpendicular" "to"
-#LIN Eng resultant_Oper = mkOper L.plus_Oper "resultant"
-#LIN Eng square_Oper = mkOper (L.mkOper "" "" "^{ 2 }" <2 : Prec>) "square"
-#LIN Eng legendre_symbol_Oper = mkOper (L.mkOper "\\left(\\frac{" "}{" "}\\right)" <4 : Prec>) "Legendre symbol"
+#LIN Fre length_Oper = mkOper L.absolute_value_Oper "norme"
+#LIN Swe length_Oper = mkOper L.absolute_value_Oper (mkN "norm" "normer")
+
+#LIN Eng perpendicular_Compar = mkCompar L.perpendicular_Compar "perpendicular" "to"
+#LIN Fre perpendicular_Compar = mkCompar L.perpendicular_Compar (mkA "perpendiculaire") dative
+#LIN Swe perpendicular_Compar = mkCompar L.perpendicular_Compar "vinkelrät" "mot"
+
+#LIN Eng resultant_Oper = mkOper L.plus_Oper "sum"
+#LIN Fre resultant_Oper = mkOper L.plus_Oper (mkN "addition")
+#LIN Swe resultant_Oper = mkOper L.plus_Oper (mkN "resultant" "resultanter")
+
+#LIN Eng square_Oper = mkOper L.square_Oper "square"
+#LIN Fre square_Oper = mkOper L.square_Oper (mkN "carré" masculine)
+#LIN Swe square_Oper = mkOper L.square_Oper (mkN "kvadrat" "kvadrater")
+
+#LIN Eng legendre_symbol_Oper = mkOper L.legendre_symbol_Oper "Legendre symbol"
+#LIN Fre legendre_symbol_Oper = mkOper L.legendre_symbol_Oper (mkCN (mkN "symbole" masculine) (SyntaxFre.mkAdv genitive (mkNP (mkPN "Legendre"))))
+#LIN Swe legendre_symbol_Oper = mkOper L.legendre_symbol_Oper (mkN "Legendresymbol" "Legendresymboler")
 

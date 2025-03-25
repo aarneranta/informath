@@ -6,6 +6,13 @@ Thm01a : (m : Elem Nat) -> (n : Elem Nat) ->
 Thm01b : (q : Elem Rat) -> Proof (Neq (pow q 2) 2).
 Thm01c : (q : Elem Rat) -> Proof (Neq (sqrt 2) q).
 
+def rational : Elem Real -> Prop :=
+  x => exists Int (p => exists Int (q => and (Neq q 0) (Eq x (div p q)))).
+Thm01d : Proof (not (rational (sqrt 2))).
+
+def irrational : Elem Real -> Prop := x => not (rational x).
+Thm01e : Proof (irrational (sqrt 2)).
+
 Polynomial : Type.
 degree : (P : Polynomial) -> Elem Nat.
 isRoot : (c : Elem Complex) -> (P : Polynomial) -> Prop. 

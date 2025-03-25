@@ -20,6 +20,7 @@ oper
   Neq_Compar = "\\neq" ;
   Leq_Compar = "\\leq" ;
   Geq_Compar = "\\geq" ;
+  perpendicular_Compar = "\\perp" ;
   
   plus_Oper : OperT = mkOper "+" <1 : Prec> <1 : Prec> <2 : Prec> ;
   minus_Oper : OperT = mkOper "-" <1 : Prec> <1 : Prec> <2 : Prec> ;
@@ -39,6 +40,8 @@ oper
   difference_Oper : OperT = mkOper "\\setminus" <2 : Prec> ;
   complement_Oper : OperT = mkOper "{" "" "}^{\\complement}" <3 : Prec> ;
   powerset_Oper : OperT = mkOper "\\wp" "" "" <3 : Prec> <4 : Prec> <4 : Prec> ;
+  square_Oper : OperT = mkOper "" "" "^{ 2 }" <2 : Prec> ;
+  legendre_symbol_Oper : OperT = mkOper "\\left(\\frac{" "}{" "}\\right)" <4 : Prec> ;
 
   subset_Comparnoun = "\\subset" ;  
   subseteq_Comparnoun = "\\subseteq" ;
