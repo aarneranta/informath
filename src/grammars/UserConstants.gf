@@ -12,4 +12,5 @@ fun length_Oper : Oper ; -- top100
 fun perpendicular_Compar : Compar ; -- top100
 fun resultant_Oper : Oper ; -- top100
 fun square_Oper : Oper ; -- top100
+fun legendre_symbol_Oper : Oper ; -- top100
 }

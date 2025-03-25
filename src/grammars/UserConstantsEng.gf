@@ -21,4 +21,5 @@ lin length_Oper = mkOper L.absolute_value_Oper "length" ; -- top100
 lin perpendicular_Compar = mkCompar "\\perp" "perpendicular" "to" ; -- top100
 lin resultant_Oper = mkOper L.plus_Oper "resultant" ; -- top100
 lin square_Oper = mkOper (L.mkOper "" "" "^{ 2 }" <2 : Prec>) "square" ; -- top100
+lin legendre_symbol_Oper = mkOper (L.mkOper "\\left(\\frac{" "}{" "}\\right)" <4 : Prec>) "Legendre symbol" ; -- top100
 }

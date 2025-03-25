@@ -88,5 +88,5 @@ length NEW top100 Oper length_Oper = mkOper L.absolute_value_Oper "length"
 perpendicular NEW top100 Compar perpendicular_Compar = mkCompar "\\perp" "perpendicular" "to"
 resultant NEW top100 Oper resultant_Oper = mkOper L.plus_Oper "resultant"
 square NEW top100 Oper square_Oper = mkOper (L.mkOper "" "" "^{ 2 }" <2 : Prec>) "square"
-
+legendre NEW top100 Oper legendre_symbol_Oper = mkOper (L.mkOper "\\left(\\frac{" "}{" "}\\right)" <4 : Prec>) "Legendre symbol"
 

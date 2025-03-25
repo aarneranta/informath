@@ -25,3 +25,7 @@ def square : Elem Real -> Elem Real := x => pow x 2.
 Thm04 : (u : Elem Vector) -> (v : Elem Vector) -> Proof (perpendicular u v) ->
   Proof (Eq (length (resultant u v)) (sqrt (plus (square (length u)) (square (length v))))).
 
+legendre : Elem Nat -> Elem Nat -> Elem Int.
+thm07 : (p : Elem Nat) -> (q : Elem Nat) -> Proof (and (prime p) (prime q)) ->
+  Proof (Eq (times (legendre p q) (legendre q p)) (pow (neg 1) (times (div (minus p 1) 2) (div (minus q 1) 2)))).
+  
