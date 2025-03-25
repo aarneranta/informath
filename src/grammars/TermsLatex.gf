@@ -23,8 +23,6 @@ lin
      <True, True> => infixl 2 "\\times" x y ** {isNumber = True} ;
      _ => tinfixl 2 "" x y
      } ;
-  TExp a b = -- tinfixl 3 "^" a (b ** {s = curlyStr b.s}) ;
-     mkPrec 3 (usePrec 4 a ++ "^" ++ top (b ** {s = curlyStr b.s})) ** {isNumber = False} ;
   TNeg x = prefix 2 "-" x ** {isNumber = x.isNumber} ;
   TApp f xs = constant (f ++ parenth xs.s) ** {isNumber = False} ;
 
@@ -45,14 +43,11 @@ lin
 
   TFrac a b = tconstant (macroApp "frac" (top a) (top b)) ;
   
-  TAbsolute a = tconstant ("|" ++ (top a) ++ "|") ;
   TFactorial t = postfix 3 "!" t ** {isNumber = t.isNumber} ;
   
   TComprehension a b f =
     tconstant ("\\{" ++ top a ++ "\\in" ++ top b ++
                 ":" ++ top f ++ "\\}") ;
-
-  TSqrt t = tconstant ("\\sqrt{" ++ top t ++ "}") ;
 
   TLog base arg =
     mkPrec 3 ("\\log_" ++ top base ++ usePrec 3 arg) ** {isNumber = arg.isNumber} ;
@@ -67,6 +62,9 @@ oper
     infixl p op x y ** {isNumber = False} ;
   tconstant : Str -> TermPrecNum = \s ->
     constant s ** {isNumber = False} ;
+
+  tbracket : Str -> Str -> TermPrec -> TermPrec = \begin, end, t ->
+    tconstant (begin ++ top t ++ end) ;
 
   -- to be usable at runtime, therefore ++
   mathEnvStr : Str -> Str = \s -> "$" ++ s ++ "$" ;

@@ -14,7 +14,7 @@ oper
   RelationT : Type = {ap : AP ; prep : Prep} ;
   FunctionT : Type = {cn : CN ; prep : Prep} ;
   ConstantT : Type = {np : NP ; c : Str} ;
-  OperatorT : Type = L.OperT ** {f : FunctionT} ; 
+  OperatorT : Type = {op : L.OperT ; f : FunctionT} ; 
   ComparisonT : Type = {rel : RelationT ; op :  Str} ;
   SetT : Type = {cn : CN ; c : Str} ;
   LabelT = {np : NP ; isEmpty : Bool} ;
@@ -91,13 +91,13 @@ oper
 
   mkOper = overload {
     mkOper : L.OperT -> Str -> OperatorT
-      = \op, w -> op ** {f = mkFun w} ;
+      = \op, w -> {op = op ; f = mkFun w} ;
     mkOper : L.OperT -> N -> OperatorT
-      = \op, w -> op ** {f = mkFun w} ;
+      = \op, w -> {op = op ; f = mkFun w} ;
     mkOper : L.OperT -> CN -> OperatorT
-      = \op, w -> op ** {f = mkFun w} ;
+      = \op, w -> {op = op ; f = mkFun w} ;
     mkOper : L.OperT -> N -> Prep -> OperatorT
-      = \op, w, prep -> op ** {f = mkFun w prep} ; 
+      = \op, w, prep -> {op = op ; f = mkFun w prep} ; 
     } ;
 
   mkCompar = overload {

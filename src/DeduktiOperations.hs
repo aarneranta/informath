@@ -61,6 +61,10 @@ applyConstantData cd = appConst []
    appConst bs t = case t of
     QIdent _ | elem t bs -> t
     c@(QIdent _) -> fst $ lookid c
+    BVar _ -> t
+    BTyped x exp -> BTyped x (appConst bs exp)
+    HVarExp x exp -> HVarExp x (appConst bs exp)
+    HParVarExp x exp -> HParVarExp x (appConst bs exp)
     EAbs b exp -> EAbs (appConst bs b) (appConst (bind2var b : bs) exp)
     EFun h exp -> EFun (appConst bs h) (appConst (hypo2vars h ++ bs) exp)
     EApp _ _ -> case splitApp t of

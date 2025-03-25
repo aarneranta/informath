@@ -63,8 +63,6 @@ getTerm t = case t of
   GFunListExp fun (GOneExps x) -> do
     tx <- getTerm x
     case fun of
-      LexFun "absolute_value_Fun" -> return (GTAbsolute tx)
-      LexFun "factorial_Fun" -> return (GTFactorial tx)
       _ -> Nothing
   GOperListExp oper (GOneExps x) -> do
     tx <- getTerm x

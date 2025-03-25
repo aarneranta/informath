@@ -44,6 +44,6 @@ uniqComplement : (A : Set) -> (B : Set) -> Proof (equalset (union A B) universes
 
 reflSubset : (A : Set) -> Proof (subseteq A A).
 antisymmSubset : (A : Set) -> (B : Set) -> Proof (iff (and (subseteq A B) (subseteq B A)) (equalset A B)).
-transitSubset : (A : Set) -> (B : Set) -> (C : Set) -> Proof (if (and (subseteq A B) (subseteq C C)) (subseteq A C)).
+transitSubset : (A : Set) -> (B : Set) -> (C : Set) -> Proof (if (and (subseteq A B) (subseteq B C)) (subseteq A C)).
 
-prop7 : (S : Set) -> (A : Set) -> Proof (subseteq A S) -> and (subseteq emptyset A) (subseteq A S).
+prop7 : (S : Set) -> (A : Set) -> Proof (subseteq A S) -> Proof (and (subseteq emptyset A) (subseteq A S)).

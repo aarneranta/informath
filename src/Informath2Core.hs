@@ -125,11 +125,8 @@ sem env t = case t of
   GTermExp (GAppOperOneTerm oper x) ->
     GOperListExp oper (GOneExps (sem env (GTermExp x)))
   GTermExp (GTTimes x y) -> sem env (GTermExp (GAppOperTerm (LexOper "times_Oper") x y))
-  GTermExp (GTExp x y) -> sem env (GTermExp (GAppOperTerm (LexOper "pow_Oper") x y))
   GTermExp (GTFrac x y) -> sem env (GTermExp (GAppOperTerm (LexOper "div_Oper") x y))
   GTermExp (GTNeg x) ->  sem env (GTermExp (GAppOperOneTerm (LexOper "neg_Oper") x))
-  GTermExp (GTAbsolute x) -> GFunListExp (LexFun "absolute_value_Fun") (GOneExps (sem env (GTermExp x)))
-  GTermExp (GTFactorial x) -> GFunListExp (LexFun "factorial_Fun") (GOneExps (sem env (GTermExp x)))
   GTParenth term -> sem env term
       
   _ -> composOp (sem env) t

@@ -20,7 +20,7 @@ fun
 
   TParenth : Term -> Term ; -- extra parentheses
 
-  TTimes, TExp : Term -> Term -> Term ;
+  TTimes : Term -> Term -> Term ;
   TNeg : Term -> Term ;
   TApp : Function -> [Term] -> Term ;
 
@@ -33,14 +33,11 @@ fun
   StrIdent : String -> Ident ;
   
   TFrac : Term -> Term -> Term ;
-  TAbsolute : Term -> Term ;
-  TFactorial : Term -> Term ;
   TComprehension : Term -> Term -> Formula -> Term ;
   TPositive : Term -> Term ; -- R^+
   TNegative : Term -> Term ;
 
   TLog : Term -> Term -> Term ;
-  TSqrt : Term -> Term ;
   
   TextbfTerm : Term -> Term ;
 }

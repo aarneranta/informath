@@ -1,8 +1,10 @@
 
 Thm01 : (m : Elem Nat) -> (n : Elem Nat) -> Proof (Neq n 0) ->
+  Proof (Neq (pow (div m n) 2) 2).
+Thm01a : (m : Elem Nat) -> (n : Elem Nat) ->
   Proof (Neq (pow (div m (plus n 1)) 2) 2).
-Thm01a : (q : Elem Rat) -> Proof (Neq (pow q 2) 2).
-Thm01b : (q : Elem Rat) -> Proof (Neq q (sqrt 2)).
+Thm01b : (q : Elem Rat) -> Proof (Neq (pow q 2) 2).
+Thm01c : (q : Elem Rat) -> Proof (Neq (sqrt 2) q).
 
 Polynomial : Type.
 degree : (P : Polynomial) -> Elem Nat.
@@ -21,5 +23,5 @@ perpendicular : Elem Vector -> Elem Vector -> Prop.
 resultant : Elem Vector -> Elem Vector -> Elem Vector.
 def square : Elem Real -> Elem Real := x => pow x 2.
 Thm04 : (u : Elem Vector) -> (v : Elem Vector) -> Proof (perpendicular u v) ->
-  Proof (Eq (sqrt (plus (square (length u)) (square (length v)))) (length (resultant u v))).
+  Proof (Eq (length (resultant u v)) (sqrt (plus (square (length u)) (square (length v))))).
 

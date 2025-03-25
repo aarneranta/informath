@@ -6,7 +6,8 @@ concrete InformathFre of Informath =
     (Grammar = GrammarFre)
   ** open
     Formal,
-    Prelude
+    Prelude,
+    BaseConstantsLatex
 in {
 
 oper

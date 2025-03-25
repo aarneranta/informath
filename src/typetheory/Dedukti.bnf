@@ -24,8 +24,6 @@ MTExp.  MTyp ::= ":" Exp ;
 MENone. MExp ::= ;
 MEExp.  MExp ::= ":=" Exp ;
 
-internal EAnnotIdent. Exp8 ::= QIdent "[" QIdent "," QIdent "]" ; -- annotation with cat and fun
-
 EIdent.  Exp9 ::= QIdent ;
 EApp.    Exp5 ::= Exp5 Exp6 ;
 EAbs.    Exp2 ::= Bind "=>" Exp2 ;

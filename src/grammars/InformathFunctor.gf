@@ -6,6 +6,7 @@ open
   Symbolic,
   Grammar,
   Formal,
+  BaseConstantsLatex,
   Prelude
 in {
 
@@ -20,10 +21,8 @@ lin
   ConstTerm const = constant const.c ** {isNumber = False} ;
   ComparEqsign compar = compar.op ;
   ComparnounEqsign compar = compar.op ;
-  AppOperTerm op x y =
-    let t = infixl op.p op.op x y in t ** {s = op.begin ++ t.s ++ op.end ; isNumber = False} ;
-  AppOperOneTerm op x =
-    let t = prefix op.p op.op x in t ** {s = op.begin ++ t.s ++ op.end ; isNumber = False} ;
+  AppOperTerm op x y = appOper op.op x y ;
+  AppOperOneTerm op x = appOper op.op x ;
 
   SimpleAndProp props = simpleProp (mkS and_Conj props) ;
   SimpleOrProp props = simpleProp (mkS or_Conj props) ;

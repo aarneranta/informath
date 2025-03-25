@@ -6,6 +6,7 @@ concrete InformathEng of Informath =
     (Grammar = GrammarEng)
   ** open
     Formal,
-    Prelude
+    Prelude,
+    BaseConstantsLatex
 in {
 }
