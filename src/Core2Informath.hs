@@ -168,6 +168,8 @@ variations tree = case tree of
     tree : [GPostQuantProp prop exp | exp <- allExpVariations argkind]
   GExistProp (GListArgKind [argkind]) prop ->
     tree : [GPostQuantProp prop exp | exp <- existExpVariations argkind]
+  GSimpleAndProp (GListProp [GFormulaProp (GFEquation (GEBinary lt a b)), GFormulaProp (GFEquation (GEBinary eq b' c))]) | b == b' ->
+    tree : [GFormulaProp (GFEquation (GEChain lt a (GEBinary eq b c)))] ---- TODO: generalize to longer chains
   _ -> composOpM variations tree
 
 allExpVariations :: GArgKind -> [GExp]

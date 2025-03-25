@@ -81,7 +81,7 @@ oper
 
   appOper = overload {
     appOper : OperT -> TermPrecNum -> TermPrecNum = \op, trm -> {
-      s = op.begin ++ usePrec op.ep1 trm ++ op.end ;
+      s = op.begin ++ op.op ++ usePrec op.ep1 trm ++ op.end ;
       p = op.p ;
       isNumber = False
       } ;
