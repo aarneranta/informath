@@ -104,7 +104,7 @@ MathCore renderings are designed to be unique for each Dedukti judgement. But th
 
 ### Dedukti
 
-[Dedukti](https://deducteam.github.io/) is a minimalistic logical framework aimed as an interlingual between different proof systems such as Agda, Coq, Isabelle, and Lean.
+[Dedukti](https://deducteam.github.io/) is a minimalistic logical framework aimed as an interlingua between different proof systems such as Agda, Coq, Isabelle, and Lean.
 Its purpose is to help share formalizations between these systems.
 Dedukti comes with an efficient proof checker and evaluator.
 Translations from many other proof system to Dedukti have been built, and this work is ongoing.
@@ -163,7 +163,7 @@ MathCore is a minimalistic grammar for mathematical English, with other language
 The following propertes are, however, *not* expected:
 
 - **Type correctness**: MathCore text can be semantically invalid, leading to syntactically correct Dedukti code that is rejected by Dedukti's type checker.
-- **Fluency**: MathCore text can be repetitive and even hard to read; making it better is delegated to ForTheL+ via the NLG component.
+- **Fluency**: MathCore text can be repetitive and even hard to read; making it better is delegated to the Informath grammar via the NLG component.
 - **Compositionality**: The translation between Dedukti and MathCore is not compositional in the strict sense of GF, as the two languages have different abstract syntaxes. For example, Core supports the aggregation of conjuncts and function argument lists, without which it would be even less readable; and the basic type system is richer than in Dedukti, for instance distinguishing between expressions that represent kinds, objects, and propositions.
 - **Easy natural language input**: while the grammar of MathCore is reversible, it is tedious to write MathCore. It is intended to be produced indirectly: by conversion from Dedukti on one hand and Informath on the other.
 
@@ -213,17 +213,6 @@ $ ./RunInformath -help
 ```
 to see the currently available functionalities.
 
-In order for all this to work, you need to compile the formal (Dedukti, Agda, Coq, Lean) and the Informath grammars:
-```
-$ make 
-```
-An example of a readily available demo case is
-```
-$ make demo
-```
-Consult the [Makefile](./src/Makefile) to see what these commands exactly do.
-
-**Note**: with some versions of GHC libraries, `make Informath.pgf` results into a `Informath.hs` that gives an error about an undefined monad operation. This is fixed by adding the line `import Control.Monad` to the import list. The current Makefile does this with a `sed` command - which may cause an error with some other versions of GHC libraries. If this happens, you can comment out the `sed` command from the Makefile.
 
 ## User-defined constants
 
@@ -231,50 +220,53 @@ _Under construction, not guaranteed always to work like this_
 
 The lexicon part part of the GF grammar (files src/grammars/BaseConstants*, UserConstants*) give verbalizations to defined constants in .dk files. The UseConstants* files can be dynamically generated with the command
 ```
-$ ./RunInformath -lang=<lang>? constand_data.dkgf
+$ ./RunInformath <file>.dkgf
 ```
-which with the default lang=Eng generates two files:
+which with the default lang=Eng generates at least two files:
 - [UserConstants.gf](src/grammars/UserConstants.gf)
-- [UserConstantsEng.gf](src/grammars/UserConstantsEng.gf)
+- [UserConstantsEng.gf](src/grammars/UserConstantsEng.gf) and similarly for other languages addressed in the .dkgf file
 
 after which
 ```
 $ make Informath.pgf
 ```
-and compiles Informath.pgf with them. The format of .dkgf files is a list of lines with data about constants, where user-defined ones have the form
+and compiles Informath.pgf with them. The format of .dkgf files is a list of lines with data about constants, where user-defined ones have the forms
 ```
-<dkid> NEW <project> <gfcat> <gffun> <int>* = <word>+
+<dkid> NEW <project> <gfcat> <gffun> <int>* = 
+#LIN <lang> <gffun> = <word>+
 ```
-This generates new entries in the two UserConstants*.gf files (abstract and concrete) and also instructs RunInformath how to handle the constant <dkid> in translations to and from GF. Other languages than English can also be addressed, but at the moment the file format permits linearization rules for only one language at a time. 
+This generates new entries in the two UserConstants*.gf files (abstract and concrete) and also instructs RunInformath how to handle the constant <dkid> in translations to and from GF. 
 
-The <project> label can be chosen freely by the user; it is appended to each generated GF rule as a comment that can be grepped with.
+The <project> label can be chosen freely by the user; it is appended to each generated GF abstract rule as a comment that can be grepped with.
 
 The <int>* part is a space-separated list of integers telling which arguments (numbered from 0) are sent to GF and in what order. It provides a way to deal with hidden arguments. Leaving it out means that all arguments are sent. 
 
 Users can also map their Dedukti identifiers to already existing ones in [BaseConstants.dk](./src/BaseConstants.dk). This is performed with a simpler form of lines in .dkgf files, 
 ```
-<dkid> ALIAS <project> <int>* <dkid>
+<dkid> ALIAS <project> <dkid> <int>*
 ```
-stating that the former dkid should be treated like the latter one.
+stating that the former dkid should be treated in the same way as the latter one in GF.
+
+In the future, .dkgf files are also planned to contain information about conversions of constants from Dedukti to the other type theories, whenever the constant names or their argument lists need to be changed.
 
 ### Categories of user-defined constants
 
 The following categories of new constants are currently supported by the grammar and can appear in the <gfcat> field of .dkgf files:
 ```
-  Noun ; -- Kind -- set
-  Fam ; -- Kind -> Kind -- list of integers
-  Set ;  -- Kind + symbol -- integer, Z
-  Adj ;  -- Exp -> Prop -- even
-  Verb ; -- Exp -> Exp -- converge
+  Noun ;    -- Kind            -- set
+  Fam ;     -- Kind -> Kind    -- list of integers
+  Set ;     -- Kind + symbol   -- integer, Z
+  Adj ;     -- Exp -> Prop     -- even
+  Verb ;    -- Exp -> Exp      -- converge
   Reladj ;  -- Exp -> Exp -> Prop -- divisible by
-  Relverb ; -- Exp -> Exp -> Exp -- divide
+  Relverb ; -- Exp -> Exp -> Exp  -- divide
   Relnoun ; -- Exp -> Exp -> Exp  -- member of
-  Name ; -- Exp -- absurdity
-  Fun ;  -- [Exp] -> Exp -- equivalence of
-  Label ; -- Exp -- theorem 1
-  Const ; -- Exp + symbol -- the empty set, Ø
-  Oper ;  -- Exp -> Exp -> Exp + symbol -- the sum, +
-  Compar ; -- Exp -> Exp -> Prop + symbol -- greater than, >
+  Name ;    -- Exp                -- absurdity
+  Fun ;     -- [Exp] -> Exp       -- equivalence of
+  Label ;   -- Exp                -- theorem 1
+  Const ;   -- Exp + symbol       -- the empty set, Ø
+  Oper ;    -- Exp -> Exp -> Exp + symbol     -- the sum of, +
+  Compar ;  -- Exp -> Exp -> Prop + symbol    -- greater than, >
   Comparnoun ; -- Exp -> Exp -> Prop + symbol -- subset of, >
 ```
 
@@ -310,7 +302,7 @@ The base file [BaseConstants.agda](./src/BaseConstants.agda) is imported automat
 
 ## Generating and type checking Coq
 
-Generation is similar to Coq, but type checking requires at the moment concatenation with [BaseConstants.v](BaseConstants.v):
+Generation from Dedukti is similar to Agda, but type checking requires at the moment concatenation with [BaseConstants.v](BaseConstants.v):
 ```
 $ ./RunInformath -to-coq test/exx.dk >exx.v
 $ cat BaseConstants.v exx.v >bexx.v   
@@ -330,10 +322,14 @@ This should be made less cumbersome in the future.
 
 ## ToDo
 
-- complete the Informath-MathCore conversion
-- extend Informath 
+- improve conversions from Dedukti to other proof systems in particular to preserve type correctness
 - extend the MathCore-Informath conversion
 - investigate the possibility of a declarative, user-defined extension of MathCore-Informath conversion
-- improve the grammars of different languages by functor exceptions 
+- improve the concrete syntaxes of different languages by functor exceptions 
 - add concrete syntaxes to yet other natural languages
+- extend the Informath language, in particular, with
+     - proofs, in addition to theorems and definitions to proofs (complete in theory, but very rudimentary now)
+     - wider coverage of BaseConstants.dk and the multilingual lexicon of math terms
+  
+
 
