@@ -21,10 +21,21 @@ in {
 -- functor exceptions
 lin
   PropHypo prop = lets_Utt (mkVP assume_VS (topProp prop)) ;
-  BaseArgKind kind =
-    mkNP thePl_Det (useKind kind) ;
-  ConsArgKind kind kinds =
-    mkNP and_Conj (mkNP thePl_Det (useKind kind)) kinds ;
+
+  BaseArgKind kind = {
+    sg = case kind.isPl of {
+      True => mkNP aPl_Det (useKind kind) ;
+      False => mkNP aSg_Det (useKind kind)
+      } ;
+    pl = mkNP thePl_Det (useKind kind)
+    } ;
+  ConsArgKind kind kinds = {
+    sg = case kind.isPl of {
+      True => mkNP and_Conj (mkNP aPl_Det (useKind kind)) kinds.sg ;
+      False => mkNP and_Conj (mkNP aSg_Det (useKind kind)) kinds.sg
+      } ;
+    pl = mkNP and_Conj (mkNP thePl_Det (useKind kind)) kinds.pl 
+    } ;
 
 
 oper

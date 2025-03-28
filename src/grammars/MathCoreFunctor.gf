@@ -19,8 +19,8 @@ lincat
   Jmt = Text ;
   Exps = {np : NP ; isPl : Bool} ;
   [Prop] = Grammar.ListS ;
-  ArgKind = {cn : CN ; adv : Adv} ;
-  [ArgKind] = NP ;
+  ArgKind = {cn : CN ; adv : Adv ; isPl : Bool} ;  -- isPl = idents.isPl
+  [ArgKind] = {sg, pl : NP} ;  -- there exists an A / for all As
   Hypo = Utt ;
   [Hypo] = {text : Text ; isEmpty : Bool} ;
   [Ident] = {np : NP ; isPl : Bool} ;
@@ -90,9 +90,9 @@ lin
     simpleProp (mkS negPol (mkCl 
           (mkVP (mkNP the_Quant (mkCN case_N (Syntax.mkAdv that_Subj (partProp prop))))))) ;
   AllProp argkinds prop =
-    simpleProp (Grammar.ExtAdvS (Syntax.mkAdv for_Prep (mkNP all_Predet argkinds)) (partProp prop)) ;
+    simpleProp (Grammar.ExtAdvS (Syntax.mkAdv for_Prep (mkNP all_Predet argkinds.pl)) (partProp prop)) ;
   ExistProp argkinds prop =
-    simpleProp (Grammar.SSubjS (mkS (Extend.ExistsNP argkinds)) such_that_Subj (partProp prop)) ; ---- TODO: sg/pl correctly
+    simpleProp (Grammar.SSubjS (mkS (Extend.ExistsNP argkinds.sg)) such_that_Subj (partProp prop)) ; ---- TODO: sg/pl correctly
   IdentProp f = simpleProp (latexS (mkSymb f)) ;
   FalseProp = simpleProp (mkS (mkCl we_NP have_V2 (mkNP a_Det contradiction_N))) ;
   AppProp f exps = simpleProp (mkS (mkCl (latexNP (mkSymb f)) hold_V2 exps.np)) ;
@@ -111,11 +111,11 @@ lin
     } ;
   FunKind argkinds kind = {
     cn = mkCN function_N ;
-    adv = ccAdv (Syntax.mkAdv from_Prep argkinds) (Syntax.mkAdv to_Prep (mkNP aPl_Det (useKind kind)))
+    adv = ccAdv (Syntax.mkAdv from_Prep argkinds.sg) (Syntax.mkAdv to_Prep (mkNP aPl_Det (useKind kind)))
     } ;
 
-  KindArgKind kind = kind ;
-  IdentsArgKind kind idents = {cn = mkCN kind.cn idents.np ; adv = kind.adv} ;
+  KindArgKind kind = kind ** {isPl = False} ;
+  IdentsArgKind kind idents = {cn = mkCN kind.cn idents.np ; adv = kind.adv ; isPl = idents.isPl} ;
 
   StrLabel s = {np = symb (mkSymb s.s) ; isEmpty = False} ;
   noLabel = {np = symb (mkSymb "") ; isEmpty = True} ;
@@ -147,11 +147,21 @@ lin
   AddExps exp exps =
     {np = mkNP and_Conj exp exps.np ; isPl = True} ;
 
-  BaseArgKind kind =
-    mkNP aPl_Det (useKind kind) ;
-  ConsArgKind kind kinds =
-    mkNP and_Conj (mkNP aPl_Det (useKind kind)) kinds ;
-
+  BaseArgKind kind = {
+    sg = case kind.isPl of {
+      True => mkNP aPl_Det (useKind kind) ;
+      False => mkNP aSg_Det (useKind kind)
+      } ;
+    pl = mkNP aPl_Det (useKind kind)
+    } ;
+  ConsArgKind kind kinds = {
+    sg = case kind.isPl of {
+      True => mkNP and_Conj (mkNP aPl_Det (useKind kind)) kinds.sg ;
+      False => mkNP and_Conj (mkNP aSg_Det (useKind kind)) kinds.sg
+      } ;
+    pl = mkNP and_Conj (mkNP aPl_Det (useKind kind)) kinds.pl 
+    } ;
+    
   BaseHypo = {text = emptyText ; isEmpty = True} ;
   ConsHypo hypo hypos = {text = mkText hypo hypos.text ; isEmpty = False} ;
   
