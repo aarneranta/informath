@@ -143,3 +143,24 @@ legendre NEW top100 Oper legendre_symbol_Oper
 #LIN Fre legendre_symbol_Oper = mkOper L.legendre_symbol_Oper (mkCN (mkN "symbole" masculine) (SyntaxFre.mkAdv genitive (mkNP (mkPN "Legendre"))))
 #LIN Swe legendre_symbol_Oper = mkOper L.legendre_symbol_Oper (mkN "Legendresymbol" "Legendresymboler")
 
+pi NEW top100 Const pi_Const
+#LIN Eng pi_Const = mkConst "\\pi" (mkNP the_Det (mkCN (mkN "number") (symb "\\(\\pi\\)")))
+#LIN Fre pi_Const = mkConst "\\pi" (mkNP the_Det (mkCN nombre_N (symb "\\(\\pi\\)")))
+#LIN Swe pi_Const = mkConst "\\pi" (mkNP the_Det (mkCN tal_N (symb "\\(\\pi\\)")))
+
+circle NEW top100 Noun circle_Noun
+#LIN Eng circle_Noun = mkNoun "circle"
+#LIN Fre circle_Noun = mkNoun (mkN "cercle" masculine)
+#LIN Swe circle_Noun = mkNoun (mkN "cirkel" "cirklar")
+
+radius NEW top100 Fun radius_Fun
+#LIN Eng radius_Fun = mkFun "radius"
+#LIN Fre radius_Fun = mkFun "rayon"
+#LIN Swe radius_Fun = mkFun "radie"
+
+area NEW top100 Fun area_Fun
+#LIN Eng area_Fun = mkFun "area"
+#LIN Fre area_Fun = mkFun "aire"
+#LIN Swe area_Fun = mkFun "area"
+
+

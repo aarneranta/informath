@@ -15,4 +15,8 @@ fun perpendicular_Compar : Compar ; -- top100
 fun resultant_Oper : Oper ; -- top100
 fun square_Oper : Oper ; -- top100
 fun legendre_symbol_Oper : Oper ; -- top100
+fun pi_Const : Const ; -- top100
+fun circle_Noun : Noun ; -- top100
+fun radius_Fun : Fun ; -- top100
+fun area_Fun : Fun ; -- top100
 }

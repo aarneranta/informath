@@ -11,6 +11,10 @@ open
   Formal
 
 in {
+lin area_Fun = mkFun "area" ;
+lin radius_Fun = mkFun "radie" ;
+lin circle_Noun = mkNoun (mkN "cirkel" "cirklar") ;
+lin pi_Const = mkConst "\\pi" (mkNP the_Det (mkCN tal_N (symb "\\(\\pi\\)"))) ;
 lin legendre_symbol_Oper = mkOper L.legendre_symbol_Oper (mkN "Legendresymbol" "Legendresymboler") ;
 lin square_Oper = mkOper L.square_Oper (mkN "kvadrat" "kvadrater") ;
 lin resultant_Oper = mkOper L.plus_Oper (mkN "resultant" "resultanter") ;
