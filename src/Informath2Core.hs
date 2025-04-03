@@ -81,12 +81,12 @@ sem env t = case t of
       sem env (GAllProp (GListArgKind [GIdentsArgKind kind (GListIdent [ident])]) prop)
     GIndefIdentKindExp ident kind ->
       sem env (GExistProp (GListArgKind [GIdentsArgKind kind (GListIdent [ident])]) prop)
-    GSomeIdentKindExp ident kind ->
-      sem env (GExistProp (GListArgKind [GIdentsArgKind kind (GListIdent [ident])]) prop)
-    GAllIdentKindExp ident kind ->
-      sem env (GAllProp (GListArgKind [GIdentsArgKind kind (GListIdent [ident])]) prop)
-    GNoIdentKindExp ident kind ->
-      sem env (GAllProp (GListArgKind [GIdentsArgKind kind (GListIdent [ident])]) (GNotProp prop))
+    GSomeIdentsKindExp idents kind ->
+      sem env (GExistProp (GListArgKind [GIdentsArgKind kind idents]) prop)
+    GAllIdentsKindExp idents kind ->
+      sem env (GAllProp (GListArgKind [GIdentsArgKind kind idents]) prop)
+    GNoIdentsKindExp idents kind ->
+      sem env (GAllProp (GListArgKind [GIdentsArgKind kind idents]) (GNotProp prop))
 
   GAllProp argkinds prop -> case argkinds of
     GListArgKind [GIdentsArgKind (GAdjKind adj kind) vars@(GListIdent xs)] ->
@@ -104,17 +104,17 @@ sem env t = case t of
     let (var, nenv) = newVar env
     in GSuchThatKind var (sem nenv kind) (sem nenv (GAdjProp adj (GTermExp (GTIdent var))))
 
-  GAdjProp adj (GAllIdentKindExp x kind) ->
+  GAdjProp adj (GAllIdentsKindExp (GListIdent [x]) kind) ->
     sem env (GAllProp (GListArgKind [GIdentsArgKind kind (GListIdent [x])])
               (GAdjProp adj (GTermExp (GTIdent x))))
   GAdjProp adj (GEveryIdentKindExp x kind) ->
-    sem env (GAdjProp adj (GAllIdentKindExp x kind))
-  GAdjProp adj (GSomeIdentKindExp x kind) ->
+    sem env (GAdjProp adj (GAllIdentsKindExp  (GListIdent [x]) kind))
+  GAdjProp adj (GSomeIdentsKindExp (GListIdent [x]) kind) ->
     sem env (GExistProp (GListArgKind [GIdentsArgKind kind (GListIdent [x])])
               (GAdjProp adj (GTermExp (GTIdent x))))
   GAdjProp adj (GIndefIdentKindExp x kind) ->
-    sem env (GAdjProp adj (GSomeIdentKindExp x kind))
-  GAdjProp adj (GNoIdentKindExp x kind) ->
+    sem env (GAdjProp adj (GSomeIdentsKindExp  (GListIdent [x]) kind))
+  GAdjProp adj (GNoIdentsKindExp (GListIdent [x]) kind) ->
     sem env (GAllProp (GListArgKind [GIdentsArgKind kind (GListIdent [x])])
               (GNotAdjProp adj (GTermExp (GTIdent x))))
 	      

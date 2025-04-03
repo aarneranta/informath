@@ -32,6 +32,7 @@ oper
   square_root_Oper : OperT = mkOper "\\sqrt{" "}" ;
   factorial_Oper : OperT = mkOper "" "" "!" <3 : Prec> ;
   absolute_value_Oper : OperT = mkOper "|" "|" ;
+  length_Oper : OperT = mkOper "\\|" "\\|" ;
 
   function_Oper : OperT = mkOper "\\rightarrow" ; ---
   union_Oper : OperT = mkOper "\\cup" <2 : Prec> ;

@@ -109,6 +109,14 @@ Definition. Let $x \in R$. Then $x$ is rational, if there exists an integer $q$,
 
 Definition. Let $x \in R$. Then $x$ is rational, if there exists an integer $q$, such that $q \neq 0$ and $x = \frac{ p}{q}$ for some integer $p$.
 
+Definition. Let $x$ be a real number. Then $x$ is rational, if there exist integers $p$ and $q$, such that $q \neq 0$ and $x = \frac{ p}{q}$.
+
+Definition. Let $x$ be a real number. Then $x$ is rational, if $q \neq 0$ and $x = \frac{ p}{q}$ for some integers $p$ and $q$.
+
+Definition. Let $x \in R$. Then $x$ is rational, if there exist integers $p$ and $q$, such that $q \neq 0$ and $x = \frac{ p}{q}$.
+
+Definition. Let $x \in R$. Then $x$ is rational, if $q \neq 0$ and $x = \frac{ p}{q}$ for some integers $p$ and $q$.
+
 Thm01d. We can prove that the square root of $2$ is not rational.
 
 Thm01d. The square root of $2$ is not rational.
@@ -195,7 +203,7 @@ Axiom. Let $x$ be an instance of vectors. Then the length of $x$ is an instance 
 
 Axiom. Let $x$ be a vector. Then the length of $x$ is a real number.
 
-Axiom. Let $x$ be a vector. Then $| x |$ is a real number.
+Axiom. Let $x$ be a vector. Then $\| x \|$ is a real number.
 
 Axiom. Let $x$ and $y$ be instances of vectors. Then we can say that $x$ is perpendicular to $y$.
 
@@ -231,11 +239,11 @@ Thm04. Let $u$ and $v$ be vectors. Then if $u$ is perpendicular to $v$, then the
 
 Thm04. Let $u$ and $v$ be vectors. Assume that $u$ is perpendicular to $v$. Then the length of the sum of $u$ and $v$ is equal to the square root of the sum of the square of the length of $u$ and the square of the length of $v$.
 
-Thm04. For all vectors $u$ and $v$, if $u \perp v$, then $| u + v | = \sqrt{ | u | ^{ 2}+ | v | ^{ 2}}$.
+Thm04. For all vectors $u$ and $v$, if $u \perp v$, then $\| u + v \| = \sqrt{ \| u \| ^{ 2}+ \| v \| ^{ 2}}$.
 
-Thm04. Let $u$ and $v$ be vectors. Then if $u \perp v$, then $| u + v | = \sqrt{ | u | ^{ 2}+ | v | ^{ 2}}$.
+Thm04. Let $u$ and $v$ be vectors. Then if $u \perp v$, then $\| u + v \| = \sqrt{ \| u \| ^{ 2}+ \| v \| ^{ 2}}$.
 
-Thm04. Let $u$ and $v$ be vectors. Assume that $u \perp v$. Then $| u + v | = \sqrt{ | u | ^{ 2}+ | v | ^{ 2}}$.
+Thm04. Let $u$ and $v$ be vectors. Assume that $u \perp v$. Then $\| u + v \| = \sqrt{ \| u \| ^{ 2}+ \| v \| ^{ 2}}$.
 
 Axiom. Let $x$ and $y$ be instances of natural numbers. Then the Legendre symbol of $x$ and $y$ is an instance of integers.
 
@@ -283,105 +291,77 @@ Thm07. Let $p$ and $q$ be natural numbers. Assume that both $p$ and $q$ are prim
 
 Thm07. Let $p , q \in N$. Assume that both $p$ and $q$ are prime. Then $\left(\frac{ p }{ q }\right) \left(\frac{ q }{ p }\right) = (- 1)^ {\frac{ p - 1}{2}\frac{ q - 1}{2}}$.
 
+Axiom. The number \(\pi\) is an instance of real numbers.
+
 Axiom. The number \(\pi\) is a real number.
 
 Axiom. $\pi$ is a real number.
 
-Axiom. $Circle$ is a set.
+Axiom. Circles are a basic type.
 
-Axiom. Let $x$ be an element of $Circle$. Then the radius of $x$ is a real number.
+Axiom. Let $x$ be a circle. Then the radius of $x$ is an instance of real numbers.
 
-Axiom. Let $x$ be an element of $Circle$. Then the area of $x$ is a real number.
+Axiom. Let $x$ be a circle. Then the radius of $x$ is a real number.
 
-Thm09. For all elements $c$ of $Circle$, for all real numbers $r$, if we can prove that $r$ is equal to the radius of $c$, then we can prove that the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
+Axiom. Let $x$ be a circle. Then the area of $x$ is an instance of real numbers.
 
-Thm09. Let $c$ be an element of $Circle$. Then for all real numbers $r$, if we can prove that $r$ is equal to the radius of $c$, then we can prove that the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
+Axiom. Let $x$ be a circle. Then the area of $x$ is a real number.
 
-Thm09. Let $c$ be an element of $Circle$. Let $r$ be a real number. Then if we can prove that $r$ is equal to the radius of $c$, then we can prove that the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
+Thm09. For all circles $c$, for all instances $r$ of real numbers, if we can prove that $r$ is equal to the radius of $c$, then we can prove that the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
 
-Thm09. Let $c$ be an element of $Circle$. Let $r \in R$. Then if we can prove that $r$ is equal to the radius of $c$, then we can prove that the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
+Thm09. Let $c$ be a circle. Then for all instances $r$ of real numbers, if we can prove that $r$ is equal to the radius of $c$, then we can prove that the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
 
-Thm09. Let $c$ be an element of $Circle$. Let $r$ be a real number. Assume that we can prove that $r$ is equal to the radius of $c$. Then we can prove that the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
+Thm09. Let $c$ be a circle. Let $r$ be an instance of real numbers. Then if we can prove that $r$ is equal to the radius of $c$, then we can prove that the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
 
-Thm09. Let $c$ be an element of $Circle$. Let $r \in R$. Assume that we can prove that $r$ is equal to the radius of $c$. Then we can prove that the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
+Thm09. Let $c$ be a circle. Let $r$ be an instance of real numbers. Assume that we can prove that $r$ is equal to the radius of $c$. Then we can prove that the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
 
-Thm09. For all elements $c$ of $Circle$, for all real numbers $r$, if $r$ is equal to the radius of $c$, then the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
+Thm09. For all circles $c$, for all real numbers $r$, if $r$ is equal to the radius of $c$, then the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
 
-Thm09. Let $c$ be an element of $Circle$. Then for all real numbers $r$, if $r$ is equal to the radius of $c$, then the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
+Thm09. Let $c$ be a circle. Then for all real numbers $r$, if $r$ is equal to the radius of $c$, then the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
 
-Thm09. Let $c$ be an element of $Circle$. Let $r$ be a real number. Then if $r$ is equal to the radius of $c$, then the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
+Thm09. Let $c$ be a circle. Let $r$ be a real number. Then if $r$ is equal to the radius of $c$, then the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
 
-Thm09. Let $c$ be an element of $Circle$. Let $r \in R$. Then if $r$ is equal to the radius of $c$, then the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
+Thm09. Let $c$ be a circle. Let $r \in R$. Then if $r$ is equal to the radius of $c$, then the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
 
-Thm09. Let $c$ be an element of $Circle$. Let $r$ be a real number. Assume that $r$ is equal to the radius of $c$. Then the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
+Thm09. Let $c$ be a circle. Let $r$ be a real number. Assume that $r$ is equal to the radius of $c$. Then the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
 
-Thm09. Let $c$ be an element of $Circle$. Let $r \in R$. Assume that $r$ is equal to the radius of $c$. Then the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
+Thm09. Let $c$ be a circle. Let $r \in R$. Assume that $r$ is equal to the radius of $c$. Then the area of $c$ is equal to the product of the number \(\pi\) and the exponentiation of $r$ and $2$.
 
-Thm09. For all elements $c$ of $Circle$, for all real numbers $r$, if $r$ is equal to the radius of $c$, then the area of $c$ is equal to $\pi \times r ^ {2}$.
+Thm09. For all circles $c$, for all real numbers $r$, if $r$ is equal to the radius of $c$, then the area of $c$ is equal to $\pi \times r ^ {2}$.
 
-Thm09. Let $c$ be an element of $Circle$. Then for all real numbers $r$, if $r$ is equal to the radius of $c$, then the area of $c$ is equal to $\pi \times r ^ {2}$.
+Thm09. Let $c$ be a circle. Then for all real numbers $r$, if $r$ is equal to the radius of $c$, then the area of $c$ is equal to $\pi \times r ^ {2}$.
 
-Thm09. Let $c$ be an element of $Circle$. Let $r$ be a real number. Then if $r$ is equal to the radius of $c$, then the area of $c$ is equal to $\pi \times r ^ {2}$.
+Thm09. Let $c$ be a circle. Let $r$ be a real number. Then if $r$ is equal to the radius of $c$, then the area of $c$ is equal to $\pi \times r ^ {2}$.
 
-Thm09. Let $c$ be an element of $Circle$. Let $r \in R$. Then if $r$ is equal to the radius of $c$, then the area of $c$ is equal to $\pi \times r ^ {2}$.
+Thm09. Let $c$ be a circle. Let $r \in R$. Then if $r$ is equal to the radius of $c$, then the area of $c$ is equal to $\pi \times r ^ {2}$.
 
-Thm09. Let $c$ be an element of $Circle$. Let $r$ be a real number. Assume that $r$ is equal to the radius of $c$. Then the area of $c$ is equal to $\pi \times r ^ {2}$.
+Thm09. Let $c$ be a circle. Let $r$ be a real number. Assume that $r$ is equal to the radius of $c$. Then the area of $c$ is equal to $\pi \times r ^ {2}$.
 
-Thm09. Let $c$ be an element of $Circle$. Let $r \in R$. Assume that $r$ is equal to the radius of $c$. Then the area of $c$ is equal to $\pi \times r ^ {2}$.
+Thm09. Let $c$ be a circle. Let $r \in R$. Assume that $r$ is equal to the radius of $c$. Then the area of $c$ is equal to $\pi \times r ^ {2}$.
 
-Thm10FermatLittle. For all natural numbers $p$, if we can prove that $p$ is prime, then for all integers $a$, we can prove that there exists an integer $q$, such that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$.
+Thm10FermatLittle. For all instances $p$ of natural numbers, if we can prove that $p$ is prime, then for all instances $a$ of integers, we can prove that there exists an integer $q$, such that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$.
 
-Thm10FermatLittle. For all natural numbers $p$, if we can prove that $p$ is prime, then for all integers $a$, we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for an integer $q$.
+Thm10FermatLittle. For all instances $p$ of natural numbers, if we can prove that $p$ is prime, then for all instances $a$ of integers, we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for an integer $q$.
 
-Thm10FermatLittle. For all natural numbers $p$, if we can prove that $p$ is prime, then for all integers $a$, we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for some integer $q$.
+Thm10FermatLittle. For all instances $p$ of natural numbers, if we can prove that $p$ is prime, then for all instances $a$ of integers, we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for some integer $q$.
 
-Thm10FermatLittle. Let $p$ be a natural number. Then if we can prove that $p$ is prime, then for all integers $a$, we can prove that there exists an integer $q$, such that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$.
+Thm10FermatLittle. Let $p$ be an instance of natural numbers. Then if we can prove that $p$ is prime, then for all instances $a$ of integers, we can prove that there exists an integer $q$, such that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$.
 
-Thm10FermatLittle. Let $p$ be a natural number. Then if we can prove that $p$ is prime, then for all integers $a$, we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for an integer $q$.
+Thm10FermatLittle. Let $p$ be an instance of natural numbers. Then if we can prove that $p$ is prime, then for all instances $a$ of integers, we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for an integer $q$.
 
-Thm10FermatLittle. Let $p$ be a natural number. Then if we can prove that $p$ is prime, then for all integers $a$, we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for some integer $q$.
+Thm10FermatLittle. Let $p$ be an instance of natural numbers. Then if we can prove that $p$ is prime, then for all instances $a$ of integers, we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for some integer $q$.
 
-Thm10FermatLittle. Let $p \in N$. Then if we can prove that $p$ is prime, then for all integers $a$, we can prove that there exists an integer $q$, such that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$.
+Thm10FermatLittle. Let $p$ be an instance of natural numbers. Assume that we can prove that $p$ is prime. Then for all instances $a$ of integers, we can prove that there exists an integer $q$, such that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$.
 
-Thm10FermatLittle. Let $p \in N$. Then if we can prove that $p$ is prime, then for all integers $a$, we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for an integer $q$.
+Thm10FermatLittle. Let $p$ be an instance of natural numbers. Assume that we can prove that $p$ is prime. Then for all instances $a$ of integers, we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for an integer $q$.
 
-Thm10FermatLittle. Let $p \in N$. Then if we can prove that $p$ is prime, then for all integers $a$, we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for some integer $q$.
+Thm10FermatLittle. Let $p$ be an instance of natural numbers. Assume that we can prove that $p$ is prime. Then for all instances $a$ of integers, we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for some integer $q$.
 
-Thm10FermatLittle. Let $p$ be a natural number. Assume that we can prove that $p$ is prime. Then for all integers $a$, we can prove that there exists an integer $q$, such that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$.
+Thm10FermatLittle. Let $p$ be an instance of natural numbers. Assume that we can prove that $p$ is prime. Let $a$ be an instance of integers. Then we can prove that there exists an integer $q$, such that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$.
 
-Thm10FermatLittle. Let $p$ be a natural number. Assume that we can prove that $p$ is prime. Then for all integers $a$, we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for an integer $q$.
+Thm10FermatLittle. Let $p$ be an instance of natural numbers. Assume that we can prove that $p$ is prime. Let $a$ be an instance of integers. Then we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for an integer $q$.
 
-Thm10FermatLittle. Let $p$ be a natural number. Assume that we can prove that $p$ is prime. Then for all integers $a$, we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for some integer $q$.
-
-Thm10FermatLittle. Let $p \in N$. Assume that we can prove that $p$ is prime. Then for all integers $a$, we can prove that there exists an integer $q$, such that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$.
-
-Thm10FermatLittle. Let $p \in N$. Assume that we can prove that $p$ is prime. Then for all integers $a$, we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for an integer $q$.
-
-Thm10FermatLittle. Let $p \in N$. Assume that we can prove that $p$ is prime. Then for all integers $a$, we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for some integer $q$.
-
-Thm10FermatLittle. Let $p$ be a natural number. Assume that we can prove that $p$ is prime. Let $a$ be an integer. Then we can prove that there exists an integer $q$, such that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$.
-
-Thm10FermatLittle. Let $p$ be a natural number. Assume that we can prove that $p$ is prime. Let $a$ be an integer. Then we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for an integer $q$.
-
-Thm10FermatLittle. Let $p$ be a natural number. Assume that we can prove that $p$ is prime. Let $a$ be an integer. Then we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for some integer $q$.
-
-Thm10FermatLittle. Let $p$ be a natural number. Assume that we can prove that $p$ is prime. Let $a \in Z$. Then we can prove that there exists an integer $q$, such that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$.
-
-Thm10FermatLittle. Let $p$ be a natural number. Assume that we can prove that $p$ is prime. Let $a \in Z$. Then we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for an integer $q$.
-
-Thm10FermatLittle. Let $p$ be a natural number. Assume that we can prove that $p$ is prime. Let $a \in Z$. Then we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for some integer $q$.
-
-Thm10FermatLittle. Let $p \in N$. Assume that we can prove that $p$ is prime. Let $a$ be an integer. Then we can prove that there exists an integer $q$, such that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$.
-
-Thm10FermatLittle. Let $p \in N$. Assume that we can prove that $p$ is prime. Let $a$ be an integer. Then we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for an integer $q$.
-
-Thm10FermatLittle. Let $p \in N$. Assume that we can prove that $p$ is prime. Let $a$ be an integer. Then we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for some integer $q$.
-
-Thm10FermatLittle. Let $p \in N$. Assume that we can prove that $p$ is prime. Let $a \in Z$. Then we can prove that there exists an integer $q$, such that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$.
-
-Thm10FermatLittle. Let $p \in N$. Assume that we can prove that $p$ is prime. Let $a \in Z$. Then we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for an integer $q$.
-
-Thm10FermatLittle. Let $p \in N$. Assume that we can prove that $p$ is prime. Let $a \in Z$. Then we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for some integer $q$.
+Thm10FermatLittle. Let $p$ be an instance of natural numbers. Assume that we can prove that $p$ is prime. Let $a$ be an instance of integers. Then we can prove that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$ for some integer $q$.
 
 Thm10FermatLittle. For all natural numbers $p$, if $p$ is prime, then for all integers $a$, there exists an integer $q$, such that the difference of the exponentiation of $a$ and $p$ and $a$ is equal to the product of $p$ and $q$.
 
@@ -491,23 +471,17 @@ Thm10FermatLittle. Let $p \in N$. Assume that $p$ is prime. Let $a \in Z$. Then 
 
 Thm10FermatLittle. Let $p \in N$. Assume that $p$ is prime. Let $a \in Z$. Then $a ^ {p}- a = p q$ for some integer $q$.
 
-Thm11. For all natural numbers $n$, we can prove that there exists a natural number $p$, such that $p$ is greater than or equal to $n$ and $p$ is prime.
+Thm11. For all instances $n$ of natural numbers, we can prove that there exists a natural number $p$, such that $p$ is greater than or equal to $n$ and $p$ is prime.
 
-Thm11. For all natural numbers $n$, we can prove that $p$ is greater than or equal to $n$ and $p$ is prime for a natural number $p$.
+Thm11. For all instances $n$ of natural numbers, we can prove that $p$ is greater than or equal to $n$ and $p$ is prime for a natural number $p$.
 
-Thm11. For all natural numbers $n$, we can prove that $p$ is greater than or equal to $n$ and $p$ is prime for some natural number $p$.
+Thm11. For all instances $n$ of natural numbers, we can prove that $p$ is greater than or equal to $n$ and $p$ is prime for some natural number $p$.
 
-Thm11. Let $n$ be a natural number. Then we can prove that there exists a natural number $p$, such that $p$ is greater than or equal to $n$ and $p$ is prime.
+Thm11. Let $n$ be an instance of natural numbers. Then we can prove that there exists a natural number $p$, such that $p$ is greater than or equal to $n$ and $p$ is prime.
 
-Thm11. Let $n$ be a natural number. Then we can prove that $p$ is greater than or equal to $n$ and $p$ is prime for a natural number $p$.
+Thm11. Let $n$ be an instance of natural numbers. Then we can prove that $p$ is greater than or equal to $n$ and $p$ is prime for a natural number $p$.
 
-Thm11. Let $n$ be a natural number. Then we can prove that $p$ is greater than or equal to $n$ and $p$ is prime for some natural number $p$.
-
-Thm11. Let $n \in N$. Then we can prove that there exists a natural number $p$, such that $p$ is greater than or equal to $n$ and $p$ is prime.
-
-Thm11. Let $n \in N$. Then we can prove that $p$ is greater than or equal to $n$ and $p$ is prime for a natural number $p$.
-
-Thm11. Let $n \in N$. Then we can prove that $p$ is greater than or equal to $n$ and $p$ is prime for some natural number $p$.
+Thm11. Let $n$ be an instance of natural numbers. Then we can prove that $p$ is greater than or equal to $n$ and $p$ is prime for some natural number $p$.
 
 Thm11. For all natural numbers $n$, there exists a natural number $p$, such that $p$ is greater than or equal to $n$ and $p$ is prime.
 
@@ -544,5 +518,65 @@ Thm11. Let $n \in N$. Then there exists a natural number $p$, such that $p \geq 
 Thm11. Let $n \in N$. Then $p \geq n$ and $p$ is prime for a natural number $p$.
 
 Thm11. Let $n \in N$. Then $p \geq n$ and $p$ is prime for some natural number $p$.
+
+Thm19. For all instances $n$ of natural numbers, we can prove that there exists a natural number $a$, such that there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n$ is equal to the sum of the sum of the sum of the square of $a$ and the square of $b$ and the square of $c$ and the square of $d$.
+
+Thm19. For all instances $n$ of natural numbers, we can prove that there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n$ is equal to the sum of the sum of the sum of the square of $a$ and the square of $b$ and the square of $c$ and the square of $d$ for a natural number $a$.
+
+Thm19. For all instances $n$ of natural numbers, we can prove that there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n$ is equal to the sum of the sum of the sum of the square of $a$ and the square of $b$ and the square of $c$ and the square of $d$ for some natural number $a$.
+
+Thm19. Let $n$ be an instance of natural numbers. Then we can prove that there exists a natural number $a$, such that there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n$ is equal to the sum of the sum of the sum of the square of $a$ and the square of $b$ and the square of $c$ and the square of $d$.
+
+Thm19. Let $n$ be an instance of natural numbers. Then we can prove that there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n$ is equal to the sum of the sum of the sum of the square of $a$ and the square of $b$ and the square of $c$ and the square of $d$ for a natural number $a$.
+
+Thm19. Let $n$ be an instance of natural numbers. Then we can prove that there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n$ is equal to the sum of the sum of the sum of the square of $a$ and the square of $b$ and the square of $c$ and the square of $d$ for some natural number $a$.
+
+Thm19. For all natural numbers $n$, there exists a natural number $a$, such that there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n$ is equal to the sum of the sum of the sum of the square of $a$ and the square of $b$ and the square of $c$ and the square of $d$.
+
+Thm19. For all natural numbers $n$, there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n$ is equal to the sum of the sum of the sum of the square of $a$ and the square of $b$ and the square of $c$ and the square of $d$ for a natural number $a$.
+
+Thm19. For all natural numbers $n$, there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n$ is equal to the sum of the sum of the sum of the square of $a$ and the square of $b$ and the square of $c$ and the square of $d$ for some natural number $a$.
+
+Thm19. Let $n$ be a natural number. Then there exists a natural number $a$, such that there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n$ is equal to the sum of the sum of the sum of the square of $a$ and the square of $b$ and the square of $c$ and the square of $d$.
+
+Thm19. Let $n$ be a natural number. Then there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n$ is equal to the sum of the sum of the sum of the square of $a$ and the square of $b$ and the square of $c$ and the square of $d$ for a natural number $a$.
+
+Thm19. Let $n$ be a natural number. Then there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n$ is equal to the sum of the sum of the sum of the square of $a$ and the square of $b$ and the square of $c$ and the square of $d$ for some natural number $a$.
+
+Thm19. Let $n \in N$. Then there exists a natural number $a$, such that there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n$ is equal to the sum of the sum of the sum of the square of $a$ and the square of $b$ and the square of $c$ and the square of $d$.
+
+Thm19. Let $n \in N$. Then there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n$ is equal to the sum of the sum of the sum of the square of $a$ and the square of $b$ and the square of $c$ and the square of $d$ for a natural number $a$.
+
+Thm19. Let $n \in N$. Then there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n$ is equal to the sum of the sum of the sum of the square of $a$ and the square of $b$ and the square of $c$ and the square of $d$ for some natural number $a$.
+
+Thm19. For all natural numbers $n$, there exists a natural number $a$, such that there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n = a ^{ 2}+ b ^{ 2}+ c ^{ 2}+ d ^{ 2}$.
+
+Thm19. For all natural numbers $n$, there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n = a ^{ 2}+ b ^{ 2}+ c ^{ 2}+ d ^{ 2}$ for a natural number $a$.
+
+Thm19. For all natural numbers $n$, there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n = a ^{ 2}+ b ^{ 2}+ c ^{ 2}+ d ^{ 2}$ for some natural number $a$.
+
+Thm19. Let $n$ be a natural number. Then there exists a natural number $a$, such that there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n = a ^{ 2}+ b ^{ 2}+ c ^{ 2}+ d ^{ 2}$.
+
+Thm19. Let $n$ be a natural number. Then there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n = a ^{ 2}+ b ^{ 2}+ c ^{ 2}+ d ^{ 2}$ for a natural number $a$.
+
+Thm19. Let $n$ be a natural number. Then there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n = a ^{ 2}+ b ^{ 2}+ c ^{ 2}+ d ^{ 2}$ for some natural number $a$.
+
+Thm19. Let $n \in N$. Then there exists a natural number $a$, such that there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n = a ^{ 2}+ b ^{ 2}+ c ^{ 2}+ d ^{ 2}$.
+
+Thm19. Let $n \in N$. Then there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n = a ^{ 2}+ b ^{ 2}+ c ^{ 2}+ d ^{ 2}$ for a natural number $a$.
+
+Thm19. Let $n \in N$. Then there exists a natural number $b$, such that there exists a natural number $c$, such that there exists a natural number $d$, such that $n = a ^{ 2}+ b ^{ 2}+ c ^{ 2}+ d ^{ 2}$ for some natural number $a$.
+
+Thm19. For all natural numbers $n$, there exist natural numbers $a$ and $b$ and $c$ and $d$, such that $n = a ^{ 2}+ b ^{ 2}+ c ^{ 2}+ d ^{ 2}$.
+
+Thm19. For all natural numbers $n$, $n = a ^{ 2}+ b ^{ 2}+ c ^{ 2}+ d ^{ 2}$ for some natural numbers $a$ and $b$ and $c$ and $d$.
+
+Thm19. Let $n$ be a natural number. Then there exist natural numbers $a$ and $b$ and $c$ and $d$, such that $n = a ^{ 2}+ b ^{ 2}+ c ^{ 2}+ d ^{ 2}$.
+
+Thm19. Let $n$ be a natural number. Then $n = a ^{ 2}+ b ^{ 2}+ c ^{ 2}+ d ^{ 2}$ for some natural numbers $a$ and $b$ and $c$ and $d$.
+
+Thm19. Let $n \in N$. Then there exist natural numbers $a$ and $b$ and $c$ and $d$, such that $n = a ^{ 2}+ b ^{ 2}+ c ^{ 2}+ d ^{ 2}$.
+
+Thm19. Let $n \in N$. Then $n = a ^{ 2}+ b ^{ 2}+ c ^{ 2}+ d ^{ 2}$ for some natural numbers $a$ and $b$ and $c$ and $d$.
 
 \end{document}

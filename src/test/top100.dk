@@ -36,15 +36,18 @@ legendre : Elem Nat -> Elem Nat -> Elem Int.
 thm07 : (p : Elem Nat) -> (q : Elem Nat) -> Proof (and (prime p) (prime q)) ->
   Proof (Eq (times (legendre p q) (legendre q p)) (pow (neg 1) (times (div (minus p 1) 2) (div (minus q 1) 2)))).
 
-pi : Real.
-Circle : Set.
-radius : Circle -> Real.
-def area : Circle -> Real.
-thm09 : (c : Circle) -> (r : Real) -> Proof (Eq r (radius c)) ->
+pi : Elem Real.
+Circle : Type.
+radius : Circle -> Elem Real.
+def area : Circle -> Elem Real.
+thm09 : (c : Circle) -> (r : Elem Real) -> Proof (Eq r (radius c)) ->
   Proof (Eq (area c) (times pi (pow r 2))).
 
-thm10FermatLittle : (p : Nat) -> Proof (prime p) -> (a : Int) ->
+thm10FermatLittle : (p : Elem Nat) -> Proof (prime p) -> (a : Elem Int) ->
   Proof (exists Int (q => Eq (minus (pow a p) a) (times p q))).
 
-thm11 : (n : Nat) -> Proof (exists Nat (p => and (Geq p n) (prime p))).
+thm11 : (n : Elem Nat) -> Proof (exists Nat (p => and (Geq p n) (prime p))).
 
+thm19 : (n : Elem Nat) -> Proof (exists Nat (a => exists Nat (b => exists Nat (c => exists Nat (d =>
+  Eq n (plus (plus (plus (square a) (square b)) (square c)) (square d))))))).
+  

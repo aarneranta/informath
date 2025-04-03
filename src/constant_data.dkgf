@@ -123,9 +123,9 @@ legendre NEW top100 Oper legendre_symbol_Oper
 #LIN Fre vector_Noun = mkNoun "vecteur"
 #LIN Swe vector_Noun = mkNoun (mkN "vektor" "vektorer")
 
-#LIN Eng length_Oper = mkOper L.absolute_value_Oper "length"
-#LIN Fre length_Oper = mkOper L.absolute_value_Oper "norme"
-#LIN Swe length_Oper = mkOper L.absolute_value_Oper (mkN "norm" "normer")
+#LIN Eng length_Oper = mkOper L.length_Oper "length"
+#LIN Fre length_Oper = mkOper L.length_Oper "norme"
+#LIN Swe length_Oper = mkOper L.length_Oper (mkN "norm" "normer")
 
 #LIN Eng perpendicular_Compar = mkCompar L.perpendicular_Compar "perpendicular" "to"
 #LIN Fre perpendicular_Compar = mkCompar L.perpendicular_Compar (mkA "perpendiculaire") dative
@@ -148,7 +148,7 @@ pi NEW top100 Const pi_Const
 #LIN Fre pi_Const = mkConst "\\pi" (mkNP the_Det (mkCN nombre_N (symb "\\(\\pi\\)")))
 #LIN Swe pi_Const = mkConst "\\pi" (mkNP the_Det (mkCN tal_N (symb "\\(\\pi\\)")))
 
-circle NEW top100 Noun circle_Noun
+Circle NEW top100 Noun circle_Noun
 #LIN Eng circle_Noun = mkNoun "circle"
 #LIN Fre circle_Noun = mkNoun (mkN "cercle" masculine)
 #LIN Swe circle_Noun = mkNoun (mkN "cirkel" "cirklar")

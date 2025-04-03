@@ -48,16 +48,16 @@ fun
   KindProp : Exp -> Kind -> Prop ;
 
   AllKindExp : Kind -> Exp ;
-  AllIdentKindExp : Ident -> Kind -> Exp ;
+  AllIdentsKindExp : [Ident] -> Kind -> Exp ;
   EveryKindExp : Kind -> Exp ;
   EveryIdentKindExp : Ident -> Kind -> Exp ;
   
   SomeKindExp : Kind -> Exp ;
-  SomeIdentKindExp : Ident -> Kind -> Exp ;
+  SomeIdentsKindExp : [Ident] -> Kind -> Exp ;
   IndefKindExp : Kind -> Exp ;
   IndefIdentKindExp : Ident -> Kind -> Exp ;
   
-  NoIdentKindExp : Ident -> Kind -> Exp ;
+  NoIdentsKindExp : [Ident] -> Kind -> Exp ;
   NoKindExp : Kind -> Exp ;
 
 }

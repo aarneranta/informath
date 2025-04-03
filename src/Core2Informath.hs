@@ -57,29 +57,27 @@ formalize t = case t of
   _ -> composOp formalize t
 
 getTerm :: Tree a -> Maybe GTerm
-getTerm t = case t of
-  GConstExp const -> return (GConstTerm const)
-----  GFunListExp (LexFun "successor_Fun") (GOneExps x) -> tryComputeSuccessor t
-  GFunListExp fun (GOneExps x) -> do
-    tx <- getTerm x
-    case fun of
+getTerm = maybe Nothing (return . optTerm) . gT where
+  gT :: Tree a -> Maybe GTerm
+  gT t = case t of
+    GConstExp const -> return (GConstTerm const)
+    GOperListExp oper (GOneExps x) -> do
+      tx <- gT x
+      return (GAppOperOneTerm oper tx)
+    GOperListExp oper (GAddExps x (GOneExps y)) -> do
+      tx <- gT x
+      ty <- gT y
+      return (GAppOperTerm oper tx ty)
+    GAppExp t@(GTermExp (GTIdent f)) exps -> case mapM gT (exps2list exps) of
+      Just xs -> return (GTApp (GFIdent f) (GListTerm xs))
       _ -> Nothing
-  GOperListExp oper (GOneExps x) -> do
-    tx <- getTerm x
-    case oper of
-      LexOper "neg_Oper" -> return (GTNeg tx)
-      _ -> return (GAppOperOneTerm oper tx)
-  GOperListExp oper (GAddExps x (GOneExps y)) -> do
-    tx <- getTerm x
-    ty <- getTerm y
-    case oper of
-      LexOper "times_Oper" -> return (GTTimes tx ty)
-      _ -> return (GAppOperTerm oper tx ty)
-  GAppExp t@(GTermExp (GTIdent f)) exps -> case mapM getTerm (exps2list exps) of
-    Just xs -> return (GTApp (GFIdent f) (GListTerm xs))
+    GTermExp term -> return term ---- TODO go deeper into term
     _ -> Nothing
-  GTermExp term -> return term
-  _ -> Nothing
+  optTerm :: Tree a -> Tree a
+  optTerm t = case t of
+    GAppOperTerm (LexOper "times_Oper") x y -> GTTimes (optTerm x) (optTerm y)
+    GAppOperOneTerm (LexOper "neg_Oper") x -> GTNeg (optTerm x) ---- really needed?
+    _ -> composOp optTerm t
 
 aggregate :: Tree a -> Tree a
 aggregate t = case t of
@@ -96,6 +94,8 @@ aggregate t = case t of
     _ -> case getAdjArgs props a of
       Just exps -> GAdjProp a (GOrExp (GListExp (x:exps)))
       _ -> GSimpleOrProp (GListProp (map aggregate pp))
+  GExistProp (GListArgKind [GIdentsArgKind kind (GListIdent xs)]) prop -> case getExists kind prop of
+    (ys, body) -> GExistProp (GListArgKind [GIdentsArgKind kind (GListIdent (xs ++ ys))]) body
   GListHypo hypos -> GListHypo (aggregateHypos hypos)
   _ -> composOp aggregate t
  where
@@ -120,6 +120,13 @@ getAdjArgs props a = case props of
     return (y : exps)
   prop : _ -> Nothing
   _ -> return []
+
+getExists :: GKind -> GProp -> ([GIdent], GProp)
+getExists kind prop = case prop of
+  GExistProp (GListArgKind [GIdentsArgKind k (GListIdent xs)]) body | k == kind ->
+    case getExists kind body of
+      (ys, bd) -> (xs ++ ys, bd)
+  _ -> ([], prop)
 
 flatten :: Tree a -> Tree a
 flatten t = case t of
@@ -174,12 +181,14 @@ variations tree = case tree of
 
 allExpVariations :: GArgKind -> [GExp]
 allExpVariations argkind = case argkind of
-  GIdentsArgKind kind (GListIdent [x]) -> [GEveryIdentKindExp x kind , GAllIdentKindExp x kind]
+  GIdentsArgKind kind (GListIdent [x]) -> [GEveryIdentKindExp x kind , GAllIdentsKindExp (GListIdent [x]) kind]
+  GIdentsArgKind kind xs -> [GAllIdentsKindExp xs kind]
   _ -> []
 
 existExpVariations :: GArgKind -> [GExp]
 existExpVariations argkind = case argkind of
-  GIdentsArgKind kind (GListIdent [x]) -> [GIndefIdentKindExp x kind, GSomeIdentKindExp x kind]
+  GIdentsArgKind kind (GListIdent [x]) -> [GIndefIdentKindExp x kind, GSomeIdentsKindExp (GListIdent [x]) kind]
+  GIdentsArgKind kind xs -> [GSomeIdentsKindExp xs kind]
   _ -> []
 
 hypoProp :: [GHypo] -> GProp -> GProp
@@ -193,10 +202,13 @@ hypoProp hypos prop = case hypos of
 insitu :: Tree a -> Tree a
 insitu t = case t of
   GAllProp (GListArgKind [argkind]) (GAdjProp adj exp) -> case subst argkind exp of
-    Just (x, kind) -> GAdjProp adj (GAllIdentKindExp x kind)
+    Just (x, kind) -> GAdjProp adj (GAllIdentsKindExp (GListIdent [x]) kind)
     _ -> t
   GAllProp (GListArgKind [argkind]) (GNotAdjProp adj exp) -> case subst argkind exp of
-    Just (x, kind) -> GAdjProp adj (GNoIdentKindExp x kind)
+    Just (x, kind) -> GAdjProp adj (GNoIdentsKindExp (GListIdent [x]) kind)
+    _ -> t
+  GExistProp (GListArgKind [argkind]) (GAdjProp adj exp) -> case subst argkind exp of
+    Just (x, kind) -> GAdjProp adj (GSomeIdentsKindExp (GListIdent [x]) kind)
     _ -> t
   _ -> composOp insitu t
 
@@ -208,9 +220,9 @@ subst argkind exp = case (argkind, exp) of
 varless :: Tree a -> Tree a
 varless t = case t of
   GEveryIdentKindExp _ kind -> GEveryKindExp kind
-  GAllIdentKindExp _ kind -> GAllKindExp kind
-  GNoIdentKindExp _ kind -> GNoKindExp kind
-  GSomeIdentKindExp _ kind -> GSomeKindExp kind
+  GAllIdentsKindExp (GListIdent [_]) kind -> GAllKindExp kind
+  GNoIdentsKindExp (GListIdent [_]) kind -> GNoKindExp kind
+  GSomeIdentsKindExp (GListIdent [_]) kind -> GSomeKindExp kind
   GIndefIdentKindExp _ kind -> GSomeKindExp kind
   _ -> composOp varless t
 

@@ -67,18 +67,24 @@ lin
   KindProp exp kind = simpleProp (mkS (mkCl exp kind.cn)) ;
 
   AllKindExp kind = mkNP all_Predet (mkNP aPl_Det (useKind kind)) ;
-  AllIdentKindExp ident kind = mkNP all_Predet (mkNP aPl_Det (mkCN (mkCN kind.cn (latexNP (mkSymb ident))) kind.adv)) ;
+  AllIdentsKindExp idents kind = mkNP all_Predet (mkNP aPl_Det (mkCN (mkCN kind.cn idents.np) kind.adv)) ;
 
   EveryKindExp kind =
     mkNP every_Det (mkCN kind.cn kind.adv) | mkNP all_Predet (mkNP aPl_Det (mkCN kind.cn kind.adv)) ;
   EveryIdentKindExp ident kind = mkNP every_Det (mkCN (mkCN kind.cn (latexNP (mkSymb ident))) kind.adv) ;
 
   SomeKindExp kind = mkNP someSg_Det (mkCN kind.cn kind.adv) ;
-  SomeIdentKindExp ident kind = mkNP someSg_Det (mkCN (mkCN kind.cn (latexNP (mkSymb ident))) kind.adv) ;
+  SomeIdentsKindExp idents kind = case idents.isPl of {
+    False => mkNP someSg_Det (mkCN (mkCN kind.cn idents.np) kind.adv) ;
+    True  => mkNP somePl_Det (mkCN (mkCN kind.cn idents.np) kind.adv)
+    } ;
   IndefKindExp kind = mkNP a_Det (mkCN kind.cn kind.adv) ;
   IndefIdentKindExp ident kind = mkNP a_Det (mkCN (mkCN kind.cn (latexNP (mkSymb ident))) kind.adv) ;
   
-  NoIdentKindExp ident kind = mkNP no_Quant (mkCN (mkCN kind.cn (latexNP (mkSymb ident))) kind.adv) ;
+  NoIdentsKindExp idents kind = case idents.isPl of {
+    False => mkNP no_Quant (mkCN (mkCN kind.cn idents.np) kind.adv) ;
+    True  => mkNP (mkDet no_Quant pluralNum) (mkCN (mkCN kind.cn idents.np) kind.adv)
+    } ;
   NoKindExp kind = mkNP no_Quant (mkCN kind.cn kind.adv) ;
 
 
