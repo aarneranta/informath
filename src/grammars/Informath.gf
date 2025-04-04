@@ -51,13 +51,16 @@ fun
   AllIdentsKindExp : [Ident] -> Kind -> Exp ;
   EveryKindExp : Kind -> Exp ;
   EveryIdentKindExp : Ident -> Kind -> Exp ;
+----  AllIdentsSetExp : [Ident] -> Set -> Exp ; -- TODO: all $x, y : N$
   
   SomeKindExp : Kind -> Exp ;
   SomeIdentsKindExp : [Ident] -> Kind -> Exp ;
   IndefKindExp : Kind -> Exp ;
   IndefIdentKindExp : Ident -> Kind -> Exp ;
+----  SomeIdentsSetExp : [Ident] -> Set -> Exp ;
   
   NoIdentsKindExp : [Ident] -> Kind -> Exp ;
   NoKindExp : Kind -> Exp ;
+----  NoIdentsSetExp : [Ident] -> Set -> Exp ;
 
 }

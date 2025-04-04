@@ -59,6 +59,7 @@ oper
   arbitrary_A = mkA "arbitraire" ;
 
   iff_Subj : Subj = Mk.mkSubj "si et seulement si" ;
+  commaConj : Conj = Mk.mkConj "," ;
 
   by_cases_Str = "par des cas" ;
   proof_Str = "démonstration" ;

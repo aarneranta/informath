@@ -11,6 +11,7 @@ concrete MathCoreSwe of MathCore =
     UtilitiesSwe,
     Prelude,
     ParadigmsSwe,
+    (M=MakeStructuralSwe),
     (I=IrregSwe)
 
 in {
@@ -35,6 +36,7 @@ oper
   arbitrary_A = mkA "godtycklig" ;
 
   iff_Subj : Subj = mkSubj "om och endast om" ;
+  commaConj : Conj = M.mkConj "," ;
 
   basic_concept_Str = "grundbegrepp" ;
   by_cases_Str = "med fallanalys:" ;

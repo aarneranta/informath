@@ -139,8 +139,13 @@ lin
 
   BaseIdent ident =
     {np = latexNP (mkSymb ident) ; isPl = False} ;
-  ConsIdent ident idents =
-    {np = mkNP and_Conj (latexNP (mkSymb ident)) idents.np ; isPl = True} ;
+  ConsIdent ident idents = {
+    np = case idents.isPl of {
+      False => mkNP and_Conj (latexNP (mkSymb ident)) idents.np ;
+      True => mkNP commaConj (latexNP (mkSymb ident)) idents.np 
+      } ;
+    isPl = True
+    } ;
 
   OneExps exp =
     {np = exp ; isPl = False} ;

@@ -38,6 +38,7 @@ oper
   arbitrary_A = mkA "arbitrary" ;
 
   iff_Subj : Subj = mkSubj "if and only if" ;
+  commaConj : Conj = mkConj "," ;
 
   basic_concept_Str = "basic concept" ;
   by_cases_Str = "by cases:" ;
