@@ -32,7 +32,7 @@ demo:
 	./RunInformath -lang=Eng test/exx.dk
 	./RunInformath -lang=Eng test/exx.dk >exx.txt
 	./RunInformath -lang=Eng exx.txt
-#	./RunInformath -lang=Eng test/gflean-data.txt
+	./RunInformath -lang=Eng test/gflean-data.txt
 	cat BaseConstants.dk test/exx.dk >bexx.dk
 	dk check bexx.dk
 	./RunInformath -to-agda test/exx.dk >exx.agda
