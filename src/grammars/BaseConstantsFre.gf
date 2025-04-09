@@ -58,7 +58,7 @@ lin
 
   Eq_Compar = mkCompar L.Eq_Compar (mkAP (mkA "égal")) dative ;
   Lt_Compar = mkCompar L.Lt_Compar (mkAP (mkA "inférieur")) dative ;
-  Gt_Compar = mkCompar L.Gt_Compar (mkAP (mkA "supërieur")) dative ;
+  Gt_Compar = mkCompar L.Gt_Compar (mkAP (mkA "supérieur")) dative ;
   Neq_Compar = mkCompar L.Neq_Compar (mkAP (mkA "inégal")) dative ; ---- ?
   Leq_Compar = mkCompar L.Leq_Compar (mkAP or_Conj (mkAP (mkA "inférieur")) (mkAP (mkA "ágal"))) dative ;
   Geq_Compar =  mkCompar L.Geq_Compar (mkAP or_Conj (mkAP (mkA "supérieur")) (mkAP (mkA "ágal"))) dative ;

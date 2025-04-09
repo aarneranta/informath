@@ -48,7 +48,7 @@ oper
   contradiction_N : N = mkN "contradiction" ;
   then_Adv : Adv = ParadigmsFre.mkAdv "alors" ;
   thenText_Adv : Adv = ParadigmsFre.mkAdv "alors" ;
-  such_that_Subj : Subj = Mk.mkSubj "tel que" ; -----
+  such_that_Subj : Subj = Mk.mkSubjSubj "tel que" ; -----
   applied_to_Prep : Prep = mkPrep "appliqué à" ; ----
   defined_as_Prep : Prep = mkPrep "défini comme" ; ----
   function_N : N = mkN "fonction" ;
@@ -72,7 +72,7 @@ oper
   
   as_Prep : Prep = mkPrep "comme" ;
 
-  let_Str = "soit" ; ----
+  let_Str : Bool => Str = table {False => "soit" ; True => "soient"} ;
   assuming_Str = "en supposant :" ;
 
 }

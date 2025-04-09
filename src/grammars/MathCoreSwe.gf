@@ -50,7 +50,7 @@ oper
   
   as_Prep : Prep = mkPrep "som" ;
 
-  let_Str = "låt" ;
+  let_Str : Bool => Str = \\_ => "låt" ;
   assuming_Str = "under följande antaganden:" ;
 
   mkSubj : Str -> Subj = \s -> lin Subj {s = s} ; ---- should be in RGL

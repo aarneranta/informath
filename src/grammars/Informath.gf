@@ -41,6 +41,8 @@ fun
   LetFormulaHypo : Formula -> Hypo ;
   PostQuantProp : Prop -> Exp -> Prop ;
 
+  LetDeclarationHypo : Declaration -> Hypo ;
+
   DefinedAdjJmt : Label -> [Hypo] -> Exp -> Adj -> Prop -> Jmt ;
   WeDefineAdjJmt : Label -> [Hypo] -> Exp -> Adj -> Prop -> Jmt ;
 

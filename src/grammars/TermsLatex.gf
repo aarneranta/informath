@@ -3,16 +3,19 @@ concrete TermsLatex of Terms =
 
 lincat
   Formula = TermPrec ;
+  Declaration = {s : Str ; isPl : Bool} ;
   Equation = {s : Str} ;
   Eqsign = Str ;
   Term = TermPrecNum ;
-  [Term] = {s : Str} ;
+  [Term] = {s : Str ; isPl : Bool} ;
   Ident = Str ;
   Function = Str ;
 
 lin
   FEquation eq = constant eq.s ;
   FElem es e = constant (es.s ++ "\\in" ++ top e) ;
+  
+  DElem es e = {s = es.s ++ "\\in" ++ top e ; isPl = es.isPl} ;
 
   EChain op x eq = {s = top x ++ op ++ eq.s} ;
   EBinary op x y = {s = top x ++ op ++ top y} ;
@@ -29,8 +32,8 @@ lin
   TIdent x =  constant x ** {isNumber = False} ;
   TNumber n = constant n.s ** {isNumber = True} ;
 
-  BaseTerm x = {s = top x} ;
-  ConsTerm x xs = {s = top x ++ "," ++ xs.s} ;
+  BaseTerm x = {s = top x ; isPl = False} ;
+  ConsTerm x xs = {s = top x ++ "," ++ xs.s ; isPl = True} ;
 
   StrIdent s = s.s ;
 

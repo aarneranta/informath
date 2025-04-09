@@ -29,11 +29,11 @@ lin
   SimpleIfProp A B = simpleProp (Grammar.ExtAdvS (Syntax.mkAdv if_Subj (partProp A)) (mkS then_Adv (partProp B))) ;
   SimpleIffProp A B = simpleProp (Grammar.SSubjS (partProp A) iff_Subj (partProp B)) ;
 
-  AndAdj adjs = mkAP both7and_DConj adjs ;
-  OrAdj adjs = mkAP or_Conj adjs ;
+  AndAdj adjs = mkAP and_Conj adjs | mkAP both7and_DConj adjs ;
+  OrAdj adjs = mkAP or_Conj adjs  | mkAP either7or_DConj adjs ;
 
-  AndExp exps = mkNP both7and_DConj exps | mkNP and_Conj exps ;
-  OrExp exps = mkNP or_Conj exps ;
+  AndExp exps =  mkNP and_Conj exps | mkNP both7and_DConj exps ;
+  OrExp exps = mkNP or_Conj exps | mkNP either7or_DConj exps ;
 
   BaseAdj a b = mkListAP a b ;
   ConsAdj a bs = mkListAP a bs ;
@@ -43,14 +43,16 @@ lin
 
   IndexedTermExp i = symb (mkSymb ("\\INDEXEDTERM{" ++ i.s ++ "}")) ;
   IndexedFormulaProp i = simpleProp (symb (mkSymb ("\\INDEXEDTERM{" ++ i.s ++ "}"))) ;
-  IndexedLetFormulaHypo i = lin Utt {s = let_Str ++ "\\INDEXEDTERM{" ++ i.s ++ "}"} ;
+  IndexedLetFormulaHypo i = lin Utt {s = let_Str ! False ++ "\\INDEXEDTERM{" ++ i.s ++ "}"} ;
 
 -- Pathak's
 
-  LetFormulaHypo formula = lin Utt {s = let_Str ++ "$" ++ top formula ++ "$"} ;
+  LetFormulaHypo formula = lin Utt {s = let_Str ! False ++ "$" ++ top formula ++ "$"} ;
 
   PostQuantProp prop exp =
     simpleProp (postAdvS prop.s (Syntax.mkAdv for_Prep exp)) ; -- ambiguous: there is no complexProp in Informath
+
+  LetDeclarationHypo decl = lin Utt {s = let_Str ! decl.isPl ++ "$" ++ decl.s ++ "$"} ;
 
   DefinedAdjJmt label hypos exp adj prop =
     labelText (label)

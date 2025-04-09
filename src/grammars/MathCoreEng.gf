@@ -52,7 +52,7 @@ oper
 
   as_Prep : Prep = mkPrep "as" ;
 
-  let_Str = "let" ;
+  let_Str : Bool => Str = \\_ => "let" ;
 
   assuming_Str = "assuming:" ;
 }

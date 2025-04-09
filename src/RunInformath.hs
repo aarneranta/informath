@@ -11,7 +11,7 @@ import Dedukti.AbsDedukti
 import Dedukti.ErrM
 import DeduktiOperations (
   identsInTypes, dropDefinitions, stripQualifiers, identTypes, ignoreCoercions,
-  alphaConvert, ignoreFirstArguments, peano2int, applyConstantData)
+  ignoreFirstArguments, peano2int, applyConstantData)
 import ConstantData (ConstantData, string2constantData, lookBackConstantData)
 import Informath -- superset of Core
 import Core2Informath (nlg)
@@ -63,13 +63,11 @@ helpMsg = unlines [
 
 informathPrefix = "Informath"
 informathPGFFile = "grammars/" ++ informathPrefix ++ ".pgf"
-conversionsFile = "alphaConversions.tsv"
 constantDataFile = "constant_data.dkgf"
 Just jmt = readType "Jmt"
 
 data Env = Env {
  flags :: [String],
- identConversions :: M.Map String String, ---- TODO deprec
  constantData :: ConstantData,
  lookBackData :: M.Map String String,  -- from GFFun to DkId ---- and to more info?
  cpgf :: PGF,
@@ -90,13 +88,11 @@ main = do
   xx <- getArgs
   let (ff, yy) = partition ((== '-') . head) xx
   corepgf <- readPGF informathPGFFile
-  conversions <- readFile conversionsFile >>= return . filter ((==2) . length) . map words . lines
   constantdata <- readFile constantDataFile >>= return . string2constantData Nothing ---- TODO filter project
   let lookbackdata = lookBackConstantData constantdata 
   let Just lan = readLanguage (informathPrefix ++ (flagValue "lang" "Eng" ff))
   let env = Env{
         flags = ff,
-	identConversions = M.fromList [(a, b) | a:b:_ <- conversions],
 	constantData = constantdata,
 	lookBackData = lookbackdata,
 	cpgf = corepgf,
@@ -157,14 +153,13 @@ deduktiOpers env =
   [ignoreFirstArguments matita_typeargs | ifFlag "-dropfirstargs" env] ++
   [ignoreCoercions matita_coercions | ifFlag "-dropcoercions" env] ++
   [applyConstantData (constantData env) | not (noConstantData env)] ++ 
-  [alphaConvert (identConversions env) | ifFlag "-alphaconv" env] ++ 
   [stripQualifiers | ifFlag "-dropqualifs" env] ++ 
   [dropDefinitions | ifFlag "-dropdefs" env] 
  where
   matita_coercions = [QIdent s | s <- words "Term lift Univ"] ---- TODO make parametric
   matita_typeargs = [(QIdent "Eq", 1), (QIdent "member", 1)]
   noConstantData env =
-    or [ifFlag f env | f <- words "-to-agda -to-coq -to-dedukti -to-lean -rawconstantdata"]
+    or [ifFlag f env | f <- words "-to-agda -to-coq -to-dedukti -to-lean -rawconstantdata -parallel"]
 
 -- example: ./RunInformath -idtypes -dropdefs -dropqualifs -dropcoercions test/matita-all.dk
 
@@ -273,11 +268,11 @@ processInformathJmtTree env t0 = do
   return dt
 
 parallelJSONL :: Env -> Module -> IO ()
-parallelJSONL env mo = do
+parallelJSONL env mo@(MJmts jmts) = do
   let gr = cpgf env
-  case mo of
-    MJmts jmts -> flip mapM_ jmts $ \jmt -> do
-      let tree = jmt2core jmt
+  let MJmts cjmts = applyConstantData (constantData env) mo
+  flip mapM_ (zip jmts cjmts) $ \ (jmt, cjmt) -> do
+      let tree = jmt2core cjmt
       let gft = gf tree
       let json = concat $ intersperse ", " $ [
             mkJSONField "dedukti" (printTree jmt),

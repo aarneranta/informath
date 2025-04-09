@@ -62,6 +62,10 @@ sem env t = case t of
       GVarsHypo (GListIdent [x | GTIdent x <- terms]) (GSetKind set) ---- TODO: check that all terms are idents
 
     _ -> GPropHypo (sem env (GFormulaProp (sem env formula)))
+    
+  GLetDeclarationHypo decl -> case (sem env decl) of
+    GDElem (GListTerm terms) (GSetTerm set) ->
+      GVarsHypo (GListIdent [x | GTIdent x <- terms]) (GSetKind set) ---- TODO: check that all terms are idents
 
   GSimpleIfProp cond@(GFormulaProp (GFElem (GListTerm terms) (GSetTerm set))) prop ->
     case getJustVarsFromTerms env terms of

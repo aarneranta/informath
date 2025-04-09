@@ -170,7 +170,7 @@ variations tree = case tree of
 	  hypos11 <- sequence (map variations hypos1),
 	  prop2 <- variations prop]
   GVarsHypo (GListIdent xs) (GSetKind set) ->
-    [tree, GLetFormulaHypo (GFElem (GListTerm [GTIdent x | x <- xs]) (GSetTerm set))]
+    [tree, GLetDeclarationHypo (GDElem (GListTerm [GTIdent x | x <- xs]) (GSetTerm set))]
   GAllProp (GListArgKind [argkind]) prop ->
     tree : [GPostQuantProp prop exp | exp <- allExpVariations argkind]
   GExistProp (GListArgKind [argkind]) prop ->

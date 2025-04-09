@@ -4,6 +4,7 @@ abstract Terms = {
 
 cat
   Formula ;
+  Declaration ;
   Equation ;
   Eqsign ;
   Term ;
@@ -14,6 +15,8 @@ cat
 fun
   FEquation : Equation -> Formula ;
   FElem : [Term] -> Term -> Formula ;
+  
+  DElem : [Term] -> Term -> Declaration ;
 
   EChain : Eqsign -> Term -> Equation -> Equation ;
   EBinary : Eqsign -> Term -> Term -> Equation ;

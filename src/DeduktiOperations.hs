@@ -103,11 +103,6 @@ ignoreFirstArguments cns t = case t of
   _ -> composOp (ignoreFirstArguments cns) t
 
 
-alphaConvert :: M.Map String String -> Tree a -> Tree a
-alphaConvert convs t = case t of
-  QIdent a -> maybe t QIdent $ M.lookup a convs
-  _ -> composOp (alphaConvert convs) t
-
 peano2int :: Tree a -> Tree a
 peano2int t = case t of
   EApp f x -> case splitApp t of
