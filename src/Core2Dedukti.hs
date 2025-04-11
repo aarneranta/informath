@@ -198,7 +198,7 @@ proofexp2exp proofexp = case proofexp of
 
 ident2ident :: GIdent -> QIdent
 ident2ident ident = case ident of
-  GStrIdent (GString s) -> QIdent s
+  GStrIdent (GString s) -> QIdent (escapeConstant s)
 
 exp2ident :: GExp -> QIdent
 exp2ident exp = case exp of

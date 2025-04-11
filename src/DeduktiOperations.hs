@@ -82,7 +82,7 @@ applyConstantData cd = appConst []
      _ -> (f, ComALL)
      
    gfAnnotate :: GFCat -> GFFun -> QIdent -> QIdent
-   gfAnnotate cat fun ident@(QIdent c) = QIdent (c ++ "|" ++ cat ++ "|" ++ fun)
+   gfAnnotate cat fun ident@(QIdent c) = QIdent (c ++ "&" ++ cat ++ "&" ++ fun)
 
 -- for a coercion application, only leave its last argument
 ignoreCoercions :: [QIdent] -> Tree a -> Tree a

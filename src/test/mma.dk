@@ -1,0 +1,10 @@
+eintMinusLe : (b : Elem Int) -> (c : Elem Int) -> Proof (Lt b c) ->
+  Proof (Gt (minus c b) (nd 0)).
+
+mulDvdMulIffLeft : (a : Elem Nat) -> (b : Elem Nat) -> (c : Elem Nat) -> 
+  Proof (Gt a (nd 0)) -> Proof (iff (divide (times a b) (times a c)) (divide b c)).
+
+normEqOneOfPowEqOne : ({|\zeta|} : Elem Complex) -> (n : Elem Nat)
+  -> Proof (if (and (Eq (exp {|\zeta|} n) (nd 1)) (Neq n (nd 0)))
+            (Eq (length {|\zeta|}) 1)).  (; z -> {|\zeta|} ;)
+

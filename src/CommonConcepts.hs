@@ -7,6 +7,7 @@ import Dedukti.AbsDedukti
 import Informath
 import qualified Data.Map as M
 import Data.List (isSuffixOf)
+import Data.Char
 
 type CTree a = Informath.Tree a
 type DTree a = Dedukti.AbsDedukti.Tree a
@@ -72,12 +73,36 @@ expNegated x = EApp (EIdent (QIdent "neg")) x
 
 -- lookup after annotation from dynamically loaded file
 lookupConstant :: String -> Maybe (String, String)
-lookupConstant f = case words (map (\c -> if c=='|' then ' ' else c) f) of
-  [_, cat, fun] -> return (cat, fun)
+lookupConstant f = case splitConstant f of
+  Right (_, cat, fun) -> return (cat, fun)
   _ -> Nothing
 
+-- split at &s; they can occur spuriously inside {|...|} but not elsewhere
+splitConstant :: String -> Either String (String, String, String) 
+splitConstant f
+  | isSuffixOf "|}" f = Left f
+  | otherwise = case reverse (words (map (\c -> if c=='&' then ' ' else c) f)) of
+      fun:cat:xs -> Right (concat xs, cat, fun) 
+      _ -> Left f
+
 stripConstant :: String -> String
-stripConstant = takeWhile (/='|')
+stripConstant f = case splitConstant f of
+  Left _ -> f
+  Right (h, _, _) -> h
+
+-- deal with {|ident|}
+unescapeConstant :: String -> String
+unescapeConstant s = case s of
+  _ | take 2 s == "{|" -> drop 2 (take (length s - 2) s)
+  _ -> s
+
+escapeConstant :: String -> String
+escapeConstant s = case s of
+  _ | any (not . isIdentChar) s -> "{|" ++ s ++ "|}"
+  _ -> s
+
+isIdentChar :: Char -> Bool
+isIdentChar c = or [isAlpha c, isDigit c, elem c ".'_"]
 
 -- Dedukti representation of digits
 digitFuns :: [String]

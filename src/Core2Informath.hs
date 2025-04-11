@@ -47,8 +47,8 @@ formalize t = case t of
   GComparnounProp compar x y -> case (getTerm x, getTerm y) of
     (Just tx, Just ty) ->
       GFormulaProp (GFEquation (GEBinary (GComparnounEqsign compar) tx ty))
-  GOperListExp oper xy@(GAddExps x (GOneExps y)) -> case (getTerm x, getTerm y) of
-    (Just tx, Just ty) -> GTermExp (GAppOperTerm oper tx ty)
+  GOperListExp oper xy@(GAddExps x (GOneExps y)) -> case getTerm t of
+    Just tr -> GTermExp tr
     _ -> GOperListExp oper (formalize xy)
   GConstExp const -> GTermExp (GConstTerm const)
   GFunListExp f exps -> maybe t GTermExp (getTerm t) 
@@ -71,7 +71,7 @@ getTerm = maybe Nothing (return . optTerm) . gT where
     GAppExp t@(GTermExp (GTIdent f)) exps -> case mapM gT (exps2list exps) of
       Just xs -> return (GTApp (GFIdent f) (GListTerm xs))
       _ -> Nothing
-    GTermExp term -> return term ---- TODO go deeper into term
+    GTermExp term -> return term
     _ -> Nothing
   optTerm :: Tree a -> Tree a
   optTerm t = case t of

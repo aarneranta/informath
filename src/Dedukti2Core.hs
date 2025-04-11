@@ -16,7 +16,7 @@ jmt2core :: Jmt -> GJmt
 jmt2core = cleanup . jmt2jmt where
   cleanup :: Informath.Tree a -> Informath.Tree a
   cleanup t = case t of
-    GStrIdent (GString s) -> GStrIdent (GString (stripConstant s))
+    GStrIdent (GString s) -> GStrIdent (GString (unescapeConstant (stripConstant s)))
     _ -> Informath.composOp cleanup t
 
 jmt2jmt :: Jmt -> GJmt
