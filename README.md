@@ -2,6 +2,10 @@
 
 (c) Aarne Ranta 2025
 
+## NEW
+
+[Slides from ENS Saclay 10 April 2025](./doc/dedukti-gf-2025.pdf)
+
 ## The Informath project
 
 The Informath project addresses the problem of translating between formal and informal languages for mathematics. It aims to translate between multiple formal and informal languages in all directions. The formal languages included are Agda, Coq, Dedukti, and Lean. The informal languages are English, French, and Swedish. More languages will be added later. Also the scope of language structures is at the moment theorem statements and definitions; proofs are included for the sake of completeness, but will require more work to enable more natural verbalizations.
