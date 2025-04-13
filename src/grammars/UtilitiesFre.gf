@@ -17,6 +17,7 @@ oper
   OperatorT : Type = {op : L.OperT ; f : FunctionT} ; 
   ComparisonT : Type = {rel : RelationT ; op :  Str} ;
   SetT : Type = {cn : CN ; c : Str} ;
+  FamilyT : Type = {cn : CN ; prep1, prep2 : Prep ; isCollective : Bool} ;
   LabelT = {np : NP ; isEmpty : Bool} ;
   ComparnounT = {cn : CN ; prep : Prep ; op : Str} ;
   
@@ -58,7 +59,18 @@ oper
     mkFun : (a, b, n : Str) -> FunctionT
       = \a, b, n -> {cn = mkCN (mkA a) (mkCN (mkA b) (mkN n)) ; prep = possess_Prep} ;
     } ;
-    
+
+  mkFam = overload {
+    mkFam : Str -> FamilyT = \s ->
+      {cn = mkCN (mkN s) ; prep1, prep2 = possess_Prep ; isCollective = True} ;
+    mkFam : Str -> Prep -> Prep -> FamilyT = \s, p1, p2 ->
+      {cn = mkCN (mkN s) ; prep1 = p1 ; prep2 = p2 ; isCollective = False} ;
+    mkFam : CN -> FamilyT = \cn ->
+      {cn = cn ; prep1, prep2 = possess_Prep ; isCollective = True} ;
+    mkFam : CN -> Prep -> Prep -> FamilyT = \cn, p1, p2 ->
+      {cn = cn ; prep1 = p1 ; prep2 = p2 ; isCollective = False} ;
+    } ;
+
   mkAdj = overload {
     mkAdj : Str -> AP
       = \s -> mkAP (mkA s) ;

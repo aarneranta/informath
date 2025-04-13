@@ -17,6 +17,7 @@ fun
   FElem : [Term] -> Term -> Formula ;
   
   DElem : [Term] -> Term -> Declaration ;
+  DFunction : Ident -> Term -> Term -> Declaration ;
 
   EChain : Eqsign -> Term -> Equation -> Equation ;
   EBinary : Eqsign -> Term -> Term -> Equation ;

@@ -38,7 +38,7 @@ divisible BASE Reladj divisible_Reladj
 divide BASE Relverb divide_Relverb
 divisor BASE Relnoun divisor_Relnoun
 converge BASE Verb converge_Verb
-function BASE Oper function_Oper
+function BASE Fam function_Fam
 union BASE Oper union_Oper
 intersection BASE Oper intersection_Oper
 difference BASE Oper difference_Oper

@@ -13,7 +13,7 @@ in {
 
 lincat
   Noun = CN ;
-  Fam = CN ;
+  Fam = FamilyT ;
   Set = SetT ;
   Adj = AP ;
   Verb = VP ;
@@ -47,7 +47,7 @@ lin
 
   number_Noun = mkNoun tal_N ;
   boolean_Noun = mkNoun "sanningsvärde" ;
-  list_Fam = mkNoun "lista" ;
+  list_Fam = mkFam "lista" ;
   natural_Set = mkSet L.natural_Set "naturlig" tal_N ;
   integer_Set = mkSet L.integer_Set (mkN "hel" tal_N) ;
   rational_Set = mkSet L.rational_Set "rationell" tal_N ;
@@ -88,7 +88,7 @@ lin
   divisible_Reladj = mkRel "delbar" "med" ;
   prime_Adj = mkAdj "prim" ;
 
-  function_Oper = mkOper L.function_Oper (mkN "funktion" "funktioner") ;
+  function_Fam = mkFam (mkCN (mkN "funktion" "funktioner")) from_Prep to_Prep ;
   union_Oper = mkOper L.union_Oper "union" ;
   intersection_Oper = mkOper L.intersection_Oper (mkN "snitt" "snittet") ;
   complement_Oper = mkOper L.complement_Oper (mkN "komplement" "komplement") ;

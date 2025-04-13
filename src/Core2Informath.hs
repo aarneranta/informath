@@ -40,6 +40,8 @@ uncoerce t = case t of
 
 formalize :: Tree a -> Tree a
 formalize t = case t of
+  GVarsHypo (GListIdent [f]) (GFam2Kind (LexFam "function_Fam") (GSetKind a) (GSetKind b)) ->
+    GLetDeclarationHypo (GDFunction f (GSetTerm a) (GSetTerm b))
   GAdjProp (GComparAdj compar y) x -> case (getTerm x, getTerm y) of
     (Just tx, Just ty) ->
       GFormulaProp (GFEquation (GEBinary (GComparEqsign compar) tx ty))
@@ -165,12 +167,14 @@ variations :: Tree a -> [Tree a]
 variations tree = case tree of
   GAxiomJmt label (GListHypo hypos) prop -> 
     let splits = [splitAt i hypos | i <- [0..length hypos]]
-    in [GAxiomJmt label (GListHypo hypos11) (hypoProp hypos2 prop2) |
+    in tree : [GAxiomJmt label (GListHypo hypos11) (hypoProp hypos2 prop2) |
           (hypos1, hypos2) <- splits,
 	  hypos11 <- sequence (map variations hypos1),
 	  prop2 <- variations prop]
   GVarsHypo (GListIdent xs) (GSetKind set) ->
     [tree, GLetDeclarationHypo (GDElem (GListTerm [GTIdent x | x <- xs]) (GSetTerm set))]
+  GVarsHypo fs@(GListIdent [f]) (GFam2Kind fam@(LexFam "function_Fam") (GSetKind a) (GSetKind b)) ->
+    [tree, GVarsHypo fs (GFam2Kind fam (GTermKind (GSetTerm a)) (GTermKind (GSetTerm b)))]
   GAllProp (GListArgKind [argkind]) prop ->
     tree : [GPostQuantProp prop exp | exp <- allExpVariations argkind]
   GExistProp (GListArgKind [argkind]) prop ->

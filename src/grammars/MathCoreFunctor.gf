@@ -192,7 +192,17 @@ lin
   LabelProofExp label = label.np ;
   ConstExp const = const.np ;
   OperListExp op exps = mkNP the_Det (mkCN op.f.cn (Syntax.mkAdv op.f.prep exps.np)) ;
-  FamKind fam kind = {cn = fam ; adv = Syntax.mkAdv possess_Prep (mkNP aPl_Det (useKind kind))} ;
+  FamKind fam kind = {cn = fam.cn ; adv = Syntax.mkAdv fam.prep1 (mkNP aPl_Det (useKind kind))} ;
+  Fam2Kind fam kind1 kind2 =
+    let
+      k1 = mkNP aPl_Det (useKind kind1) ;
+      k2 = mkNP aPl_Det (useKind kind2)
+    in  
+    {cn = fam.cn ; adv = case fam.isCollective of {
+      False => ccAdv (mkAdv fam.prep1 k1) (mkAdv fam.prep2 k2) ;  
+      True => mkAdv fam.prep1 (mkNP and_Conj k1 k2)  
+      }
+    } ;
   VerbProp verb exp = simpleProp (mkS (mkCl exp verb)) ; 
   RelverbProp verb x y = simpleProp (mkS (mkCl x verb y)) ; 
   RelnounProp rel x y = simpleProp (mkS (mkCl x (mkVP (mkCN rel y)))) ; 

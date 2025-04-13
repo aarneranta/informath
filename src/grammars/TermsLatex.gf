@@ -16,6 +16,7 @@ lin
   FElem es e = constant (es.s ++ "\\in" ++ top e) ;
   
   DElem es e = {s = es.s ++ "\\in" ++ top e ; isPl = es.isPl} ;
+  DFunction f a b = {s = f ++ ":" ++ top a ++ "\\rightarrow" ++ top b ; isPl = False} ;
 
   EChain op x eq = {s = top x ++ op ++ eq.s} ;
   EBinary op x y = {s = top x ++ op ++ top y} ;

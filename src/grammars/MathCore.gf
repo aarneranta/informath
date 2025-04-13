@@ -100,6 +100,7 @@ fun
   OperListExp : Oper -> Exps -> Exp ; -- binary operation applied collectively
   ComparAdj : Compar -> Exp -> Adj ;
   FamKind : Fam -> Kind -> Kind ;
+  Fam2Kind : Fam -> Kind -> Kind -> Kind ;
   VerbProp : Verb -> Exp -> Prop ;
   RelverbProp : Relverb -> Exp -> Exp -> Prop ;
   RelnounProp : Relnoun -> Exp -> Exp -> Prop ;

@@ -79,7 +79,7 @@ fun
   divisible_Reladj : Reladj ;
   prime_Adj : Adj ;
 
-  function_Oper : Oper ;
+  function_Fam : Fam ;
   union_Oper : Oper ;
   intersection_Oper : Oper ;
   cartesian_Oper : Oper ;

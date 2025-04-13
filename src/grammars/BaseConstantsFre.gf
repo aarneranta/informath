@@ -14,7 +14,7 @@ in {
 
 lincat
   Noun = CN ;
-  Fam = CN ;
+  Fam = FamilyT ;
   Set = SetT ;
   Adj = AP ;
   Reladj = RelationT ;
@@ -48,7 +48,7 @@ lin
 
   number_Noun = mkNoun nombre_N ;
   boolean_Noun = mkNoun (mkCN (mkA "booléen") (mkN "valeur" feminine)) ;
-  list_Fam = mkNoun "liste" ;
+  list_Fam = mkFam "liste" ;
 
   natural_Set = mkSet L.natural_Set "naturel" nombre_N ;
   integer_Set = mkSet L.integer_Set "entier" ;
@@ -91,7 +91,7 @@ lin
   divisible_Reladj = mkRel "divisible" "par" ;
   prime_Adj = mkAdj "premier" ;
 
-  function_Oper = mkOper L.function_Oper "fonction" ;
+  function_Fam = mkFam "fonction" genitive dative ;
   union_Oper = mkOper L.union_Oper "union" ;
   intersection_Oper = mkOper L.intersection_Oper "intersection" ;
   complement_Oper = mkOper L.complement_Oper (mkN "complément") ;

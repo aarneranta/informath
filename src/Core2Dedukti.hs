@@ -136,6 +136,10 @@ kind2dedukti kind = case kind of
       (kind2dedukti kind)
       (EAbs (BVar (ident2ident ident))
             (prop2dedukti prop))
+  GFamKind (LexFam fam) exp ->
+    EApp (EIdent (QIdent fam)) (kind2dedukti exp)
+  GFam2Kind (LexFam fam) exp1 exp2 ->
+    EApp (EApp (EIdent (QIdent fam)) (kind2dedukti exp1)) (kind2dedukti exp2)
   GAppKind ident exps ->
     foldl1 EApp (EIdent (ident2ident ident) : map exp2dedukti (exps2list exps))
   ---- still assuming GF fun is Dedukti ident

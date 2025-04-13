@@ -13,7 +13,7 @@ in {
 
 lincat
   Noun = CN ;
-  Fam = CN ;
+  Fam = FamilyT ; 
   Set = SetT ;
   Adj = AP ;
   Reladj = RelationT ;
@@ -48,7 +48,7 @@ lin
   digit_Noun = mkNoun "digit" ;
   number_Noun = mkNoun "Number" ;
   boolean_Noun = mkNoun "boolean" ;
-  list_Fam = mkNoun "list" ;
+  list_Fam = mkFam "list" ;
 
   natural_Set = mkSet L.natural_Set "natural" "number" ;
   integer_Set = mkSet L.integer_Set "integer" ;
@@ -90,7 +90,7 @@ lin
   divisible_Reladj = mkRel "divisible" "by" ;
   prime_Adj = mkAdj "prime" ;
 
-  function_Oper = mkOper L.function_Oper "function" ;
+  function_Fam = mkFam "function" from_Prep to_Prep ;
   union_Oper = mkOper L.union_Oper "union" ;
   intersection_Oper = mkOper L.intersection_Oper "intersection" ;
   difference_Oper = mkOper L.difference_Oper "difference" ;
