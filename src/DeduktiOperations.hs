@@ -79,6 +79,7 @@ applyConstantData cd = appConst []
      Just (BASE cat fun) -> (gfAnnotate cat fun f, ComALL)
      Just (ALIAS _ dkid com) -> (applyConstantData cd (QIdent dkid), com)
      Just (NEW _ cat fun com) -> (gfAnnotate cat fun f, com)
+     Just (CONV other) -> (QIdent other, ComALL)
      _ -> (f, ComALL)
      
    gfAnnotate :: GFCat -> GFFun -> QIdent -> QIdent

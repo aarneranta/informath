@@ -119,10 +119,6 @@ transHypo t = case t of
 
 transIdent :: QIdent -> C.CIdent
 transIdent t = case t of
-  c | c == identPi -> C.CIdent "All" 
-  c | c == identSigma -> C.CIdent "Exist"
-  c | c == identNat -> C.CIdent "nat" -- "ℕ" ---- TODO find out how to make Coq recognize these
-  c | isWildIdent c -> C.CIdent "x__" ---- ?
   QIdent str -> C.CIdent str ---- not quite the same ident syntax ; reserved idents in Coq!
 
 processDeduktiModule :: Module -> IO ()

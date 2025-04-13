@@ -12,7 +12,8 @@ import Dedukti.ErrM
 import DeduktiOperations (
   identsInTypes, dropDefinitions, stripQualifiers, identTypes, ignoreCoercions,
   ignoreFirstArguments, peano2int, applyConstantData)
-import ConstantData (ConstantData, string2constantData, lookBackConstantData)
+import ConstantData (
+  ConstantData, extractConstantData, lookBackConstantData, extractTargetConversions, convInfo)
 import Informath -- superset of Core
 import Core2Informath (nlg)
 import Informath2Core (semantics)
@@ -70,6 +71,9 @@ data Env = Env {
  flags :: [String],
  constantData :: ConstantData,
  lookBackData :: M.Map String String,  -- from GFFun to DkId ---- and to more info?
+ convToAgdaData :: ConstantData,
+ convToCoqData :: ConstantData,
+ convToLeanData :: ConstantData,
  cpgf :: PGF,
  lang :: Language,
  termindex :: [String] -- list of terms replaced by \INDEXEDTERM{ i }
@@ -88,13 +92,18 @@ main = do
   xx <- getArgs
   let (ff, yy) = partition ((== '-') . head) xx
   corepgf <- readPGF informathPGFFile
-  constantdata <- readFile constantDataFile >>= return . string2constantData Nothing ---- TODO filter project
+  datalines <- readFile constantDataFile >>= return . filter (not . null) . map words . lines
+  let constantdata = extractConstantData Nothing datalines ---- reserved for Maybe project
+  let targetdata = extractTargetConversions datalines
   let lookbackdata = lookBackConstantData constantdata 
   let Just lan = readLanguage (informathPrefix ++ (flagValue "lang" "Eng" ff))
   let env = Env{
         flags = ff,
 	constantData = constantdata,
 	lookBackData = lookbackdata,
+	convToAgdaData = M.fromList [(dk, convInfo t) | ("Agda", dk, t) <- targetdata],
+	convToCoqData = M.fromList [(dk, convInfo t) | ("Coq", dk, t) <- targetdata],
+	convToLeanData = M.fromList [(dk, convInfo t) | ("Lean", dk, t) <- targetdata],
 	cpgf = corepgf,
 	lang=lan,
 	termindex = []}
@@ -107,9 +116,12 @@ main = do
       s <- readFile filename
       mo@(MJmts jmts) <- parseDeduktiModule env s
       case s of
-        _ | ifFlag "-to-agda" env -> DA.processDeduktiModule mo
-        _ | ifFlag "-to-coq" env -> DC.processDeduktiModule mo
-        _ | ifFlag "-to-lean" env -> DL.processDeduktiModule mo
+        _ | ifFlag "-to-agda" env ->
+	  DA.processDeduktiModule (applyConstantData (convToAgdaData env) mo)
+        _ | ifFlag "-to-coq" env ->
+	  DC.processDeduktiModule (applyConstantData (convToCoqData env) mo)
+        _ | ifFlag "-to-lean" env -> 
+	  DL.processDeduktiModule (applyConstantData (convToLeanData env) mo)
 	_ | ifFlag "-to-dedukti" env -> mapM_ putStrLn [printTree j | j <- jmts] -- when modifying dedukti
 	_ | ifFlag "-parallel" env -> parallelJSONL env{flags = "-variations":flags env} mo
 	_ | ifFlag "-idents" env -> printFrequencyTable (identsInTypes mo)
@@ -122,9 +134,12 @@ main = do
       let ss = renameLabels ss0 -- quick hack to rename labels
       mo <- parseDeduktiModule env (unlines ss)
       case s of
-        _ | ifFlag "-to-agda" env -> DA.processDeduktiModule mo
-        _ | ifFlag "-to-coq" env -> DC.processDeduktiModule mo
-        _ | ifFlag "-to-lean" env -> DL.processDeduktiModule mo
+        _ | ifFlag "-to-agda" env ->
+	  DA.processDeduktiModule (applyConstantData (convToAgdaData env) mo)
+        _ | ifFlag "-to-coq" env ->
+	  DC.processDeduktiModule (applyConstantData (convToCoqData env) mo)
+        _ | ifFlag "-to-lean" env ->
+	  DL.processDeduktiModule (applyConstantData (convToLeanData env) mo)
 	_ -> mapM_ putStrLn ss
     _ -> do
       loop env
@@ -276,9 +291,9 @@ parallelJSONL env mo@(MJmts jmts) = do
       let gft = gf tree
       let json = concat $ intersperse ", " $ [
             mkJSONField "dedukti" (printTree jmt),
-            mkJSONField "agda" (DA.printAgdaJmts (DA.transJmt jmt)),
-            mkJSONField "coq" (DC.printCoqJmt (DC.transJmt jmt)),
-            mkJSONField "lean" (DL.printLeanJmt (DL.transJmt jmt))
+            mkJSONField "agda" (DA.printAgdaJmts (DA.transJmt (applyConstantData (convToAgdaData env) jmt))),
+            mkJSONField "coq" (DC.printCoqJmt (DC.transJmt (applyConstantData (convToCoqData env) jmt))),
+            mkJSONField "lean" (DL.printLeanJmt (DL.transJmt (applyConstantData (convToLeanData env) jmt)))
 	    ] ++ [
 	      mkJSONListField (showCId lang)
 	        [unlextex (linearize gr lang (gf t)) | t <- nlg (flags env) tree]

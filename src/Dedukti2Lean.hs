@@ -121,11 +121,6 @@ transHypo t = case t of
 
 transQIdent :: QIdent -> L.LIdent
 transQIdent t = case t of
-  c | c == identPi -> L.LIdent "All" 
-  c | c == identSigma -> L.LIdent "Exist"
-  c | c == identNat -> L.LIdent "Nat" -- "ℕ" ---- TODO find out how to make Lean recognize these
-  c | c == identInt -> L.LIdent "Int" -- "ℤ"
-  c | c == identReal -> L.LIdent "Real" -- "ℝ"
   QIdent str -> L.LIdent str ---- not quite the same ident syntax ; reserved idents in Lean!
 
 processDeduktiModule :: Module -> IO ()

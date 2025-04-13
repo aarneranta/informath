@@ -10,8 +10,6 @@ import qualified Agda.PrintAgda as PrA
 
 import DeduktiOperations (getNumber, splitApp, isWildIdent)
 
-import System.Environment (getArgs)
-
 -- skeleton copied from bnfc-generated SkelDedukti
 
 import Dedukti.ErrM
@@ -84,9 +82,8 @@ transPatt t = case t of
 
 transQIdent :: QIdent -> A.AIdent
 transQIdent t = case t of
-  QIdent "forall" -> A.AIdent "all" -- reserved word
-  QIdent "Type" -> A.AIdent "Set" ---
-  QIdent str -> A.AIdent str --- so far the same Ident syntax
+  QIdent str -> A.AIdent (map (\c -> if c=='_' then '8' else c) str) --- replace _
+  ---- TODO avoid clashes
 
 processDeduktiModule :: Module -> IO ()
 processDeduktiModule mo@(MJmts jmts) = do

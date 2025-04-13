@@ -164,3 +164,15 @@ area NEW top100 Fun area_Fun
 #LIN Swe area_Fun = mkFun "area"
 
 
+#CONV Agda forall all
+#CONV Agda Type Set
+
+#CONV Lean forall All
+#CONV Lean exists Exist
+
+#CONV Coq forall All
+#CONV Coq exists Exist
+#CONV Coq Nat nat
+#CONV Coq _ x_
+
+

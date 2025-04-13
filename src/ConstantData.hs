@@ -24,16 +24,20 @@ data ConstantInfo =
   | ALIAS Project DkId Combination        -- alias for a BASE constant in Project
   | NEW Project GFCat GFFun Combination   -- new constant in Project
   | COERCION Project                      -- coercion, to be peeled away with all args except last
+  | CONV DkId  -- just convert, e.g. from Dk to Lean
  deriving Show
 
-string2constantData mproj =
+convInfo other = CONV other
+
+extractTargetConversions :: [[String]] -> [(String, String, String)]
+extractTargetConversions ds = [(tgt, dk, t) | "#CONV":tgt:dk:t:_ <- ds]
+
+extractConstantData :: Maybe String -> [[String]] -> M.Map String ConstantInfo
+extractConstantData mproj =
   M.fromList .
   filter (isFor mproj) .
   map (mkConstantInfo) .  -- after =, a possible GF rule
-  filter ((/='#') . head . head) .
-  filter (not . null) .
-  map words .
-  lines
+  filter ((/='#') . head . head) 
 
 isFor mproj info = case mproj of
   Just proj -> case info of
