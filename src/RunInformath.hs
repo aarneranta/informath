@@ -13,7 +13,7 @@ import DeduktiOperations (
   identsInTypes, dropDefinitions, stripQualifiers, identTypes, ignoreCoercions,
   ignoreFirstArguments, peano2int, applyConstantData)
 import ConstantData (
-  ConstantData, extractConstantData, lookBackConstantData, extractTargetConversions, convInfo)
+  ConstantData, extractConstantData, lookBackConstantData, extractTargetConversions, convInfo, coercionFunctions)
 import Informath -- superset of Core
 import Core2Informath (nlg)
 import Informath2Core (semantics)
@@ -35,13 +35,16 @@ import qualified Data.Map as M
 helpMsg = unlines [
   "usage: RunInformath <flag>* <file>?",
   "without arguments or flags, start interactive session",
+  "",
   "  ? <string>  translate from natural language to Dedukti",
   "  <string>    translate from Dedukti to natural language",
+  "",
   "with file argument: depending on file suffix,",
   "  .dk    read Dedukti file and convert to natural language of Agda",
   "  .dkgf  create UserConstants files to map Dedukti identifiers",
   "  .txt   (or any other) parse as natural language, convert to Dedukti",
   "flags:",
+  "",
   "  -help           print this message",
   "  -data=<files>   constant data additional to base_constant_data.dkgf",
   "  -projects=<names> project names used for filtering additional constant data",
@@ -50,6 +53,7 @@ helpMsg = unlines [
   "  -to-lean        convert to Lean (with <file>.dk as argument)",
   "  -to-dedukti     to Dedukti code (typically after changes in <file.dk>)",
   "  -lang=<lang>    natural language to be targeted; Eng (default), Swe, Fre,...",
+  "  -gfname=<ident> GF module generated from .dkgf, default UserConstants", 
   "  -to-latex-file  generate a LaTeX file (used with natural language output)",
   "  -parallel       generate a jsonl list with all languages and variations",
   "  -v              verbose output, e.g. syntax trees and intermediate results",
@@ -60,7 +64,10 @@ helpMsg = unlines [
   "  -dropcoercions  strip named coercions, only leaving their last arguments",
   "  -dropfirstargs  drop first k arguments of given functions (usually type arguments)",
   "  -peano2int      convert succ/0 natural numbers to sequences of digits",
-  "output is to stdout and can be redirected to a file to check with",
+  "  -idents         print a frequency table of identifiers in a .dk file",
+  "  -idtypes        print the types identifiers in a .dk file",
+  "",
+  "Output is to stdout and can be redirected to a file to check with",
   "Dedukti or Agda or Coq or Lean when producing one of these."
   ]
 
@@ -119,7 +126,8 @@ main = do
     _ | ifFlag "-help" env -> do
       putStrLn helpMsg
     filename:_ | isSuffixOf ".dkgf" filename -> do
-      mkConstants filename
+      let gfname = flagValue "gfname" "UserConstants" ff
+      mkConstants filename gfname
     filename:_ | isSuffixOf ".dk" filename -> do
       s <- readFile filename
       mo@(MJmts jmts) <- parseDeduktiModule env s
@@ -173,14 +181,12 @@ parseDeduktiModule env s = do
 deduktiOpers :: Env -> [Module -> Module]
 deduktiOpers env =
   [peano2int | ifFlag "-peano2int" env] ++
-  [ignoreFirstArguments matita_typeargs | ifFlag "-dropfirstargs" env] ++
-  [ignoreCoercions matita_coercions | ifFlag "-dropcoercions" env] ++
+  [ignoreCoercions envCoercions | ifFlag "-dropcoercions" env] ++
   [applyConstantData (constantData env) | not (noConstantData env)] ++ 
   [stripQualifiers | ifFlag "-dropqualifs" env] ++ 
   [dropDefinitions | ifFlag "-dropdefs" env] 
  where
-  matita_coercions = [QIdent s | s <- words "Term lift Univ"] ---- TODO make parametric
-  matita_typeargs = [(QIdent "Eq", 1), (QIdent "member", 1)]
+  envCoercions = map QIdent (coercionFunctions (constantData env))
   noConstantData env =
     or [ifFlag f env | f <- words "-to-agda -to-coq -to-dedukti -to-lean -rawconstantdata -parallel"]
 

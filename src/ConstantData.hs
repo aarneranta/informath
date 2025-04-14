@@ -47,6 +47,8 @@ isFor mprojs info = case mprojs of
     _ -> True
   _ -> True
 
+coercionFunctions cd = [s | (s, COERCION _) <- M.toList cd] 
+
 mkConstantInfo words = case words of
   c : "BASE" : cat : fun : _ -> (c, BASE cat fun)
   c : "ALIAS" : proj : dkid : ws -> (c, ALIAS proj dkid (mkCombination ws))
