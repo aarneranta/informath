@@ -43,6 +43,8 @@ helpMsg = unlines [
   "  .txt   (or any other) parse as natural language, convert to Dedukti",
   "flags:",
   "  -help           print this message",
+  "  -data=<files>   constant data additional to base_constant_data.dkgf",
+  "  -projects=<names> project names used for filtering additional constant data",
   "  -to-agda        convert to Agda (with <file>.dk as argument)",
   "  -to-coq         convert to Coq (with <file>.dk as argument)",
   "  -to-lean        convert to Lean (with <file>.dk as argument)",
@@ -64,7 +66,7 @@ helpMsg = unlines [
 
 informathPrefix = "Informath"
 informathPGFFile = "grammars/" ++ informathPrefix ++ ".pgf"
-constantDataFile = "constant_data.dkgf"
+baseConstantDataFile = "base_constant_data.dkgf"
 Just jmt = readType "Jmt"
 
 data Env = Env {
@@ -86,14 +88,20 @@ flagValue flag dfault ff = case [f | f <- ff, isPrefixOf flag (tail f)] of
   f:_ -> drop (length flag + 2) f   -- -<flag>=<value>
   _ -> dfault
 
+commaSep s = words (map (\c -> if c==',' then ' ' else c) s)
+
 allLanguages env = languages (cpgf env)
 
 main = do
   xx <- getArgs
   let (ff, yy) = partition ((== '-') . head) xx
   corepgf <- readPGF informathPGFFile
-  datalines <- readFile constantDataFile >>= return . filter (not . null) . map words . lines
-  let constantdata = extractConstantData Nothing datalines ---- reserved for Maybe project
+  let otherdatafiles = commaSep (flagValue "data" "" ff)
+  datafiles <- mapM readFile (baseConstantDataFile : otherdatafiles) >>= return . concatMap lines
+  let datalines = filter (not . null) (map words datafiles)
+  let mprojects = let ps = commaSep (flagValue "projects" "" ff)
+                  in if null ps then Nothing else Just ps
+  let constantdata = extractConstantData mprojects datalines
   let targetdata = extractTargetConversions datalines
   let lookbackdata = lookBackConstantData constantdata 
   let Just lan = readLanguage (informathPrefix ++ (flagValue "lang" "Eng" ff))

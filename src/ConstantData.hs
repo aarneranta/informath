@@ -32,18 +32,18 @@ convInfo other = CONV other
 extractTargetConversions :: [[String]] -> [(String, String, String)]
 extractTargetConversions ds = [(tgt, dk, t) | "#CONV":tgt:dk:t:_ <- ds]
 
-extractConstantData :: Maybe String -> [[String]] -> M.Map String ConstantInfo
-extractConstantData mproj =
+extractConstantData :: Maybe [String] -> [[String]] -> M.Map String ConstantInfo
+extractConstantData mprojs =
   M.fromList .
-  filter (isFor mproj) .
+  filter (isFor mprojs) .
   map (mkConstantInfo) .  -- after =, a possible GF rule
   filter ((/='#') . head . head) 
 
-isFor mproj info = case mproj of
-  Just proj -> case info of
-    (_, ALIAS p _ _) -> p == proj
-    (_, NEW p _ _ _) -> p == proj
-    (_, COERCION p) -> p == proj
+isFor mprojs info = case mprojs of
+  Just projs -> case info of
+    (_, ALIAS p _ _) -> elem p projs
+    (_, NEW p _ _ _) -> elem p projs
+    (_, COERCION p) -> elem p projs
     _ -> True
   _ -> True
 

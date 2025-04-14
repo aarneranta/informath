@@ -47,7 +47,7 @@ demo:
 	dk check out/texx.dk
 	cat BaseConstants.dk test/sets.dk >out/sexx.dk 
 	dk check out/sexx.dk
-	./RunInformath -to-latex-file -variations test/top100.dk >out/top100.tex
+	./RunInformath -to-latex-file -variations -data=added_constants.dkgf -projects=top100 test/top100.dk >out/top100.tex
 	echo "consider pdflatex out/top100.tex"
 	./RunInformath -to-latex-file -variations test/sets.dk >out/sets.tex
 	echo "consider pdflatex out/sets.tex"

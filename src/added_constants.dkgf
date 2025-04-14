@@ -1,61 +1,3 @@
-Set BASE Noun set_Noun
-Type BASE Noun type_Noun
-Prop BASE Noun proposition_Noun
-false BASE Name absurdity_Name
-Num BASE Noun number_Noun
-bool BASE Noun boolean_Noun
-List BASE Fam list_Fam
-Dig BASE Noun digit_Noun
-Nat BASE Set natural_Set
-Int BASE Set integer_Set
-Rat BASE Set rational_Set
-Real BASE Set real_Set
-Complex BASE Set complex_Set
-Eq BASE Compar Eq_Compar
-Lt BASE Compar Lt_Compar
-Gt BASE Compar Gt_Compar
-Neq BASE Compar Neq_Compar
-Leq BASE Compar Leq_Compar
-Geq BASE Compar Geq_Compar
-positive BASE Adj positive_Adj
-negative BASE Adj negative_Adj
-plus BASE Oper plus_Oper
-minus BASE Oper minus_Oper
-times BASE Oper times_Oper
-div BASE Oper div_Oper
-pow BASE Oper pow_Oper
-neg BASE Oper neg_Oper
-log BASE Oper logarithm_Oper
-sqrt BASE Oper square_root_Oper
-succ BASE Fun successor_Fun
-abs BASE Fun absolute_value_Fun
-factorial BASE Oper factorial_Oper
-gcd BASE Fun gcd_Fun
-even BASE Adj even_Adj
-odd BASE Adj odd_Adj
-prime BASE Adj prime_Adj
-divisible BASE Reladj divisible_Reladj
-divide BASE Relverb divide_Relverb
-divisor BASE Relnoun divisor_Relnoun
-converge BASE Verb converge_Verb
-function BASE Fam function_Fam
-union BASE Oper union_Oper
-intersection BASE Oper intersection_Oper
-difference BASE Oper difference_Oper
-cartesian BASE Oper difference_Oper
-powerset BASE Oper powerset_Oper
-complement BASE Oper complement_Oper
-subset BASE Comparnoun subset_Comparnoun
-subseteq BASE Comparnoun subseteq_Comparnoun
-superset BASE Comparnoun superset_Comparnoun
-superseteq BASE Comparnoun superset_Comparnoun
-equalset BASE Compar equalset_Compar
-notequalset BASE Compar notequalset_Compar
-element BASE Comparnoun element_Comparnoun
-notelement BASE Comparnoun notelement_Comparnoun
-emptyset BASE Const emptyset_Const
-universeset BASE Const universeset_Const
-
 nat ALIAS matita Nat
 Type0 ALIAS matita Set
 prop ALIAS matita Prop
@@ -163,16 +105,16 @@ area NEW top100 Fun area_Fun
 #LIN Fre area_Fun = mkFun "aire"
 #LIN Swe area_Fun = mkFun "area"
 
-
-#CONV Agda forall all
-#CONV Agda Type Set
-
-#CONV Lean forall All
-#CONV Lean exists Exist
-
-#CONV Coq forall All
-#CONV Coq exists Exist
-#CONV Coq Nat nat
-#CONV Coq _ x_
-
+fun ALIAS hol function
+el ALIAS hol Elem
+prf ALIAS hol Proof
+bool ALIAS hol Prop
+{|ε|} ALIAS hol element
+{|¬|} ALIAS hol not
+{|⊥|} ALIAS hol false
+{|∨|} ALIAS hol or
+{|∃|} ALIAS hol exists
+{|∀|} ALIAS hol forall
+{|⇒|} ALIAS hol if
+{|∧|} ALIAS hol and
 

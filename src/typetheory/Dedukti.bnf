@@ -9,7 +9,7 @@ comment "#" ; ----
 
 JStatic.  Jmt ::= QIdent ":" Exp "." ;
 JDef.     Jmt ::= "def" QIdent MTyp MExp "." ;
-JInj.     Jmt ::= "inj" QIdent MTyp MExp "." ;
+JInj.     Jmt ::= "injective" QIdent MTyp MExp "." ;  --- "inj" in https://github.com/Deducteam/Dedukti
 JThm.     Jmt ::= "thm" QIdent MTyp MExp "." ;
 JRules.   Jmt ::= [Rule] "." ;
 
