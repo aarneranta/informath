@@ -251,27 +251,32 @@ Users can also map their Dedukti identifiers to already existing ones in [BaseCo
 ```
 stating that the former dkid should be treated in the same way as the latter one in GF.
 
-In the future, .dkgf files are also planned to contain information about conversions of constants from Dedukti to the other type theories, whenever the constant names or their argument lists need to be changed.
+In addition to information for GF, .dkgf files can contain information about conversions of constants from Dedukti to the other type theories, whenever the constant names or their argument lists need to be changed; see below.
 
 ### Categories of user-defined constants
 
 The following categories of new constants are currently supported by the grammar and can appear in the <gfcat> field of .dkgf files:
 ```
-  Noun ;    -- Kind            -- set
-  Fam ;     -- Kind -> Kind    -- list of integers
-  Set ;     -- Kind + symbol   -- integer, Z
-  Adj ;     -- Exp -> Prop     -- even
-  Verb ;    -- Exp -> Exp      -- converge
-  Reladj ;  -- Exp -> Exp -> Prop -- divisible by
-  Relverb ; -- Exp -> Exp -> Exp  -- divide
-  Relnoun ; -- Exp -> Exp -> Exp  -- member of
-  Name ;    -- Exp                -- absurdity
-  Fun ;     -- [Exp] -> Exp       -- equivalence of
-  Label ;   -- Exp                -- theorem 1
-  Const ;   -- Exp + symbol       -- the empty set, Ø
-  Oper ;    -- Exp -> Exp -> Exp + symbol     -- the sum of, +
-  Compar ;  -- Exp -> Exp -> Prop + symbol    -- greater than, >
-  Comparnoun ; -- Exp -> Exp -> Prop + symbol -- subset of, >
+  -- GF cat         usage                           example
+—-------------------------------------------------------------------
+  Noun ;       -- Kind                         -- set
+  Fam ;        -- Kind -> Kind                 -- list of integers
+  Adj ;        -- Exp -> Prop                  -- even
+  Verb ;       -- Exp -> Exp                   -- converge
+  Reladj ;     -- Exp -> Exp -> Prop           -- divisible by
+  Relverb ;    -- Exp -> Exp -> Prop           -- divide
+  Relnoun ;    -- Exp -> Exp -> Prop           -- root of
+  Name ;       -- Exp                          -- contradiction
+  Fun ;        -- [Exp] -> Exp                 -- radius of
+  Label ;      -- Exp                          -- theorem 1
+
+  Set ;        -- Kind | Term                  -- integer, Z
+  Const ;      -- Exp | Term                   -- the empty set, Ø
+  Oper ;       -- Exp -> Exp -> Exp  | Term    -- the sum of, +
+  Compar ;     -- Exp -> Exp -> Prop | Formula -- greater than, >
+  Comparnoun ; -- Exp -> Exp -> Prop | Formula -- a subset of, \sub
+
+
 ```
 
 
@@ -288,11 +293,27 @@ The example file [test/exx.dk](./src/test/exx.dk) assumes this file. As shown in
 $ cat BaseConstants.dk test/exx.dk >bexx.dk
 $ dk check bexx.dk
 ```
-As this is cumbersome, we will need to implement something more automatic in the future.
+Since this is cumbersome, we will need to implement something more automatic in the future. We also plan to use Dedukti for type selecting among ambiguous parse results by type checking, and Lambdapi (a syntactically richer version of Dedukti with implicit arguments) to restore implicit arguments.
+
+
+## Generating other type theories
+
+Each of Agda, Coq, and Lean will be described below. A common feature to all of them are the conversion rules of constants stored in [BaseConstants.dk](./src/BaseConstants.dk), with the format as in
+```
+#CONV Agda forall all
+#CONV Coq forall All
+#CONV Lean forall All
+```
+The purpose of these conversions is to 
+- avoid clashes of the target systems' reserved words
+- map Dedukti to standard libraries of these systems
+- comply to the identifier syntax of each system
+
+The last purpose might be better served by a generic conversion, but that remains to be done.
 
 ## Generating and type checking Agda
 
-There is now a simple generation of Agda from Dedukti. At the moment, it is only reliable for generating Agda "postulates". The usage is
+There a simple generation of Agda from Dedukti. At the moment, it is only reliable for generating Agda "postulates". The usage is
 ```
 $ ./RunInformath -to-agda <file>
 ```

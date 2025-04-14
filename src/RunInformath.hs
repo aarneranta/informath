@@ -14,6 +14,7 @@ import DeduktiOperations (
   ignoreFirstArguments, peano2int, applyConstantData)
 import ConstantData (
   ConstantData, extractConstantData, lookBackConstantData, extractTargetConversions, convInfo, coercionFunctions)
+import SpecialDeduktiConversions (specialDeduktiConversions)
 import Informath -- superset of Core
 import Core2Informath (nlg)
 import Informath2Core (semantics)
@@ -53,7 +54,8 @@ helpMsg = unlines [
   "  -to-lean        convert to Lean (with <file>.dk as argument)",
   "  -to-dedukti     to Dedukti code (typically after changes in <file.dk>)",
   "  -lang=<lang>    natural language to be targeted; Eng (default), Swe, Fre,...",
-  "  -gfname=<ident> GF module generated from .dkgf, default UserConstants", 
+  "  -gfname=<ident> GF module generated from .dkgf, default UserConstants",
+  "  -conv=<ident>+  special dedukti conversions from defined in a separate file",
   "  -to-latex-file  generate a LaTeX file (used with natural language output)",
   "  -parallel       generate a jsonl list with all languages and variations",
   "  -v              verbose output, e.g. syntax trees and intermediate results",
@@ -80,6 +82,7 @@ data Env = Env {
  flags :: [String],
  constantData :: ConstantData,
  lookBackData :: M.Map String String,  -- from GFFun to DkId ---- and to more info?
+ specialConversions :: [String],
  convToAgdaData :: ConstantData,
  convToCoqData :: ConstantData,
  convToLeanData :: ConstantData,
@@ -108,6 +111,7 @@ main = do
   let datalines = filter (not . null) (map words datafiles)
   let mprojects = let ps = commaSep (flagValue "projects" "" ff)
                   in if null ps then Nothing else Just ps
+  let specialconvs = commaSep (flagValue "conv" "" ff)
   let constantdata = extractConstantData mprojects datalines
   let targetdata = extractTargetConversions datalines
   let lookbackdata = lookBackConstantData constantdata 
@@ -116,6 +120,7 @@ main = do
         flags = ff,
 	constantData = constantdata,
 	lookBackData = lookbackdata,
+	specialConversions = specialconvs,
 	convToAgdaData = M.fromList [(dk, convInfo t) | ("Agda", dk, t) <- targetdata],
 	convToCoqData = M.fromList [(dk, convInfo t) | ("Coq", dk, t) <- targetdata],
 	convToLeanData = M.fromList [(dk, convInfo t) | ("Lean", dk, t) <- targetdata],
@@ -183,7 +188,8 @@ deduktiOpers env =
   [peano2int | ifFlag "-peano2int" env] ++
   [ignoreCoercions envCoercions | ifFlag "-dropcoercions" env] ++
   [applyConstantData (constantData env) | not (noConstantData env)] ++ 
-  [stripQualifiers | ifFlag "-dropqualifs" env] ++ 
+  [stripQualifiers | ifFlag "-dropqualifs" env] ++
+  [f | c <- specialConversions env, Just f <- [M.lookup c specialDeduktiConversions]] ++
   [dropDefinitions | ifFlag "-dropdefs" env] 
  where
   envCoercions = map QIdent (coercionFunctions (constantData env))

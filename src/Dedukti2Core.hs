@@ -180,6 +180,7 @@ exp2kind exp = case exp of
     case splitType exp of
       (hypos, valexp) ->
         GFunKind (GListArgKind (map hypo2coreArgKind hypos)) (exp2kind valexp)
+  _ -> error $ "exp2kind not defined for " ++ show exp
 
 exp2prop :: Exp -> GProp
 exp2prop exp = case exp of
