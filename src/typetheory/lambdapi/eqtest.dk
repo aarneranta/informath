@@ -1,0 +1,16 @@
+Set : Type.
+Elem : Set -> Type.
+
+Equal : (A : Set) -> Elem A -> Elem A -> Type.
+Refl : (A : Set) -> (a : Elem A) -> Equal A a a.
+
+N : Set.
+0 : Elem N.
+
+R : Set.
+pi : Elem R.
+
+def eq0 : Equal N 0 0 := Refl N 0.
+
+def eqpi : Equal R pi pi := Refl R pi.
+
