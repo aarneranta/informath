@@ -31,6 +31,8 @@ lin
   TNeg x = prefix 2 "-" x ** {isNumber = x.isNumber} ;
   TApp f xs = constant (f ++ parenth xs.s) ** {isNumber = False} ;
 
+  TEnumSet ts = constant ("\\{" ++ ts.s ++ "\\}") ** {isNumber = False} ;
+
   TIdent x =  constant x ** {isNumber = False} ;
   TNumber n = constant n.s ** {isNumber = True} ;
 

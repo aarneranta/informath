@@ -231,6 +231,7 @@ exp2exp exp = case exp of
     _ -> ident2exp ident
   EApp _ _ -> case splitApp exp of
     (fun, args) -> case fun of
+----      EIdent (QIdent "enumset") enum ->
       EIdent (QIdent n) | elem n digitFuns -> case getNumber fun args of
         Just s -> GTermExp (GTNumber (GInt (read s)))
 	_ -> GAppExp (exp2exp fun) (gExps (map exp2exp args))

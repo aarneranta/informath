@@ -29,6 +29,8 @@ fun
   TNeg : Term -> Term ;
   TApp : Function -> [Term] -> Term ;
 
+  TEnumSet : [Term] -> Term ;
+
   TIdent : Ident -> Term ;
   TNumber : Int -> Term ; --- was float
 

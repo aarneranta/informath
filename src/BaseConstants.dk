@@ -117,10 +117,17 @@ negativePart : Set -> Set.
 finite : Set -> Prop.
 def infinite : Set -> Prop := A => not (finite A).
 
-(; hard-coded in MathCore ;)
 suchthat : (A : Set) -> (B : Elem A -> Prop) -> Set.
 fst : (A : Set) -> (B : (Elem A -> Prop)) -> Elem (suchthat A B) -> Elem A.
 
 def congruent : (a : Elem Int) -> (b : Elem Int) -> (m : Elem Nat) -> Prop :=
   a => b => m => exists Nat (k => Eq (minus a b) (times k m)).
+
+Enum : Set.
+nil : Elem Enum.
+cons : Elem Num -> Elem Enum -> Elem Enum.
+
+def enum123 : Elem Enum := cons 1 (cons 2 (cons 3 nil)).
+
+enumset : Elem Enum -> Set.
 
