@@ -20,6 +20,7 @@ oper
   FamilyT : Type = {cn : CN ; prep1, prep2 : Prep ; isCollective : Bool} ;
   LabelT = {np : NP ; isEmpty : Bool} ;
   ComparnounT = {cn : CN ; prep : Prep ; op : Str} ;
+  Pred3T = {ap : AP ; prep1, prep2 : Prep} ;
 
   mkNoun = overload {
     mkNoun : Str -> CN
@@ -113,6 +114,11 @@ oper
       = \op, cn -> {cn = cn ; prep = possess_Prep ; op = op} ;
     mkComparnoun : Str -> CN -> Prep -> ComparnounT
       = \op, cn, prep -> {cn = cn ; prep = prep ; op = op} ;
+    } ;
+
+  mkPred3 = overload {
+    mkPred3 : AP -> Prep -> Prep -> Pred3T
+      = \ap, p1, p2 -> {ap = ap ; prep1 = p1 ; prep2 = p2} ;
     } ;
 
   latexName : Str -> NP

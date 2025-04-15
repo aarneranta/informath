@@ -15,6 +15,7 @@ cat
 fun
   FEquation : Equation -> Formula ;
   FElem : [Term] -> Term -> Formula ;
+  FModulo : Term -> Term -> Term -> Formula ;
   
   DElem : [Term] -> Term -> Declaration ;
   DFunction : Ident -> Term -> Term -> Declaration ;

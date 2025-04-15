@@ -42,6 +42,10 @@ formalize :: Tree a -> Tree a
 formalize t = case t of
   GVarsHypo (GListIdent [f]) (GFam2Kind (LexFam "function_Fam") (GSetKind a) (GSetKind b)) ->
     GLetDeclarationHypo (GDFunction f (GSetTerm a) (GSetTerm b))
+  GAdjProp (GPred3Adj p@(LexPred3 "congruent_Pred3") y z) x -> case (getTerm x, getTerm y, getTerm z) of
+    (Just tx, Just ty, Just tz) ->
+      GFormulaProp (GFModulo tx ty tz)
+    _ -> GAdjProp (GPred3Adj p (formalize y) (formalize z)) (formalize x)
   GAdjProp (GComparAdj compar y) x -> case (getTerm x, getTerm y) of
     (Just tx, Just ty) ->
       GFormulaProp (GFEquation (GEBinary (GComparEqsign compar) tx ty))

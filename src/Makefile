@@ -3,7 +3,7 @@ all: Informath.pgf Dedukti Agda Coq Lean RunInformath
 .PHONY: all Informath.pgf Dedukti Agda Lean Coq RunInformath demo
 
 Informath.pgf:
-	cd grammars ; gf --make -output-format=haskell -haskell=lexical --haskell=gadt -lexical=Name,Noun,Fam,Adj,Rel,Fun,Label,Const,Oper,Compar,Set,Coercion,Relverb,Relnoun,Reladj,Comparnoun,Verb --probs=Informath.probs InformathEng.gf InformathFre.gf InformathSwe.gf
+	cd grammars ; gf --make -output-format=haskell -haskell=lexical --haskell=gadt -lexical=Name,Noun,Fam,Adj,Rel,Fun,Label,Const,Oper,Compar,Set,Coercion,Relverb,Relnoun,Reladj,Comparnoun,Verb,Pred3 --probs=Informath.probs InformathEng.gf InformathFre.gf InformathSwe.gf
 	sed -i '' 's/Monad\.Identity/Monad\.Identity\nimport Control\.Monad/' grammars/Informath.hs
 	ln -sf grammars/Informath.hs
 

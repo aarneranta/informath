@@ -209,7 +209,9 @@ lin
   NotVerbProp verb exp = simpleProp (mkS negPol (mkCl exp verb)) ; 
   NotRelverbProp verb x y = simpleProp (mkS negPol (mkCl x verb y)) ; 
   NotRelnounProp rel x y = simpleProp (mkS negPol (mkCl x (mkVP (mkCN rel y)))) ; 
-  ComparnounProp rel x y = simpleProp (mkS (mkCl x (mkVP ((mkCN rel.cn (Syntax.mkAdv rel.prep y)))))) ; 
+  ComparnounProp rel x y = simpleProp (mkS (mkCl x (mkVP ((mkCN rel.cn (Syntax.mkAdv rel.prep y)))))) ;
+  Pred3Adj pred y z =
+    AdvAP (AdvAP pred.ap (Syntax.mkAdv pred.prep1 y)) (Syntax.mkAdv pred.prep2 z) ;
 
 -- coercions, to disappear in Core2Informath
 -- their purpose is to maintain lossless rendering of Dedukti

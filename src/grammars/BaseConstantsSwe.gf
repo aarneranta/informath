@@ -27,6 +27,7 @@ lincat
   Oper = OperatorT ;
   Compar = ComparisonT ;
   Comparnoun = ComparnounT ;
+  Pred3 = Pred3T ;
 
 lin
   type_Noun = mkNoun (mkN "typ" "typer") ;
@@ -108,5 +109,6 @@ lin
   emptyset_Const = mkConst L.emptyset_Const (mkNP the_Det (mkCN (mkA "tom" "tomt" "tomma" "tommare" "tommast") mängd_N)) ;
   universeset_Const = mkConst L.universeset_Const (mkNP the_Det (mkCN (mkA "universell") mängd_N)) ;
 
-
+  congruent_Pred3 = mkPred3 (mkAP (mkA "kongruent")) with_Prep (mkPrep "modulo") ;
+  
 }

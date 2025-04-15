@@ -1,8 +1,7 @@
 enc.El ALIAS lean Elem 1
-Nat&Set&natural_Set ALIAS lean Nat
 Nat_zero ALIAS lean 0
 Nat_succ ALIAS lean succ
-Eq NEW lean Compar Eq_Compar 1 2
+Eq NEW lean Compar Eq_Compar
 enc.Sort ALIAS lean Set NONE
 enc.Pi ALIAS lean forall 3 4
 

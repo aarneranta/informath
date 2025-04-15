@@ -94,6 +94,8 @@ prop2dedukti prop = case prop of
         (concatMap argkind2dedukti argkinds)
   GAppProp ident exps ->
     foldl1 EApp ((EIdent (ident2ident ident)) : map exp2dedukti (exps2list exps))
+  GAdjProp (GPred3Adj (LexPred3 rel) b c) a ->
+    foldl EApp (EIdent (QIdent (rel))) (map exp2dedukti [a, b, c])
   GAdjProp (GReladjAdj (LexReladj rel) b) a ->
     foldl EApp (EIdent (QIdent (rel))) (map exp2dedukti [a, b])
   GAdjProp (GComparAdj (LexCompar rel) b) a ->

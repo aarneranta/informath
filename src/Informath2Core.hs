@@ -156,9 +156,11 @@ sem env t = case t of
     in GOrProp (GListProp [GAdjProp sa exp | exp <- exps])
   GNotAdjProp adj exp -> GNotProp (sem env (GAdjProp adj exp))
 
+  GFormulaProp (GFModulo term1 term2 term3) ->
+    GAdjProp (GPred3Adj (LexPred3 "modulo_Pred3") (sem env (GTermExp term2)) (sem env (GTermExp term3)))
+      (sem env (GTermExp term1))
   GFormulaProp (GFEquation (GEBinary (GComparEqsign compar) term1 term2)) ->
     GAdjProp (GComparAdj compar (sem env (GTermExp term2))) (sem env (GTermExp term1))
-
   GFormulaProp (GFEquation equation@(GEChain _ _ _)) -> case chainedEquations equation of
     triples -> GAndProp (GListProp
       [sem env (GFormulaProp (GFEquation (GEBinary eqsign x y))) | (eqsign, x, y) <- triples])

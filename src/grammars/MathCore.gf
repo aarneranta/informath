@@ -108,6 +108,7 @@ fun
   NotRelverbProp : Relverb -> Exp -> Exp -> Prop ;
   NotRelnounProp : Relnoun -> Exp -> Exp -> Prop ;
   ComparnounProp : Comparnoun -> Exp -> Exp -> Prop ;
+  Pred3Adj : Pred3 -> Exp -> Exp -> Adj ;
 
 -- coercions, to disappear in Core2Informath
 -- their purpose is to maintain lossless rendering of Dedukti

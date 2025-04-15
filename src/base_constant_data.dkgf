@@ -55,6 +55,7 @@ element BASE Comparnoun element_Comparnoun
 notelement BASE Comparnoun notelement_Comparnoun
 emptyset BASE Const emptyset_Const
 universeset BASE Const universeset_Const
+congruent BASE Pred3 congruent_Pred3
 
 #CONV Agda forall all
 #CONV Agda Type Set

@@ -14,6 +14,7 @@ lincat
 lin
   FEquation eq = constant eq.s ;
   FElem es e = constant (es.s ++ "\\in" ++ top e) ;
+  FModulo a b m = constant (top a ++ "\\equiv" ++ top b ++ "\\pmod{" ++ top m ++ "}") ;
   
   DElem es e = {s = es.s ++ "\\in" ++ top e ; isPl = es.isPl} ;
   DFunction f a b = {s = f ++ ":" ++ top a ++ "\\rightarrow" ++ top b ; isPl = False} ;

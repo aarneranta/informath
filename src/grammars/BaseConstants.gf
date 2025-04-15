@@ -16,6 +16,7 @@ cat
   Oper ;  -- Exp -> Exp -> Exp + symbol -- the sum, +
   Compar ; -- Exp -> Exp -> Prop + symbol -- greater than, >
   Comparnoun ; -- Exp -> Exp -> Prop + symbol -- subset of, >
+  Pred3 ; -- Exp -> Exp -> Exp -> Prop -- congruent to y modulo z
 
 fun
   type_Noun : Noun ;
@@ -98,5 +99,7 @@ fun
 
   emptyset_Const : Const ;
   universeset_Const : Const ;
+
+  congruent_Pred3 : Pred3 ;
 
 }

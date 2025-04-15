@@ -51,3 +51,9 @@ thm11 : (n : Elem Nat) -> Proof (exists Nat (p => and (Geq p n) (prime p))).
 thm19 : (n : Elem Nat) -> Proof (exists Nat (a => exists Nat (b => exists Nat (c => exists Nat (d =>
   Eq n (plus (plus (plus (square a) (square b)) (square c)) (square d))))))).
   
+thm20a : (p : Elem Nat) -> Proof (prime p) -> (k : Elem Nat) -> Proof (Eq p (plus (times 4 k) 1))
+  -> Proof (exists Nat (x => exists Nat (y => Eq p (plus (square x) (square y))))).
+
+thm20b : (p : Elem Nat) -> Proof (prime p) -> Proof (congruent p 1 4)
+  -> Proof (exists Nat (x => exists Nat (y => Eq p (plus (square x) (square y))))).
+ 
