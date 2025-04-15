@@ -25,6 +25,7 @@ def Int : Set := Num.
 def Rat : Set := Num.
 def Real : Set := Num.
 def Complex : Set := Num.
+def Cardinal : Set := Num.
 
 (; digits ;)
 0 : Elem Dig.
@@ -45,12 +46,12 @@ nd : Elem Dig -> Elem Nat.
 nn : Elem Dig -> Elem Nat -> Elem Nat.
 
 (; basic comparison relations ;)
-Eq : (x : Elem Real) -> (y : Elem Real) -> Prop.
-Lt : Elem Real -> Elem Real -> Prop.
-Gt : Elem Real -> Elem Real -> Prop.
-Neq : Elem Real -> Elem Real -> Prop.
-Leq : Elem Real -> Elem Real -> Prop.
-Geq : Elem Real -> Elem Real -> Prop.
+Eq : (x : Elem Num) -> (y : Elem Num) -> Prop.
+Lt : Elem Num -> Elem Num -> Prop.
+Gt : Elem Num -> Elem Num -> Prop.
+Neq : Elem Num -> Elem Num -> Prop.
+Leq : Elem Num -> Elem Num -> Prop.
+Geq : Elem Num -> Elem Num -> Prop.
 
 (; type-relative equality often used ;)
 Eqt : (A : Set) -> Elem A -> Elem A -> Prop.
@@ -59,14 +60,14 @@ positive : (x : Elem Real) -> Prop.
 negative : Elem Real -> Prop.
 
 (; basic arithmetic operations ;)
-plus : (x : Elem Real) -> (y : Elem Real) -> Elem Real.
-minus : Elem Real -> Elem Real -> Elem Real.
-times : Elem Real -> Elem Real -> Elem Real.
-div : Elem Real -> Elem Real -> Elem Real.
-pow : Elem Real -> Elem Real -> Elem Real.
-neg : Elem Real -> Elem Real.
-sqrt : Elem Real -> Elem Complex.
-log : Elem Real -> Elem Real -> Elem Real.
+plus : (x : Elem Num) -> (y : Elem Num) -> Elem Num.
+minus : Elem Num -> Elem Num -> Elem Num.
+times : Elem Num -> Elem Num -> Elem Num.
+div : Elem Num -> Elem Num -> Elem Num.
+pow : Elem Num -> Elem Num -> Elem Num.
+neg : Elem Num -> Elem Num.
+sqrt : Elem Num -> Elem Num.
+log : Elem Num -> Elem Num -> Elem Num.
 
 succ : Elem Nat -> Elem Nat.
 
@@ -102,7 +103,6 @@ powerset : Set -> Set.
 emptyset : Set.
 universeset : Set.
 
-
 subset : Set -> Set -> Prop.
 subseteq : Set -> Set -> Prop.
 superset : Set -> Set -> Prop.
@@ -113,6 +113,9 @@ notelement : Elem universeset -> Set -> Prop.
 
 positivePart : Set -> Set.
 negativePart : Set -> Set.
+
+finite : Set -> Prop.
+def infinite : Set -> Prop := A => not (finite A).
 
 (; hard-coded in MathCore ;)
 suchthat : (A : Set) -> (B : Elem A -> Prop) -> Set.

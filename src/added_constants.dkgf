@@ -24,7 +24,7 @@ irrational NEW top100 Adj irrational_Adj
 Polynomial NEW top100 Noun polynomial_Noun
 degree NEW top100 Fun degree_Fun
 isRoot NEW top100 Relnoun is_root_Relnoun
-cardinality NEW top100 Fun cardinality_Fun
+cardinality NEW top100 Oper cardinality_Oper
 denumerable NEW top100 Adj denumerable_Adj
 Vector NEW top100 Noun vector_Noun
 length NEW top100 Oper length_Oper
@@ -53,9 +53,9 @@ legendre NEW top100 Oper legendre_symbol_Oper
 #LIN Fre is_root_Relnoun = mkN2 (mkN "racine") genitive
 #LIN Swe is_root_Relnoun = mkN2 (mkN "rot" "rötter")
 
-#LIN Eng cardinality_Fun = mkFun "cardinality"
-#LIN Fre cardinality_Fun = mkFun "cardinalité"
-#LIN Swe cardinality_Fun = mkFun (mkN "kardinalitet" "kardinaliteter")
+#LIN Eng cardinality_Oper = mkOper L.absolute_value_Oper "cardinality"
+#LIN Fre cardinality_Oper = mkOper L.absolute_value_Oper "cardinalité"
+#LIN Swe cardinality_Oper = mkOper L.absolute_value_Oper (mkN "kardinalitet" "kardinaliteter")
 
 #LIN Eng denumerable_Adj = mkAdj "denumerable"
 #LIN Fre denumerable_Adj = mkAdj "dénombrable"

@@ -38,7 +38,8 @@ fun
   number_Noun : Noun ;
   boolean_Noun : Noun ;
   list_Fam : Fam ;
-
+  
+  cardinal_Noun : Noun ;
   digit_Noun : Noun ;
   natural_Set : Set ;
   integer_Set : Set ;
@@ -102,4 +103,7 @@ fun
 
   congruent_Pred3 : Pred3 ;
 
+  finite_Adj : Adj ;
+  infinite_Adj : Adj ;
+  
 }

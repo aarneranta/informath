@@ -49,6 +49,7 @@ lin
   digit_Noun = mkNoun "digit" ;
   number_Noun = mkNoun "Number" ;
   boolean_Noun = mkNoun "boolean" ;
+  cardinal_Noun = mkNoun "cardinal" ;
   list_Fam = mkFam "list" ;
 
   natural_Set = mkSet L.natural_Set "natural" "number" ;
@@ -113,4 +114,6 @@ lin
 
   congruent_Pred3 = mkPred3 (mkAP (mkA "congruent")) to_Prep (mkPrep "modulo") ;
 
+  finite_Adj = mkAdj "finite" ;
+  infinite_Adj = mkAdj "infinite" ;
 }

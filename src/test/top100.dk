@@ -19,7 +19,7 @@ isRoot : (c : Elem Complex) -> (P : Polynomial) -> Prop.
 Thm02 : (P : Polynomial) -> Proof (Gt (degree P) 0) ->
   Proof (exists Complex (c => isRoot c P)).
 
-cardinality : (A : Set) -> Elem Real.
+cardinality : (A : Set) -> Elem Cardinal.
 def denumerable : (A : Set) -> Prop := A => Eq (cardinality A) (cardinality Nat).
 Thm03 : Proof (denumerable Rat).
 Thm03a : Proof (Eq (cardinality Nat) (cardinality Rat)).
@@ -56,4 +56,10 @@ thm20a : (p : Elem Nat) -> Proof (prime p) -> (k : Elem Nat) -> Proof (Eq p (plu
 
 thm20b : (p : Elem Nat) -> Proof (prime p) -> Proof (congruent p 1 4)
   -> Proof (exists Nat (x => exists Nat (y => Eq p (plus (square x) (square y))))).
- 
+
+thm22 : Proof (not (denumerable Real)).
+
+thm51wilson : (n : Elem Nat) -> Proof (iff (prime n) (congruent (factorial (minus n 1)) (neg 1)  n)).
+thm51b : (n : Elem Nat) -> Proof (iff (prime n) (divisible (plus (factorial (minus n 1)) 1) n)).
+
+thm52 : (A : Set) -> Proof (finite A) -> Proof (Eq (cardinality (powerset A)) (pow 2 (cardinality A))).

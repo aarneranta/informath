@@ -11,6 +11,7 @@ Int BASE Set integer_Set
 Rat BASE Set rational_Set
 Real BASE Set real_Set
 Complex BASE Set complex_Set
+Cardinal BASE Noun cardinal_Noun
 Eq BASE Compar Eq_Compar
 Lt BASE Compar Lt_Compar
 Gt BASE Compar Gt_Compar
@@ -56,6 +57,9 @@ notelement BASE Comparnoun notelement_Comparnoun
 emptyset BASE Const emptyset_Const
 universeset BASE Const universeset_Const
 congruent BASE Pred3 congruent_Pred3
+finite BASE Adj finite_Adj
+infinite BASE Adj infinite_Adj
+
 
 #CONV Agda forall all
 #CONV Agda Type Set

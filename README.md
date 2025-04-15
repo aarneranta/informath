@@ -8,7 +8,7 @@
 
 ## The Informath project
 
-The Informath project addresses the problem of translating between formal and informal languages for mathematics. It aims to translate between multiple formal and informal languages in all directions. The formal languages included are Agda, Coq, Dedukti, and Lean. The informal languages are English, French, and Swedish. More languages will be added later. Also the scope of language structures is at the moment theorem statements and definitions; proofs are included for the sake of completeness, but will require more work to enable more natural verbalizations.
+The Informath project addresses the problem of translating between formal and informal languages for mathematics. It aims to translate between multiple formal and informal languages in all directions. The formal languages included are Agda, Rocq (formerly Coq), Dedukti, and Lean. The informal languages are English, French, and Swedish. More languages will be added later. Also the scope of language structures is at the moment theorem statements and definitions; proofs are included for the sake of completeness, but will require more work to enable more natural verbalizations.
 
 Informath started in 2024, but it has a background of a long tradition of translating between formal and informal languages by using GF, Grammatical Framework. New relevance for this task has been created by recent attempts to "teach mathematics" to Artificial Intelligence (AI) systems. These contemporary systems, such as Google's AlphaProof, combine machine learning (e.g. large language models) with formal proof systems, to guarantee the correctness of results. In this context,
 
@@ -275,6 +275,7 @@ The following categories of new constants are currently supported by the grammar
   Oper ;       -- Exp -> Exp -> Exp  | Term    -- the sum of, +
   Compar ;     -- Exp -> Exp -> Prop | Formula -- greater than, >
   Comparnoun ; -- Exp -> Exp -> Prop | Formula -- a subset of, \sub
+  Pred3 ;      -- Exp -> Exp -> Exp -> Prop    -- congruent to y modulo m
 
 
 ```
@@ -296,7 +297,7 @@ $ dk check bexx.dk
 Since this is cumbersome, we will need to implement something more automatic in the future. We also plan to use Dedukti for type selecting among ambiguous parse results by type checking, and Lambdapi (a syntactically richer version of Dedukti with implicit arguments) to restore implicit arguments.
 
 
-## Generating other type theories
+### Generating other type theories
 
 Each of Agda, Coq, and Lean will be described below. A common feature to all of them are the conversion rules of constants stored in [BaseConstants.dk](./src/BaseConstants.dk), with the format as in
 ```
@@ -311,7 +312,7 @@ The purpose of these conversions is to
 
 The last purpose might be better served by a generic conversion, but that remains to be done.
 
-## Generating and type checking Agda
+### Generating and type checking Agda
 
 There a simple generation of Agda from Dedukti. At the moment, it is only reliable for generating Agda "postulates". The usage is
 ```
@@ -325,7 +326,7 @@ $ agda --prop exx.agda
 ```
 The base file [BaseConstants.agda](./src/BaseConstants.agda) is imported automatically.
 
-## Generating and type checking Coq
+### Generating and type checking Coq
 
 Generation from Dedukti is similar to Agda, but type checking requires at the moment concatenation with [BaseConstants.v](BaseConstants.v):
 ```
@@ -335,7 +336,7 @@ $ coqc bexx.lean
 ```
 This should be made less cumbersome in the future.
 
-## Generating and type checking Lean
+### Generating and type checking Lean
 
 Just like in Coq, type checking requires at the moment concatenation with [BaseConstants.lean](BaseConstants.lean):
 ```
