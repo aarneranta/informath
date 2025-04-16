@@ -3,7 +3,8 @@ concrete InformathSwe of Informath =
   InformathFunctor - [postAdvS] with
     (Syntax = SyntaxSwe),
     (Symbolic = SymbolicSwe),
-    (Grammar = GrammarSwe)
+    (Grammar = GrammarSwe),
+    (Extend = ExtendSwe)
   ** open
     Formal,
     Prelude,

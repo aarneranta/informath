@@ -105,6 +105,8 @@ area NEW top100 Fun area_Fun
 #LIN Fre area_Fun = mkFun "aire"
 #LIN Swe area_Fun = mkFun "area"
 
+binomial NEW top100 Oper binomial_Oper
+#LIN Eng binomial_Oper = mkOper L.binomial_Oper "binomial coefficient"
 
 
 fun ALIAS hol function

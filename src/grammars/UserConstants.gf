@@ -19,4 +19,5 @@ fun pi_Const : Const ; -- top100
 fun circle_Noun : Noun ; -- top100
 fun radius_Fun : Fun ; -- top100
 fun area_Fun : Fun ; -- top100
+fun binomial_Oper : Oper ; -- top100
 }

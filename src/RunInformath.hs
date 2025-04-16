@@ -385,6 +385,7 @@ latexPreamble = unlines [
   "\\documentclass{article}",
   "\\usepackage{amsfonts}",
   "\\usepackage{amssymb}",
+  "\\usepackage{amsmath}",
   "\\setlength\\parindent{0pt}",
   "\\setlength\\parskip{8pt}",
   "\\begin{document}"

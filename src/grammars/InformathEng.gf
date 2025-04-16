@@ -3,7 +3,8 @@ concrete InformathEng of Informath =
   InformathFunctor with
     (Syntax = SyntaxEng),
     (Symbolic = SymbolicEng),
-    (Grammar = GrammarEng)
+    (Grammar = GrammarEng),
+    (Extend = ExtendEng)
   ** open
     Formal,
     Prelude,

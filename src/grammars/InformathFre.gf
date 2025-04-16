@@ -6,7 +6,8 @@ concrete InformathFre of Informath =
   ] with
     (Syntax = SyntaxFre),
     (Symbolic = SymbolicFre),
-    (Grammar = GrammarFre)
+    (Grammar = GrammarFre),
+    (Extend = ExtendFre)
   ** open
     Formal,
     Prelude,

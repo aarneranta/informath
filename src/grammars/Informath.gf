@@ -30,6 +30,8 @@ fun
   AndExp : [Exp] -> Exp ;
   OrExp : [Exp] -> Exp ;
 
+  ExistNoProp : [ArgKind] -> Prop -> Prop ;
+
 -- for indexed parsing (terms in $...$ stored in a dictionary)
 
   IndexedTermExp : Int -> Exp ;

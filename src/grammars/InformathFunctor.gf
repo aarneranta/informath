@@ -5,6 +5,7 @@ open
   Syntax,
   Symbolic,
   Grammar,
+  Extend,
   Formal,
   BaseConstantsLatex,
   Prelude
@@ -34,6 +35,8 @@ lin
 
   AndExp exps =  mkNP and_Conj exps | mkNP both7and_DConj exps ;
   OrExp exps = mkNP or_Conj exps | mkNP either7or_DConj exps ;
+
+  ExistNoProp argkinds prop = simpleProp (Grammar.SSubjS (mkS (Extend.ExistsNP argkinds.neg)) such_that_Subj (partProp prop)) ; 
 
   BaseAdj a b = mkListAP a b ;
   ConsAdj a bs = mkListAP a bs ;

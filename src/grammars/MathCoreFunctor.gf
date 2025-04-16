@@ -20,7 +20,7 @@ lincat
   Exps = {np : NP ; isPl : Bool} ;
   [Prop] = Grammar.ListS ;
   ArgKind = {cn : CN ; adv : Adv ; isPl : Bool} ;  -- isPl = idents.isPl
-  [ArgKind] = {sg, pl : NP} ;  -- there exists an A / for all As
+  [ArgKind] = {sg, neg, pl : NP} ;  -- there exists an A / there exists no A / for all As
   Hypo = Utt ;
   [Hypo] = {text : Text ; isEmpty : Bool} ;
   [Ident] = {np : NP ; isPl : Bool} ;
@@ -93,7 +93,7 @@ lin
   AllProp argkinds prop =
     simpleProp (Grammar.ExtAdvS (Syntax.mkAdv for_Prep (mkNP all_Predet argkinds.pl)) (partProp prop)) ;
   ExistProp argkinds prop =
-    simpleProp (Grammar.SSubjS (mkS (Extend.ExistsNP argkinds.sg)) such_that_Subj (partProp prop)) ; ---- TODO: sg/pl correctly
+    simpleProp (Grammar.SSubjS (mkS (Extend.ExistsNP argkinds.sg)) such_that_Subj (partProp prop)) ; 
   IdentProp f = simpleProp (latexS (mkSymb f)) ;
   FalseProp = simpleProp (mkS (mkCl we_NP have_V2 (mkNP a_Det contradiction_N))) ;
   AppProp f exps = simpleProp (mkS (mkCl (latexNP (mkSymb f)) hold_V2 exps.np)) ;
@@ -158,12 +158,20 @@ lin
       True => mkNP aPl_Det (useKind kind) ;
       False => mkNP aSg_Det (useKind kind)
       } ;
+    neg = case kind.isPl of {
+      True => mkNP (mkDet no_Quant pluralNum) (useKind kind) ;
+      False => mkNP no_Quant (useKind kind)
+      } ;
     pl = mkNP aPl_Det (useKind kind)
     } ;
   ConsArgKind kind kinds = {
     sg = case kind.isPl of {
       True => mkNP and_Conj (mkNP aPl_Det (useKind kind)) kinds.sg ;
       False => mkNP and_Conj (mkNP aSg_Det (useKind kind)) kinds.sg
+      } ;
+    neg = case kind.isPl of {
+      True => mkNP and_Conj (mkNP (mkDet no_Quant pluralNum) (useKind kind)) kinds.neg ;
+      False => mkNP and_Conj (mkNP no_Quant (useKind kind)) kinds.neg
       } ;
     pl = mkNP and_Conj (mkNP aPl_Det (useKind kind)) kinds.pl 
     } ;

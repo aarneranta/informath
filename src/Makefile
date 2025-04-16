@@ -1,3 +1,5 @@
+OPEN=open  # pdf viewer command
+
 all: Informath.pgf Dedukti Agda Coq Lean RunInformath
 
 .PHONY: all Informath.pgf Dedukti Agda Lean Coq RunInformath demo
@@ -51,6 +53,12 @@ demo:
 	echo "consider pdflatex out/top100.tex"
 	./RunInformath -to-latex-file -variations test/sets.dk >out/sets.tex
 	echo "consider pdflatex out/sets.tex"
+
+top100:
+	./RunInformath -to-latex-file -variations -data=added_constants.dkgf -projects=top100 test/top100.dk >out/top100.tex
+	cd out ; pdflatex top100.tex ; $(OPEN) top100.pdf
+	cat BaseConstants.dk test/top100.dk >out/texx.dk 
+	dk check out/texx.dk
 
 matita:
 	./RunInformath test/mini-matita.dk

@@ -13,6 +13,9 @@ Thm01d : Proof (not (rational (sqrt 2))).
 def irrational : Elem Real -> Prop := x => not (rational x).
 Thm01e : Proof (irrational (sqrt 2)).
 
+def square : Elem Real -> Elem Real := x => pow x 2.
+Thm01f : Proof (not (exists Nat (p => exists Nat (q => Eq (square p) (times 2 (square q)))))).
+
 Polynomial : Type.
 degree : (P : Polynomial) -> Elem Nat.
 isRoot : (c : Elem Complex) -> (P : Polynomial) -> Prop. 
@@ -28,7 +31,6 @@ Vector : Set.
 length : Elem Vector -> Elem Real.
 perpendicular : Elem Vector -> Elem Vector -> Prop.
 resultant : Elem Vector -> Elem Vector -> Elem Vector.
-def square : Elem Real -> Elem Real := x => pow x 2.
 Thm04 : (u : Elem Vector) -> (v : Elem Vector) -> Proof (perpendicular u v) ->
   Proof (Eq (length (resultant u v)) (sqrt (plus (square (length u)) (square (length v))))).
 
@@ -63,3 +65,10 @@ thm51wilson : (n : Elem Nat) -> Proof (iff (prime n) (congruent (factorial (minu
 thm51b : (n : Elem Nat) -> Proof (iff (prime n) (divisible (plus (factorial (minus n 1)) 1) n)).
 
 thm52 : (A : Set) -> Proof (finite A) -> Proof (Eq (cardinality (powerset A)) (pow 2 (cardinality A))).
+
+def binomial : (n : Elem Nat) -> (k : Elem Nat) -> Elem Nat := n => k => div (factorial n) (times (factorial k) (factorial (minus n k))).
+
+(;
+thm58 : (A : Set) -> (n : Elem Nat) -> Proof (Eq (cardinality A) n) -> (k : Elem Nat) ->
+  Proof (Eq (cardinality (suchthat (powerset A) (B => Eq (cardinality B) k))) (binomial n k)).
+;)

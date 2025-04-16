@@ -59,6 +59,8 @@ oper
   positivePart : OperT = mkOper "" "" "^{+}" <3 : Prec> ;
   negativePart : OperT = mkOper "" "" "^{-}" <3 : Prec> ;
 
+  binomial_Oper : OperT = mkOper "\\binom{" "}{" "}" <4 : Prec> ;
+
 oper
   OperT : Type = {
     begin, op, end : Str ; -- op = between args

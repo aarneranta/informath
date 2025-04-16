@@ -11,6 +11,7 @@ open
   Formal
 
 in {
+lin binomial_Oper = mkOper L.binomial_Oper "binomial coefficient" ;
 lin area_Fun = mkFun "area" ;
 lin radius_Fun = mkFun "radius" ;
 lin circle_Noun = mkNoun "circle" ;
