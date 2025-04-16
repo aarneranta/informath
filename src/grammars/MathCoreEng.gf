@@ -36,6 +36,7 @@ oper
   say_VS = mkVS I.say_V ;
   hold_V2 = mkV2 I.hold_V for_Prep ;
   arbitrary_A = mkA "arbitrary" ;
+  set_N = mkN "set" ;
 
   iff_Subj : Subj = mkSubj "if and only if" ;
   commaConj : Conj = mkConj "," ;

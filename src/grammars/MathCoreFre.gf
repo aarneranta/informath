@@ -57,6 +57,7 @@ oper
   say_VS = mkVS I.dire_V ;
   hold_V2 = mkV2 I.tenir_V for_Prep ; ----
   arbitrary_A = mkA "arbitraire" ;
+  set_N = mkN "ensemble" masculine ;
 
   iff_Subj : Subj = Mk.mkSubj "si et seulement si" ;
   commaConj : Conj = Mk.mkConj "," ;

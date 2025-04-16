@@ -81,6 +81,7 @@ lin
   KindExp kind = mkNP the_Det (mkCN type_CN (Syntax.mkAdv possess_Prep (mkNP aPl_Det (useKind kind)))) ;
   TermExp term = latexNP (mkSymb term.s) ;
   TypedExp exp kind = mkNP the_Det (mkCN (mkCN kind.cn exp) kind.adv) ;
+  EnumSetExp exps = mkNP the_Det (mkCN set_N (Syntax.mkAdv possess_Prep exps.np)) ;
 
   AndProp props = complexProp (mkS and_Conj props) ;
   OrProp props = complexProp (mkS or_Conj props) ;
@@ -199,8 +200,8 @@ lin
       k2 = mkNP aPl_Det (useKind kind2)
     in  
     {cn = fam.cn ; adv = case fam.isCollective of {
-      False => ccAdv (mkAdv fam.prep1 k1) (mkAdv fam.prep2 k2) ;  
-      True => mkAdv fam.prep1 (mkNP and_Conj k1 k2)  
+      False => ccAdv (Syntax.mkAdv fam.prep1 k1) (Syntax.mkAdv fam.prep2 k2) ;  
+      True => Syntax.mkAdv fam.prep1 (mkNP and_Conj k1 k2)  
       }
     } ;
   VerbProp verb exp = simpleProp (mkS (mkCl exp verb)) ; 

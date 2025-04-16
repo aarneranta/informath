@@ -34,6 +34,7 @@ oper
   say_VS = mkVS I.säga_V ;
   hold_V2 = mkV2 I.hålla_V for_Prep ;
   arbitrary_A = mkA "godtycklig" ;
+  set_N = mkN "mängd" "mängder" ;
 
   iff_Subj : Subj = mkSubj "om och endast om" ;
   commaConj : Conj = M.mkConj "," ;

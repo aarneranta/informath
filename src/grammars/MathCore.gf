@@ -51,6 +51,7 @@ fun
   TermExp : Term -> Exp ;
   KindExp : Kind -> Exp ;
   TypedExp : Exp -> Kind -> Exp ;
+  EnumSetExp : Exps -> Exp ;
 
   AndProp : [Prop] -> Prop ;
   OrProp : [Prop] -> Prop ;

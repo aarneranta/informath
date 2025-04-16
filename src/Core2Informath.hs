@@ -50,6 +50,7 @@ formalize t = case t of
     (Just tx, Just ty) ->
       GFormulaProp (GFEquation (GEBinary (GComparEqsign compar) tx ty))
     _ -> GAdjProp (GComparAdj compar (formalize y)) (formalize x)
+  GAdjProp adj x -> maybe t (GAdjProp adj . GTermExp) (getTerm x)
   GComparnounProp compar x y -> case (getTerm x, getTerm y) of
     (Just tx, Just ty) ->
       GFormulaProp (GFEquation (GEBinary (GComparnounEqsign compar) tx ty))
@@ -76,6 +77,9 @@ getTerm = maybe Nothing (return . optTerm) . gT where
       return (GAppOperTerm oper tx ty)
     GAppExp t@(GTermExp (GTIdent f)) exps -> case mapM gT (exps2list exps) of
       Just xs -> return (GTApp (GFIdent f) (GListTerm xs))
+      _ -> Nothing
+    GEnumSetExp exps -> case mapM gT (exps2list exps) of
+      Just xs -> return (GTEnumSet (GListTerm xs))
       _ -> Nothing
     GTermExp term -> return term
     _ -> Nothing

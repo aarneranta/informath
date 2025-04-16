@@ -121,6 +121,19 @@ peano2int t = case t of
        (n, y) -> (n + 1, y)
      _ -> (0, exp)
 
+enum2list :: Exp -> Maybe [Exp]
+enum2list t = case t of
+  EApp (EApp (EIdent (QIdent "cons")) x) xs -> do
+    exps <- enum2list xs
+    return (x : exps)
+  EIdent (QIdent "nil") -> return []
+  _ -> Nothing
+
+list2enum :: [Exp] -> Exp
+list2enum xs = case xs of
+  x:xx -> EApp (EApp (EIdent (QIdent "cons")) x) (list2enum xs)
+  _ -> EIdent (QIdent "nil")
+
 -- deciding the kind of a new constant
 guessCat :: QIdent -> Exp -> String
 guessCat ident@(QIdent c) typ =
