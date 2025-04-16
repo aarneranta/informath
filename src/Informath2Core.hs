@@ -175,7 +175,7 @@ sem env t = case t of
   GTermExp (GTTimes x y) -> sem env (GTermExp (GAppOperTerm (LexOper "times_Oper") x y))
   GTermExp (GTFrac x y) -> sem env (GTermExp (GAppOperTerm (LexOper "div_Oper") x y))
   GTermExp (GTNeg x) ->  sem env (GTermExp (GAppOperOneTerm (LexOper "neg_Oper") x))
-----  GTermExp (GTEnumSet xs) -> sem env (GEnumSetExp ())
+  GTermExp (GTEnumSet (GListTerm xs)) -> sem env (GEnumSetExp (gExps (map GTermExp xs)))
   GTParenth term -> sem env term
       
   _ -> composOp (sem env) t
@@ -227,5 +227,8 @@ getAndProps :: GProp -> Maybe [GProp]
 getAndProps prop = case prop of
   GSimpleAndProp (GListProp props) -> Just props
   _ -> Nothing
+
+gExps :: [GExp] -> GExps
+gExps exps = foldr GAddExps (GOneExps (last exps)) (init exps)
 
 

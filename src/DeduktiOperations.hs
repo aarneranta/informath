@@ -131,7 +131,7 @@ enum2list t = case t of
 
 list2enum :: [Exp] -> Exp
 list2enum xs = case xs of
-  x:xx -> EApp (EApp (EIdent (QIdent "cons")) x) (list2enum xs)
+  x:xx -> EApp (EApp (EIdent (QIdent "cons")) x) (list2enum xx)
   _ -> EIdent (QIdent "nil")
 
 -- deciding the kind of a new constant

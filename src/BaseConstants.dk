@@ -130,4 +130,3 @@ cons : Elem Num -> Elem Enum -> Elem Enum.
 def enum123 : Elem Enum := cons 1 (cons 2 (cons 3 nil)).
 
 enumset : Elem Enum -> Set.
-
