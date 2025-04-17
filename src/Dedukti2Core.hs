@@ -47,7 +47,7 @@ jmt2jmt jmt = case jmt of
       ((hypos, kind), c) | elem c ["Fun", "Oper"] ->
         let chypos = hypos2hypos (addVarsToHypos hypos)
         in (maybe (GAxiomExpJmt axiomLabel)
-	          (\exp x y z -> GDefExpJmt definitionLabel x y z (exp2exp exp)) mexp)
+	          (\exp x y z -> GDefExpJmt definitionLabel x y z (exp2exp (stripAbs hypos exp))) mexp)
              (GListHypo chypos)
              (funListExp ident (map (GTermExp . GTIdent) (concatMap hypoIdents chypos)))
              (exp2kind kind)

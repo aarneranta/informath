@@ -108,6 +108,12 @@ area NEW top100 Fun area_Fun
 binomial NEW top100 Oper binomial_Oper
 #LIN Eng binomial_Oper = mkOper L.binomial_Oper "binomial coefficient"
 
+combinations NEW top100 Oper combinations_Oper
+#LIN Eng combinations_Oper = mkOper L.combinations_Oper "set of combinations"
+
+combinationsFromSet NEW top100 Oper combinationsFromSet_Oper
+#LIN Eng combinationsFromSet_Oper = mkOper L.binomial_Oper "number of combinations"
+
 
 fun ALIAS hol function
 el ALIAS hol Elem

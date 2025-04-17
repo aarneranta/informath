@@ -11,6 +11,8 @@ open
   Formal
 
 in {
+lin combinationsFromSet_Oper = mkOper L.binomial_Oper "number of combinations" ;
+lin combinations_Oper = mkOper L.combinations_Oper "set of combinations" ;
 lin binomial_Oper = mkOper L.binomial_Oper "binomial coefficient" ;
 lin area_Fun = mkFun "area" ;
 lin radius_Fun = mkFun "radius" ;

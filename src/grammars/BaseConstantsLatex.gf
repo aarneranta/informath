@@ -60,6 +60,7 @@ oper
   negativePart : OperT = mkOper "" "" "^{-}" <3 : Prec> ;
 
   binomial_Oper : OperT = mkOper "\\binom{" "}{" "}" <4 : Prec> ;
+  combinations_Oper : OperT = mkOper "C^{" "}_{" "}" <4 : Prec> ;
 
 oper
   OperT : Type = {
