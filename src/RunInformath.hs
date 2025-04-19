@@ -381,6 +381,14 @@ printFrequencyTable m = do
   let list = sortOn (\ (_, i) -> -i) $ M.toList m
   mapM_ putStrLn ["(" ++ show n ++ ")\t" ++ printTree x | (x, n) <- list]
 
+{- TODO to get variants
+linearizeInEnv :: Env -> PGF.Expr -> [(Language, [String])]
+linearizeInEnv env tree = lins
+ where
+  lins = [(lang, map unlextex s) | (lang, s) <- groupResults (linearizeAllLang pgf tree)]
+  pgf = cpgf env
+-}
+
 latexPreamble = unlines [
   "\\documentclass{article}",
   "\\usepackage{amsfonts}",

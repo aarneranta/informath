@@ -9,6 +9,8 @@ concrete InformathFre of Informath =
     (Grammar = GrammarFre),
     (Extend = ExtendFre)
   ** open
+    ParadigmsFre,
+    (Mk = MakeStructuralFre),
     Formal,
     Prelude,
     BaseConstantsLatex
@@ -20,5 +22,7 @@ lin
 
 oper
   postAdvS : S -> Adv -> S = \s, adv -> s ** {s = \\o => s.s ! o ++ adv.s} ;
+  imply_V2 : V2 = mkV2 (mkV "impliquer") ;
+  only_if_Subj : Subj = Mk.mkSubj "seulement si" ;
 
 }

@@ -10,6 +10,7 @@ cat
 
 fun
   FormulaProp : Formula -> Prop ;
+  FormulaImpliesProp : Formula -> Formula -> Prop ;
 
   SetTerm : Set -> Term ;
   ConstTerm : Const -> Term ;
@@ -29,6 +30,8 @@ fun
 
   AndExp : [Exp] -> Exp ;
   OrExp : [Exp] -> Exp ;
+
+  OnlyIfProp : Prop -> Prop -> Prop ;
 
   ExistNoProp : [ArgKind] -> Prop -> Prop ;
 

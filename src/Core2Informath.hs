@@ -175,10 +175,12 @@ variations :: Tree a -> [Tree a]
 variations tree = case tree of
   GAxiomJmt label (GListHypo hypos) prop -> 
     let splits = [splitAt i hypos | i <- [0..length hypos]]
-    in tree : [GAxiomJmt label (GListHypo hypos11) (hypoProp hypos2 prop2) |
+    in tree : [GAxiomJmt label (GListHypo hypos11) hypoprop |
           (hypos1, hypos2) <- splits,
 	  hypos11 <- sequence (map variations hypos1),
-	  prop2 <- variations prop]
+	  prop2 <- variations prop,
+	  hypoprop <- variations (hypoProp hypos2 prop2)
+	  ]
   GVarsHypo (GListIdent xs) (GSetKind set) ->
     [tree, GLetDeclarationHypo (GDElem (GListTerm [GTIdent x | x <- xs]) (GSetTerm set))]
   GVarsHypo fs@(GListIdent [f]) (GFam2Kind fam@(LexFam "function_Fam") (GSetKind a) (GSetKind b)) ->
@@ -189,6 +191,10 @@ variations tree = case tree of
     tree : [GPostQuantProp prop exp | exp <- existExpVariations argkind]
   GSimpleAndProp (GListProp [GFormulaProp (GFEquation (GEBinary lt a b)), GFormulaProp (GFEquation (GEBinary eq b' c))]) | b == b' ->
     tree : [GFormulaProp (GFEquation (GEChain lt a (GEBinary eq b c)))] ---- TODO: generalize to longer chains
+  GSimpleIfProp a@(GFormulaProp fa) b@(GFormulaProp fb) ->
+    tree : [GOnlyIfProp a b, GFormulaImpliesProp fa fb]
+  GSimpleIfProp a b ->
+    tree : [GOnlyIfProp a b ]
   _ -> composOpM variations tree
 
 allExpVariations :: GArgKind -> [GExp]

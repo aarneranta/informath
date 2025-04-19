@@ -80,6 +80,10 @@ sem env t = case t of
     Just props -> sem env (foldr (\a b -> GSimpleIfProp a b) prop props)
     _ -> GSimpleIfProp (sem env cond) (sem env prop)
 
+  GOnlyIfProp cond prop -> sem env (GSimpleIfProp cond prop)
+  GFormulaImpliesProp cond prop ->
+    sem env (GSimpleIfProp (GFormulaProp cond) (GFormulaProp prop))
+
   GPostQuantProp prop exp -> case exp of
     GEveryIdentKindExp ident kind ->
       sem env (GAllProp (GListArgKind [GIdentsArgKind kind (GListIdent [ident])]) prop)

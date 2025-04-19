@@ -17,6 +17,7 @@ lincat
 
 lin
   FormulaProp formula = simpleProp (latexS (mkSymb formula.s)) ;
+  FormulaImpliesProp a b = simpleProp (mkS (mkCl (latexNP (mkSymb a.s)) imply_V2 (latexNP (mkSymb b.s)))) ;
 
   SetTerm set = constant set.c ** {isNumber = False} ;
   ConstTerm const = constant const.c ** {isNumber = False} ;
@@ -35,6 +36,8 @@ lin
 
   AndExp exps =  mkNP and_Conj exps | mkNP both7and_DConj exps ;
   OrExp exps = mkNP or_Conj exps | mkNP either7or_DConj exps ;
+
+  OnlyIfProp A B = simpleProp (Grammar.SSubjS (partProp A) only_if_Subj (partProp B)) ;
 
   ExistNoProp argkinds prop = simpleProp (Grammar.SSubjS (mkS (Extend.ExistsNP argkinds.neg)) such_that_Subj (partProp prop)) ; 
 
