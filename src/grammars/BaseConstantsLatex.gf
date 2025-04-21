@@ -46,8 +46,8 @@ oper
 
   subset_Comparnoun = "\\subset" ;  
   subseteq_Comparnoun = "\\subseteq" ;
-  superset_Comparnoun = "\\superset" ;  
-  superseteq_Comparnoun = "\\superseteq" ;  
+  superset_Comparnoun = "\\supset" ;  
+  superseteq_Comparnoun = "\\supseteq" ;  
   equalset_Compar = "=" ;
   notequalset_Compar = "\\neq" ;
   element_Comparnoun = "\\in" ;  
@@ -61,6 +61,18 @@ oper
 
   binomial_Oper : OperT = mkOper "\\binom{" "}{" "}" <4 : Prec> ;
   combinations_Oper : OperT = mkOper "C^{" "}_{" "}" <4 : Prec> ;
+
+  sin_Oper : OperT = prefixOper "\\sin" ;
+  cos_Oper : OperT = prefixOper "\\cos" ;
+  tan_Oper : OperT = prefixOper "\\tan" ;
+  arcsin_Oper : OperT = prefixOper "\\arcsin" ;
+  arccos_Oper : OperT = prefixOper "\\arccos" ;
+  arctan_Oper : OperT = prefixOper "\\arctan" ;
+  orthogonal_Compar : Str = "\\perp" ;
+
+  dot_product_Oper : OperT = mkOper "\\cdot" <1 : Prec> <1 : Prec> <2 : Prec> ;
+  vector_plus_Oper : OperT = mkOper "+" <1 : Prec> <1 : Prec> <2 : Prec> ;
+
 
 oper
   OperT : Type = {
@@ -85,6 +97,8 @@ oper
       = \beg, op, end , p, p1, p2 ->
         {begin = beg ;  end = end ; op = op ; p = p ; ep1 = p1 ; ep2 = p2} ;
     } ;
+
+  prefixOper : Str -> OperT = \op -> mkOper op "" "" <3 : Prec> <3 : Prec> <3 : Prec> ;
 
   appOper = overload {
     appOper : OperT -> TermPrecNum -> TermPrecNum = \op, trm -> {

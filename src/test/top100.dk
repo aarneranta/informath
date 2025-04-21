@@ -6,42 +6,24 @@ Thm01a : (m : Elem Nat) -> (n : Elem Nat) ->
 Thm01b : (q : Elem Rat) -> Proof (Neq (pow q 2) 2).
 Thm01c : (q : Elem Rat) -> Proof (Neq (sqrt 2) q).
 
-def rational : Elem Real -> Prop :=
-  x => exists Int (p => exists Int (q => and (Neq q 0) (Eq x (div p q)))).
 Thm01d : Proof (not (rational (sqrt 2))).
 
-def irrational : Elem Real -> Prop := x => not (rational x).
 Thm01e : Proof (irrational (sqrt 2)).
 
-def square : Elem Real -> Elem Real := x => pow x 2.
 Thm01f : Proof (not (exists Nat (p => exists Nat (q => Eq (square p) (times 2 (square q)))))).
 
-Polynomial : Type.
-degree : (P : Polynomial) -> Elem Nat.
-isRoot : (c : Elem Complex) -> (P : Polynomial) -> Prop. 
 Thm02 : (P : Polynomial) -> Proof (Gt (degree P) 0) ->
   Proof (exists Complex (c => isRoot c P)).
 
-cardinality : (A : Set) -> Elem Cardinal.
-def denumerable : (A : Set) -> Prop := A => Eq (cardinality A) (cardinality Nat).
 Thm03 : Proof (denumerable Rat).
 Thm03a : Proof (Eq (cardinality Nat) (cardinality Rat)).
 
-Vector : Set.
-length : Elem Vector -> Elem Real.
-perpendicular : Elem Vector -> Elem Vector -> Prop.
-resultant : Elem Vector -> Elem Vector -> Elem Vector.
 Thm04 : (u : Elem Vector) -> (v : Elem Vector) -> Proof (perpendicular u v) ->
   Proof (Eq (length (resultant u v)) (sqrt (plus (square (length u)) (square (length v))))).
 
-legendre : Elem Nat -> Elem Nat -> Elem Int.
 thm07 : (p : Elem Nat) -> (q : Elem Nat) -> Proof (and (prime p) (prime q)) ->
   Proof (Eq (times (legendre p q) (legendre q p)) (pow (neg 1) (times (div (minus p 1) 2) (div (minus q 1) 2)))).
 
-pi : Elem Real.
-Circle : Type.
-radius : Circle -> Elem Real.
-def area : Circle -> Elem Real.
 thm09 : (c : Circle) -> (r : Elem Real) -> Proof (Eq r (radius c)) ->
   Proof (Eq (area c) (times pi (pow r 2))).
 
@@ -66,13 +48,18 @@ thm51b : (n : Elem Nat) -> Proof (iff (prime n) (divisible (plus (factorial (min
 
 thm52 : (A : Set) -> Proof (finite A) -> Proof (Eq (cardinality (powerset A)) (pow 2 (cardinality A))).
 
-def binomial : (n : Elem Nat) -> (k : Elem Nat) -> Elem Nat := n => k => div (factorial n) (times (factorial k) (factorial (minus n k))).
-
-combinations : (n : Elem Nat) -> (k : Elem Nat) -> Elem Nat.
-
-combinationsFromSet : (A : Set) -> (k : Elem Nat) -> Set.
-
 thm58 : (A : Set) -> (n : Elem Nat) -> Proof (Eq (cardinality A) n) ->
   (k : Elem Nat) -> Proof (Leq k n) ->
     Proof (Eq (cardinality (combinationsFromSet A k)) (binomial n k)).
+
+thm78 : (u : Elem Vector) -> (v : Elem Vector) ->
+  Proof (Leq (dotProduct u v) (times (norm u) (norm v))).
+
+thm78a : (u : Elem Vector) -> (v : Elem Vector) ->
+  Proof (if (orthogonal u v) (Eq (dotProduct u v) (nd 0))).
+
+thm91 : (u : Elem Vector) -> (v : Elem Vector) ->
+  Proof (Leq (norm (vectorPlus u v)) (plus (norm u) (norm v))).
+
+thm98 : (n : Elem Nat) -> Proof (exists Nat (p => and (prime p) (and (Lt n p) (Lt p (times 2 n))))).
 

@@ -45,6 +45,9 @@ def Cardinal : Set := Num.
 nd : Elem Dig -> Elem Nat.
 nn : Elem Dig -> Elem Nat -> Elem Nat.
 
+
+
+
 (; basic comparison relations ;)
 Eq : (x : Elem Num) -> (y : Elem Num) -> Prop.
 Lt : Elem Num -> Elem Num -> Prop.
@@ -130,3 +133,69 @@ cons : Elem Num -> Elem Enum -> Elem Enum.
 def enum123 : Elem Enum := cons 1 (cons 2 (cons 3 nil)).
 
 enumset : Elem Enum -> Set.
+
+(; from 100 theorems ;)
+
+def rational : Elem Real -> Prop :=
+  x => exists Int (p => exists Int (q => and (Neq q 0) (Eq x (div p q)))).
+
+def irrational : Elem Real -> Prop := x => not (rational x).
+
+def square : Elem Real -> Elem Real := x => pow x 2.
+
+Polynomial : Type.
+
+degree : (P : Polynomial) -> Elem Nat.
+
+isRoot : (c : Elem Complex) -> (P : Polynomial) -> Prop. 
+
+cardinality : (A : Set) -> Elem Cardinal.
+
+def denumerable : (A : Set) -> Prop := A => Eq (cardinality A) (cardinality Nat).
+
+Vector : Set.
+
+norm : Elem Vector -> Elem Real.
+def length : (v : Elem Vector) -> Elem Real := v => norm v.
+
+resultant : Elem Vector -> Elem Vector -> Elem Vector.
+
+legendre : Elem Nat -> Elem Nat -> Elem Int.
+
+pi : Elem Real.
+
+Circle : Type.
+
+radius : Circle -> Elem Real.
+
+area : Circle -> Elem Real.
+
+def binomial : (n : Elem Nat) -> (k : Elem Nat) -> Elem Nat := n => k =>
+  div (factorial n) (times (factorial k) (factorial (minus n k))).
+
+combinations : (n : Elem Nat) -> (k : Elem Nat) -> Elem Nat.
+
+combinationsFromSet : (A : Set) -> (k : Elem Nat) -> Set.
+
+sin : Elem Real -> Elem Real.
+
+def cos : Elem Real -> Elem Real := x => sin (minus (div pi (nd 2)) x).
+
+def tan : Elem Real -> Elem Real := x => div (sin x) (cos x).
+
+arcsin : Elem Real -> Elem Real.
+arccos : Elem Real -> Elem Real.
+arctan : Elem Real -> Elem Real.
+
+angleBetween : Elem Vector -> Elem Vector -> Elem Real.
+
+def dotProduct : (u : Elem Vector) -> (v : Elem Vector) -> Elem Real := u => v =>
+  times (times (length u) (length v)) (cos (angleBetween u v)).
+
+def orthogonal : (u : Elem Vector) -> (v : Elem Vector) -> Prop := u => v =>
+  Eq (angleBetween u v) (div pi (nd 2)).
+def perpendicular : (u : Elem Vector) -> (v : Elem Vector) -> Prop := u => v =>
+  orthogonal u v.
+
+def vectorPlus : (u : Elem Vector) -> (v : Elem Vector) -> Elem Vector := u => v => resultant u v.
+

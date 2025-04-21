@@ -105,5 +105,37 @@ fun
 
   finite_Adj : Adj ;
   infinite_Adj : Adj ;
-  
+
+  rational_Adj : Adj ; -- top100
+  irrational_Adj : Adj ; -- top100
+  polynomial_Noun : Noun ; -- top100
+  degree_Fun : Fun ; -- top100
+  is_root_Relnoun : Relnoun ; -- top100
+  cardinality_Oper : Oper ; -- top100
+  denumerable_Adj : Adj ; -- top100
+  vector_Noun : Noun ; -- top100
+  length_Oper : Oper ; -- top100
+  norm_Oper : Oper ; -- top100
+  perpendicular_Compar : Compar ; -- top100
+  resultant_Oper : Oper ; -- top100
+  square_Oper : Oper ; -- top100
+  legendre_symbol_Oper : Oper ; -- top100
+  pi_Const : Const ; -- top100
+  circle_Noun : Noun ; -- top100
+  radius_Fun  : Fun ; -- top100
+  area_Fun : Fun ; -- top100
+  binomial_Oper : Oper ; -- top100
+  combinations_Oper : Oper ; -- top100
+  combinationsFromSet_Oper : Oper ; -- top100
+  sin_Oper : Oper ;
+  cos_Oper : Oper ;
+  tan_Oper : Oper ;
+  arcsin_Oper : Oper ;
+  arccos_Oper : Oper ;
+  arctan_Oper : Oper ;
+  orthogonal_Compar : Compar ;
+  angle_between_Fun : Fun ;
+  dot_product_Oper : Oper ;
+  vector_plus_Oper : Oper ;
+
 }

@@ -116,4 +116,38 @@ lin
 
   finite_Adj = mkAdj "finite" ;
   infinite_Adj = mkAdj "infinite" ;
+
+  combinationsFromSet_Oper = mkOper L.binomial_Oper "number of combinations" ;
+  combinations_Oper = mkOper L.combinations_Oper "set of combinations" ;
+  binomial_Oper = mkOper L.binomial_Oper "binomial coefficient" ;
+  area_Fun = mkFun "area" ;
+  radius_Fun = mkFun "radius" ;
+  circle_Noun = mkNoun "circle" ;
+  pi_Const = mkConst "\\pi" (mkNP the_Det (mkCN (mkN "number") (symb "\\(\\pi\\)"))) ;
+  legendre_symbol_Oper = mkOper L.legendre_symbol_Oper "Legendre symbol" ;
+  square_Oper = mkOper L.square_Oper "square" ;
+  resultant_Oper = mkOper L.plus_Oper "sum" ;
+  perpendicular_Compar = mkCompar L.perpendicular_Compar "perpendicular" "to" ;
+  length_Oper = mkOper L.length_Oper "length" ;
+  norm_Oper = mkOper L.length_Oper "norm" ;
+  vector_Noun = mkNoun "vector" ;
+  denumerable_Adj = mkAdj "denumerable" ;
+  cardinality_Oper = mkOper L.absolute_value_Oper "cardinality" ;
+  is_root_Relnoun = mkN2 (mkN "root") ;
+  degree_Fun = mkFun "degree" ;
+  polynomial_Noun = mkNoun "polynomial" ;
+  irrational_Adj = mkAdj "irrational" ;
+  rational_Adj = mkAdj "rational" ;
+
+  sin_Oper = mkOper L.sin_Oper "sine" ;
+  cos_Oper = mkOper L.cos_Oper "cosine" ;
+  tan_Oper = mkOper L.tan_Oper "tangent" ;
+  arcsin_Oper = mkOper L.arcsin_Oper "arcsine" ;
+  arccos_Oper = mkOper L.arccos_Oper "arccosine" ;
+  arctan_Oper = mkOper L.arctan_Oper "arctangent" ;
+  orthogonal_Compar = mkCompar L.perpendicular_Compar "orthogonal" "to" ;
+  angle_between_Fun = mkFun "angle" "between" ;
+  dot_product_Oper = mkOper L.dot_product_Oper "dot product" ;
+  vector_plus_Oper = mkOper L.plus_Oper "sum" ;
+
 }

@@ -49,16 +49,31 @@ demo:
 	dk check out/texx.dk
 	cat BaseConstants.dk test/sets.dk >out/sexx.dk 
 	dk check out/sexx.dk
-	./RunInformath -to-latex-file -variations -data=added_constants.dkgf -projects=top100 test/top100.dk >out/top100.tex
+	./RunInformath -to-latex-file -variations test/top100.dk >out/top100.tex
 	echo "consider pdflatex out/top100.tex"
 	./RunInformath -to-latex-file -variations test/sets.dk >out/sets.tex
 	echo "consider pdflatex out/sets.tex"
 
 top100:
-	./RunInformath -to-latex-file -variations -data=added_constants.dkgf -projects=top100 test/top100.dk >out/top100.tex
+	./RunInformath -to-latex-file -variations test/top100.dk >out/top100.tex
 	cd out ; pdflatex top100.tex ; $(OPEN) top100.pdf
 	cat BaseConstants.dk test/top100.dk >out/texx.dk 
 	dk check out/texx.dk
+
+baseconstants:
+	tail -150 BaseConstants.dk >tmp/baseconstants.dk
+
+	./RunInformath -to-latex-file -variations tmp/baseconstants.dk >out/baseconstants.tex
+	cd out ; pdflatex baseconstants.tex ; $(OPEN) baseconstants.pdf
+
+parallel:
+	tail -150 BaseConstants.dk >tmp/parallel.dk
+	cat test/exx.dk >>tmp/parallel.dk
+	cat test/sets.dk >>tmp/parallel.dk
+	cat test/top100.dk >>tmp/parallel.dk
+	./RunInformath -parallel tmp/parallel.dk >tmp/parallel-informath.jsonl
+
+
 
 matita:
 	./RunInformath test/mini-matita.dk

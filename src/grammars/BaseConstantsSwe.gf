@@ -110,5 +110,34 @@ lin
   universeset_Const = mkConst L.universeset_Const (mkNP the_Det (mkCN (mkA "universell") mängd_N)) ;
 
   congruent_Pred3 = mkPred3 (mkAP (mkA "kongruent")) with_Prep (mkPrep "modulo") ;
+
+  area_Fun = mkFun "area" ;
+  radius_Fun = mkFun "radie" ;
+  circle_Noun = mkNoun (mkN "cirkel" "cirklar") ;
+  pi_Const = mkConst "\\pi" (mkNP the_Det (mkCN tal_N (symb "\\(\\pi\\)"))) ;
+  legendre_symbol_Oper = mkOper L.legendre_symbol_Oper (mkN "Legendresymbol" "Legendresymboler") ;
+  square_Oper = mkOper L.square_Oper (mkN "kvadrat" "kvadrater") ;
+  resultant_Oper = mkOper L.plus_Oper (mkN "resultant" "resultanter") ;
+  perpendicular_Compar = mkCompar L.perpendicular_Compar "vinkelrät" "mot" ;
+  length_Oper = mkOper L.length_Oper (mkN "norm" "normer") ;
+  vector_Noun = mkNoun (mkN "vektor" "vektorer") ;
+  denumerable_Adj = mkAdj "upräknelig" ;
+  cardinality_Oper = mkOper L.absolute_value_Oper (mkN "kardinalitet" "kardinaliteter") ;
+  is_root_Relnoun = mkN2 (mkN "rot" "rötter") ;
+  degree_Fun = mkFun (mkN "grad" "grader") ;
+  polynomial_Noun = mkNoun (mkN "polynom" "polynom") ;
+  irrational_Adj = mkAdj "irrationell" ;
+  rational_Adj = mkAdj "rationell" ;
   
+  sin_Oper = mkOper L.sin_Oper "sinus" ;
+  cos_Oper = mkOper L.cos_Oper "cosinus" ;
+  tan_Oper = mkOper L.tan_Oper "tangens" ;
+  arcsin_Oper = mkOper L.arcsin_Oper (mkN "arcsinus") for_Prep ;
+  arccos_Oper = mkOper L.arccos_Oper (mkN "arccosinus") for_Prep ;
+  arctan_Oper = mkOper L.arctan_Oper (mkN "arctangens") for_Prep ;
+  orthogonal_Compar = mkCompar L.perpendicular_Compar "ortogonal" "till" ;
+  angle_between_Fun = mkFun (mkN "vinkel") (mkPrep "mellan") ;
+  dot_product_Oper = mkOper L.dot_product_Oper "punktprodukt" ;
+  vector_plus_Oper = mkOper L.plus_Oper "summa" ;
+
 }

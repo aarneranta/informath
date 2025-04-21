@@ -114,6 +114,17 @@ combinations NEW top100 Oper combinations_Oper
 combinationsFromSet NEW top100 Oper combinationsFromSet_Oper
 #LIN Eng combinationsFromSet_Oper = mkOper L.binomial_Oper "number of combinations"
 
+sin NEW top100 Oper sin_Oper
+
+cos NEW top100 Oper cos_Oper
+
+angleBetween NEW top100 Oper angle_between_Oper
+
+dotProduct NEW top100 Oper dot_product_Oper
+
+vectorPlus NEW top100 Oper vector_plus_Oper
+
+
 
 fun ALIAS hol function
 el ALIAS hol Elem

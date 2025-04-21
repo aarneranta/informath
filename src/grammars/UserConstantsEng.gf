@@ -11,24 +11,4 @@ open
   Formal
 
 in {
-lin combinationsFromSet_Oper = mkOper L.binomial_Oper "number of combinations" ;
-lin combinations_Oper = mkOper L.combinations_Oper "set of combinations" ;
-lin binomial_Oper = mkOper L.binomial_Oper "binomial coefficient" ;
-lin area_Fun = mkFun "area" ;
-lin radius_Fun = mkFun "radius" ;
-lin circle_Noun = mkNoun "circle" ;
-lin pi_Const = mkConst "\\pi" (mkNP the_Det (mkCN (mkN "number") (symb "\\(\\pi\\)"))) ;
-lin legendre_symbol_Oper = mkOper L.legendre_symbol_Oper "Legendre symbol" ;
-lin square_Oper = mkOper L.square_Oper "square" ;
-lin resultant_Oper = mkOper L.plus_Oper "sum" ;
-lin perpendicular_Compar = mkCompar L.perpendicular_Compar "perpendicular" "to" ;
-lin length_Oper = mkOper L.length_Oper "length" ;
-lin vector_Noun = mkNoun "vector" ;
-lin denumerable_Adj = mkAdj "denumerable" ;
-lin cardinality_Oper = mkOper L.absolute_value_Oper "cardinality" ;
-lin is_root_Relnoun = mkN2 (mkN "root") ;
-lin degree_Fun = mkFun "degree" ;
-lin polynomial_Noun = mkNoun "polynomial" ;
-lin irrational_Adj = mkAdj "irrational" ;
-lin rational_Adj = mkAdj "rational" ;
 }
