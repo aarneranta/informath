@@ -177,16 +177,20 @@ splitType exp = case exp of
     (hypos, rest) -> (hypo:hypos, rest)
   _ -> ([], exp)
 
-addVarsToHypos :: [Hypo] -> [Hypo]
-addVarsToHypos = adds vars where
+-- make hypo-bound vars consistent with defining abstraction, adding vars if not given
+addVarsToHypos :: Maybe Exp -> [Hypo] -> [Hypo]
+addVarsToHypos mexp = adds vars where
   adds :: [QIdent] -> [Hypo] -> [Hypo]
   adds vs hypos = case hypos of
     HExp exp : hh -> HVarExp (head vs) exp : adds (tail vs) hh
-    hypo@(HVarExp var _) : hh -> hypo : adds (filter (/= var) vs) hh
-    hypo@(HParVarExp var _) : hh -> hypo : adds (filter (/= var) vs) hh
+    HVarExp _ exp  : hh ->  HVarExp (head vs) exp : adds (tail vs) hh
+    HParVarExp _ exp : hh ->  HParVarExp (head vs) exp : adds (tail vs) hh
     _ -> []
-  vars = [QIdent s |
-           s <- ["x", "y", "z", "u", "v", "w"] ++ ["X"  ++ show i | i <- [1..11]]]
+  vars = case mexp of
+    Just exp -> absIdents exp ++ newvars
+    _ -> newvars
+  newvars = [QIdent s |
+             s <- ["x", "y", "z", "u", "v", "w"] ++ ["X"  ++ show i | i <- [1..11]]]
 	 --- finite list so that filter works
 
 -- strip abstraction when function type arguments are moved to hypos, as in Lean
@@ -194,6 +198,15 @@ stripAbs :: [Hypo] -> Exp -> Exp
 stripAbs hypos exp = case (hypos, exp) of
   (h:hs, EAbs _ body) -> stripAbs hs body
   _ -> exp
+
+-- get a list of idents from an abstraction expression
+absIdents :: Exp -> [QIdent]
+absIdents = map bind2ident . fst . splitAbs
+
+bind2ident :: Bind -> QIdent
+bind2ident bind = case bind of
+  BVar var -> var
+  BTyped var _ -> var
 
 splitApp :: Exp -> (Exp, [Exp])
 splitApp exp = case exp of

@@ -45,20 +45,20 @@ jmt2jmt jmt = case jmt of
 	    (ident2exp ident)
             (exp2kind kind)
       ((hypos, kind), c) | elem c ["Fun", "Oper"] ->
-        let chypos = hypos2hypos (addVarsToHypos hypos)
+        let chypos = hypos2hypos (addVarsToHypos mexp hypos)
         in (maybe (GAxiomExpJmt axiomLabel)
 	          (\exp x y z -> GDefExpJmt definitionLabel x y z (exp2exp (stripAbs hypos exp))) mexp)
              (GListHypo chypos)
              (funListExp ident (map (GTermExp . GTIdent) (concatMap hypoIdents chypos)))
              (exp2kind kind)
       ((hypos, kind), c) | elem c ["Reladj", "Compar", "Relverb", "Relnoun", "Comparnoun", "Pred3"] ->
-        let chypos = hypos2hypos  (addVarsToHypos hypos)
+        let chypos = hypos2hypos  (addVarsToHypos mexp hypos)
         in (maybe (GAxiomPropJmt axiomLabel)
 	        (\exp x y -> GDefPropJmt definitionLabel x y (exp2prop exp)) mexp)
              (GListHypo chypos)
 	     (funListProp ident (map (GTermExp . GTIdent) (concatMap hypoIdents chypos)))
       ((hypos, kind), c) | elem c ["Adj", "Verb"] ->
-        let chypos = hypos2hypos  (addVarsToHypos hypos)
+        let chypos = hypos2hypos  (addVarsToHypos mexp hypos)
         in (maybe (GAxiomPropJmt axiomLabel)
 	        (\exp x y -> GDefPropJmt definitionLabel x y (exp2prop exp)) mexp)
              (GListHypo chypos)
@@ -306,9 +306,7 @@ ident2kind ident = case ident of
     _ -> GTermKind (GTIdent (ident2ident ident))
 
 bind2coreIdent :: Bind -> GIdent
-bind2coreIdent bind = case bind of
-  BVar var -> ident2ident var
-  BTyped var exp -> ident2ident var ---- add typed binding to Core?
+bind2coreIdent = ident2ident . bind2ident
 
 -- needed in proofs by abstraction
 bind2coreHypo :: Bind -> GHypo

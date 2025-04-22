@@ -47,7 +47,7 @@ lin
   equivalence_Fun = mkFun "equivalence" ;
 
   digit_Noun = mkNoun "digit" ;
-  number_Noun = mkNoun "Number" ;
+  number_Noun = mkNoun "number" ;
   boolean_Noun = mkNoun "boolean" ;
   cardinal_Noun = mkNoun "cardinal" ;
   list_Fam = mkFam "list" ;
@@ -126,7 +126,7 @@ lin
   pi_Const = mkConst "\\pi" (mkNP the_Det (mkCN (mkN "number") (symb "\\(\\pi\\)"))) ;
   legendre_symbol_Oper = mkOper L.legendre_symbol_Oper "Legendre symbol" ;
   square_Oper = mkOper L.square_Oper "square" ;
-  resultant_Oper = mkOper L.plus_Oper "sum" ;
+  resultant_Oper = mkOper L.plus_Oper "resultant" ;
   perpendicular_Compar = mkCompar L.perpendicular_Compar "perpendicular" "to" ;
   length_Oper = mkOper L.length_Oper "length" ;
   norm_Oper = mkOper L.length_Oper "norm" ;

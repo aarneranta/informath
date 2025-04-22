@@ -35,13 +35,13 @@ transJmt :: Jmt -> L.Jmt
 transJmt t = case t of
   JStatic qident exp ->
     let (hypos, typ) = splitType exp
-    in L.JAxiom (transQIdent qident) (transHypos hypos) (transExp typ)
+    in L.JAxiom (transQIdent qident) (transHypos Nothing hypos) (transExp typ)
   JDef qident (MTExp typ) (MEExp exp) ->
     let (hypos, vtyp) = splitType typ
-    in L.JDef (transQIdent qident) (transHypos hypos) (transExp vtyp) (transExp (stripAbs hypos exp))
+    in L.JDef (transQIdent qident) (transHypos (Just exp) hypos) (transExp vtyp) (transExp (stripAbs hypos exp))
   JThm qident (MTExp typ) (MEExp exp) ->
     let (hypos, vtyp) = splitType typ
-    in L.JThm (transQIdent qident) (transHypos hypos) (transExp vtyp) (transExp (stripAbs hypos exp))
+    in L.JThm (transQIdent qident) (transHypos (Just exp) hypos) (transExp vtyp) (transExp (stripAbs hypos exp))
   JDef qident (MTExp typ) MENone ->
     transJmt (JStatic qident typ)
   JInj qident mtyp mexp -> transJmt (JDef qident mtyp mexp)  
@@ -95,10 +95,12 @@ transVar t = case t of
   _ | isWildIdent t -> L.LIdent "x__" --- ?
   _ -> transQIdent t
 
-transHypos :: [Hypo] -> [L.Hypo]
-transHypos hypos = compress (map transHypo vhypos)
+transHypos :: Maybe Exp -> [Hypo] -> [L.Hypo]
+transHypos mexp hypos = compress (map transHypo vhypos)
   where
-    vhypos = addVarsToHypos hypos
+    vhypos = case mexp of
+      Nothing -> hypos
+      _ -> addVarsToHypos mexp hypos
     
     compress :: [L.Hypo] -> [L.Hypo]
     compress hs = case hs of
@@ -115,7 +117,7 @@ transHypos hypos = compress (map transHypo vhypos)
 
 transHypo :: Hypo -> L.Hypo
 transHypo t = case t of
---  HExp exp -> L.HExp (transExp exp) -- not reached due to addVarsToHypos
+  HExp exp -> L.HVarExp [L.LIdent "_"] (transExp exp)
   HVarExp var exp -> L.HVarExp [transVar var] (transExp exp)
   HParVarExp var exp -> L.HVarExp [transVar var] (transExp exp)
 
