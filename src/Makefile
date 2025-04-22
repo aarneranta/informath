@@ -61,7 +61,8 @@ top100:
 	dk check out/texx.dk
 
 baseconstants:
-	tail -150 BaseConstants.dk >tmp/baseconstants.dk
+#	tail -150 BaseConstants.dk >tmp/baseconstants.dk
+	cat BaseConstants.dk >tmp/baseconstants.dk
 
 	./RunInformath -to-latex-file -variations tmp/baseconstants.dk >out/baseconstants.tex
 	cd out ; pdflatex baseconstants.tex ; $(OPEN) baseconstants.pdf

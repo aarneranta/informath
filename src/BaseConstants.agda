@@ -74,7 +74,9 @@ module BaseConstants where
   postulate pow : Real -> Real -> Real
   postulate gcd : Int -> Int -> Int
   postulate factorial : Nat -> Nat
-
+  postulate sqrt : Num -> Num
+  postulate neg : Num -> Num
+  
   postulate even : Int -> Prop
 
   odd : Int -> Prop
@@ -94,3 +96,121 @@ module BaseConstants where
   postulate suchthat : (A : Set) -> ((B : A) -> Prop) -> Set
   postulate fst : (A : Set) -> (B : A -> Prop) -> (suchthat A B) -> A
 
+  postulate cartesian : Set -> Set -> Set
+
+  postulate complement : Set -> Set
+
+  postulate emptyset : Set
+
+  postulate universeset : Set
+
+  postulate subset : Set -> Set -> Prop
+
+  postulate subseteq : Set -> Set -> Prop
+
+  postulate superset : Set -> Set -> Prop
+
+  postulate superseteq : Set -> Set -> Prop
+
+  postulate equalset : Set -> Set -> Prop
+
+  postulate element : universeset -> Set -> Prop
+
+  postulate notelement : universeset -> Set -> Prop
+
+  postulate positivePart : Set -> Set
+
+  postulate negativePart : Set -> Set
+
+  postulate finite : Set -> Prop
+
+  infinite : Set -> Prop
+  infinite = \ A -> not (finite A)
+
+  congruent : (a : Int) -> (b : Int) -> (m : Nat) -> Prop
+  congruent = \ a -> \ b -> \ m -> exists Nat (\ k -> Eq (minus a b) (times k m))
+
+  postulate Enum : Set
+
+  postulate nil : Enum
+
+  postulate cons : Num -> Enum -> Enum
+
+  postulate enumset : Enum -> Set
+
+  rational : Real -> Prop
+  rational = \ x -> exists Int (\ p -> exists Int (\ q -> and (Neq q 0) (Eq x (div p q))))
+
+  irrational : Real -> Prop
+  irrational = \ x -> not (rational x)
+
+  square : Real -> Real
+  square = \ x -> pow x 2
+
+  postulate Polynomial : Set
+
+  postulate degree : (P : Polynomial) -> Nat
+
+  postulate isRoot : (c : Complex) -> (P : Polynomial) -> Prop
+
+  Cardinal : Set
+  Cardinal = Num
+  
+  postulate cardinality : (A : Set) -> Cardinal
+
+  denumerable : (A : Set) -> Prop
+  denumerable = \ A -> Eq (cardinality A) (cardinality Nat)
+
+  postulate Vector : Set
+
+  postulate norm : Vector -> Real
+
+  length : (v : Vector) -> Real
+  length = \ v -> norm v
+
+  postulate resultant : Vector -> Vector -> Vector
+
+  postulate legendre : Nat -> Nat -> Int
+
+  postulate pi : Real
+
+  postulate Circle : Set
+
+  postulate radius : Circle -> Real
+
+  postulate area : Circle -> Real
+
+  binomial : (n : Nat) -> (k : Nat) -> Nat
+  binomial = \ n -> \ k -> div (factorial n) (times (factorial k) (factorial (minus n k)))
+
+  postulate combinations : (n : Nat) -> (k : Nat) -> Nat
+
+  postulate combinationsFromSet : (A : Set) -> (k : Nat) -> Set
+
+  postulate sin : Real -> Real
+
+  cos : Real -> Real
+  cos = \ x -> sin (minus (div pi 2) x)
+
+  tan : Real -> Real
+  tan = \ x -> div (sin x) (cos x)
+
+  postulate arcsin : Real -> Real
+
+  postulate arccos : Real -> Real
+
+  postulate arctan : Real -> Real
+
+  postulate angleBetween : Vector -> Vector -> Real
+
+  dotProduct : (u : Vector) -> (v : Vector) -> Real
+  dotProduct = \ u -> \ v -> times (times (length u) (length v)) (cos (angleBetween u v))
+
+  orthogonal : (u : Vector) -> (v : Vector) -> Prop
+  orthogonal = \ u -> \ v -> Eq (angleBetween u v) (div pi 2)
+
+  perpendicular : (u : Vector) -> (v : Vector) -> Prop
+  perpendicular = \ u -> \ v -> orthogonal u v
+
+  vectorPlus : (u : Vector) -> (v : Vector) -> Vector
+  vectorPlus = \ u -> \ v -> resultant u v
