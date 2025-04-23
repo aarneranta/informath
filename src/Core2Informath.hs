@@ -105,11 +105,14 @@ aggregate t = case t of
       Just exps -> GAdjProp a (GOrExp (GListExp (x:exps)))
       _ -> GSimpleOrProp (GListProp (map aggregate pp))
   GExistProp (GListArgKind [GIdentsArgKind kind (GListIdent xs)]) prop -> case getExists kind prop of
-    (ys, body) -> GExistProp (GListArgKind [GIdentsArgKind kind (GListIdent (xs ++ ys))]) body
+    (ys, body) -> GExistProp (GListArgKind [GIdentsArgKind kind (GListIdent (xs ++ ys))]) (aggregate body)
   GListHypo hypos -> GListHypo (aggregateHypos hypos)
   _ -> composOp aggregate t
  where
    aggregateHypos hypos = case hypos of
+     GVarsHypo (GListIdent [x]) kind :
+       GPropHypo (GAdjProp adj exp@(GTermExp (GTIdent y))) : hs | x == y ->
+         GPropHypo (GKindProp exp (GAdjKind adj kind)) : aggregateHypos hs
      GPropHypo a : GPropHypo b : hs ->
        GPropHypo (aggregate (GSimpleAndProp (GListProp [a, b]))) : aggregateHypos hs
      h : hs -> aggregate h : aggregateHypos hs
@@ -189,6 +192,8 @@ variations tree = case tree of
     tree : [GPostQuantProp prop exp | exp <- allExpVariations argkind]
   GExistProp (GListArgKind [argkind]) prop ->
     tree : [GPostQuantProp prop exp | exp <- existExpVariations argkind]
+  GNotProp (GExistProp argkinds prop) ->
+    tree : [GExistNoProp argkinds prop]
   GSimpleAndProp (GListProp [GFormulaProp (GFEquation (GEBinary lt a b)), GFormulaProp (GFEquation (GEBinary eq b' c))]) | b == b' ->
     tree : [GFormulaProp (GFEquation (GEChain lt a (GEBinary eq b c)))] ---- TODO: generalize to longer chains
   GSimpleIfProp a@(GFormulaProp fa) b@(GFormulaProp fb) ->
