@@ -60,6 +60,12 @@ top100:
 	cat BaseConstants.dk test/top100.dk >out/texx.dk 
 	dk check out/texx.dk
 
+top100single:
+	./RunInformath -to-latex-file test/top100.dk >out/top100.tex
+	cd out ; pdflatex top100.tex ; $(OPEN) top100.pdf
+	cat BaseConstants.dk test/top100.dk >out/texx.dk 
+	dk check out/texx.dk
+
 baseconstants:
 #	tail -150 BaseConstants.dk >tmp/baseconstants.dk
 	cat BaseConstants.dk >tmp/baseconstants.dk

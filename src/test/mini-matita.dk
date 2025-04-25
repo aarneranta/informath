@@ -541,8 +541,8 @@ mod_S : n : Nat -> m : Nat -> __ : Lt 0 m -> __1 : Lt (plus (mod n m) (nd 1)) m 
 mod_O_n : n : Nat -> Eq (mod 0 n) 0 .
 lt_to_eq_mod : n : Nat -> m : Nat -> __ : Lt n m -> Eq (mod n m) n .
 or_div_mod : n : Nat -> q : Nat -> __ : Lt 0 q -> or (and (Eq (plus (mod n q) (nd 1)) q) (Eq (plus n (nd 1)) (times (plus (div n q) (nd 1)) q))) (and (Lt (plus (mod n q) (nd 1)) q) (Eq (plus n (nd 1)) (plus (times (div n q) q) (plus (mod n q) (nd 1))))) .
-injective_times_r : n : Nat -> __ : Lt 0 n -> injective Nat Nat (m : Nat => times n m) .
-injective_times_l : n : Nat -> __ : Lt 0 n -> injective Nat Nat (m : Nat => times m n) .
+injective_times_r : n : Nat -> __ : Lt 0 n -> injectif Nat Nat (m : Nat => times n m) .
+injective_times_l : n : Nat -> __ : Lt 0 n -> injectif Nat Nat (m : Nat => times m n) .
 lt_div_S : n : Nat -> m : Nat -> __ : Lt 0 m -> Lt n (times (plus (div n m) (nd 1)) m) .
 le_div : n : Nat -> m : Nat -> __ : Lt 0 n -> Leq (div m n) m .
 le_plus_mod : m : Nat -> n : Nat -> q : Nat -> __ : Lt 0 q -> Leq (mod (plus m n) q) (plus (mod m q) (mod n q)) .
@@ -573,7 +573,7 @@ lt_O_exp : n : Nat -> m : Nat -> __ : Lt 0 n -> Lt 0 (pow n m) .
 lt_m_exp_nm : n : Nat -> m : Nat -> __ : Lt (nd 1) n -> Lt m (pow n m) .
 exp_to_eq_O : n : Nat -> m : Nat -> __ : Lt (nd 1) n -> __1 : Eq (pow n m) (nd 1) -> Eq m 0 .
 let_clause_1258 : b : Nat -> lt1b : Lt (nd 1) b -> n : Nat -> H : Eq (times (pow b n) b) (nd 1) -> Eq (times b (pow b n)) (nd 1) .
-injective_exp_r : b : Nat -> __ : Lt (nd 1) b -> injective Nat Nat (i : Nat => pow b i) .
+injective_exp_r : b : Nat -> __ : Lt (nd 1) b -> injectif Nat Nat (i : Nat => pow b i) .
 le_exp : n : Nat -> m : Nat -> p : Nat -> __ : Lt 0 p -> __1 : Leq n m -> Leq (pow p n) (pow p m) .
 le_exp1 : n : Nat -> m : Nat -> a : Nat -> __ : Lt 0 a -> __1 : Leq n m -> Leq (pow n a) (pow m a) .
 lt_exp : n : Nat -> m : Nat -> p : Nat -> __ : Lt (nd 1) p -> __1 : Lt n m -> Lt (pow p n) (pow p m) .
@@ -850,7 +850,7 @@ nat_case : n : Nat -> P : (__ : Nat -> Prop) -> __ : (__ : Eq n 0 -> P 0) -> __1
 nat_elim2 : R : (__ : Nat -> __1 : Nat -> Prop) -> __ : (n : Nat -> R 0 n) -> __1 : (n : Nat -> R (plus n (nd 1)) 0) -> __2 : (n : Nat -> m : Nat -> __2 : R n m -> R (plus n (nd 1)) (plus m (nd 1))) -> n : Nat -> m : Nat -> R n m .
 le_gen : P : (__ : Nat -> Prop) -> n : Nat -> __ : (i : Nat -> __ : Leq i n -> P i) -> P n .
 pred_Sn : n : Nat -> Eq n (pred (plus n (nd 1))) .
-injective_S : injective Nat Nat succ .
+injective_S : injectif Nat Nat succ .
 S_pred : n : Nat -> __ : Lt 0 n -> Eq (plus (pred n) (nd 1)) n .
 plus_O_n : n : Nat -> Eq n (plus 0 n) .
 plus_n_O : n : Nat -> Eq n (plus n 0) .
@@ -858,8 +858,8 @@ plus_n_Sm : n : Nat -> m : Nat -> Eq (plus (plus n m) (nd 1)) (plus n (plus m (n
 commutative_plus : commutative Nat plus .
 associative_plus : associative Nat plus .
 assoc_plus1 : a : Nat -> b : Nat -> c : Nat -> Eq (plus c (plus b a)) (plus (plus b c) a) .
-injective_plus_r : n : Nat -> injective Nat Nat (m : Nat => plus n m) .
-injective_plus_l : n : Nat -> injective Nat Nat (m : Nat => plus m n) .
+injective_plus_r : n : Nat -> injectif Nat Nat (m : Nat => plus n m) .
+injective_plus_l : n : Nat -> injectif Nat Nat (m : Nat => plus m n) .
 times_Sn_m : n : Nat -> m : Nat -> Eq (plus m (times n m)) (times (plus n (nd 1)) m) .
 times_O_n : n : Nat -> Eq 0 (times 0 n) .
 times_n_O : n : Nat -> Eq 0 (times n 0) .
@@ -962,7 +962,7 @@ f3_ind : A1 : Set -> A2 : Set -> A3 : Set -> f : (__ : A1 -> __1 : A2 -> __2 : A
 lt_to_not_eq : n : Nat -> m : Nat -> __ : Lt n m -> not (Eq n m) .
 le_n_O_to_eq : n : Nat -> __ : Leq n 0 -> Eq 0 n .
 le_to_le_to_eq : n : Nat -> m : Nat -> __ : Leq n m -> __1 : Leq m n -> Eq n m .
-increasing_to_injective : f : (__ : Nat -> Nat) -> __ : increasing f -> injective Nat Nat f .
+increasing_to_injectif : f : (__ : Nat -> Nat) -> __ : increasing f -> injectif Nat Nat f .
 minus_Sn_m : m : Nat -> n : Nat -> __ : Leq m n -> Eq (minus (plus n (nd 1)) m) (plus (minus n m) (nd 1)) .
 plus_minus : m : Nat -> n : Nat -> p : Nat -> __ : Leq m n -> Eq (plus (minus n m) p) (minus (plus n p) m) .
 minus_plus_m_m : n : Nat -> m : Nat -> Eq n (minus (plus n m) m) .
@@ -1073,7 +1073,7 @@ div_p_ord_inv : p : Nat -> m : Nat -> x : Nat -> __ : Lt (ord x p) m -> Eq (div 
 mod_p_ord_inv : p : Nat -> m : Nat -> x : Nat -> __ : Lt (ord x p) m -> Eq (mod (p_ord_inv p m x) m) (ord x p) .
 injn : __ : (__ : Nat -> Nat) -> __1 : Nat -> Prop .
 injn_Sn_n : f : (__ : Nat -> Nat) -> n : Nat -> __ : injn f (plus n (nd 1)) -> injn f n .
-injective_to_injn : f : (__ : Nat -> Nat) -> n : Nat -> __ : injective Nat Nat f -> injn f n .
+injective_to_injn : f : (__ : Nat -> Nat) -> n : Nat -> __ : injectif Nat Nat f -> injn f n .
 permut : __ : (__ : Nat -> Nat) -> __1 : Nat -> Prop .
 permut_O_to_eq_O : h : (__ : Nat -> Nat) -> __ : permut h 0 -> Eq (h 0) 0 .
 permut_S_to_permut : f : (__ : Nat -> Nat) -> m : Nat -> __ : permut f (plus m (nd 1)) -> __1 : Eq (f (plus m (nd 1))) (plus m (nd 1)) -> permut f m .
@@ -1083,7 +1083,7 @@ transpose_i_j_j : i : Nat -> j : Nat -> Eq (transpose i j j) i .
 transpose_i_i : i : Nat -> n : Nat -> Eq (transpose i i n) n .
 transpose_i_j_j_i : i : Nat -> j : Nat -> n : Nat -> Eq (transpose i j n) (transpose j i n) .
 transpose_transpose : i : Nat -> j : Nat -> n : Nat -> Eq (transpose i j (transpose i j n)) n .
-injective_transpose : i : Nat -> j : Nat -> injective Nat Nat (transpose i j) .
+injective_transpose : i : Nat -> j : Nat -> injectif Nat Nat (transpose i j) .
 permut_transpose : i : Nat -> j : Nat -> n : Nat -> __ : Leq i n -> __1 : Leq j n -> permut (transpose i j) n .
 permut_fg : f : (__ : Nat -> Nat) -> g : (__ : Nat -> Nat) -> n : Nat -> __ : permut f n -> __1 : permut g n -> permut (m : Nat => f (g m)) n .
 permut_transpose_l : f : (__ : Nat -> Nat) -> m : Nat -> i : Nat -> j : Nat -> __ : Leq i m -> __1 : Leq j m -> __2 : permut f m -> permut (n : Nat => transpose i j (f n)) m .
