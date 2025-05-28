@@ -34,6 +34,14 @@ if MODE == 'all':
     print()
 
 
+# printing baseline predicted Agda, renamed thm labels
+# use this for generating an Agda file from the baseline predictions
+if MODE == 'base':
+  i = 0
+  for d in data:
+    print(rename(d['Base'].split(), str(i)))
+    i += 1
+
 # printing predicted Agda, renamed thm labels
 # use this for generating an Agda file from the predictions
 if MODE == 'tuned':
