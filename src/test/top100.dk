@@ -61,5 +61,5 @@ thm78a : (u : Elem Vector) -> (v : Elem Vector) ->
 thm91 : (u : Elem Vector) -> (v : Elem Vector) ->
   Proof (Leq (norm (vectorPlus u v)) (plus (norm u) (norm v))).
 
-thm98 : (n : Elem Nat) -> Proof (exists Nat (p => and (prime p) (and (Lt n p) (Lt p (times 2 n))))).
+thm98 : (n : Elem Nat) -> Proof (if (Gt n 1) (exists Nat (p => and (prime p) (and (Lt n p) (Lt p (times 2 n)))))).
 
