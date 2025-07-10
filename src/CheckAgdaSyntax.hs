@@ -16,11 +16,11 @@ main = interact (unlines . map parseAgdaJmt . filter (not . null) . lines)
 parseAgdaJmt :: String -> String
 parseAgdaJmt s = do
   case pJmt (myLexer (s ++ " ;")) of
-    Bad e -> "ERROR: " ++ s
+    Bad e -> "ERROR: " ++ s ++ "\n" ++ s ++ " -- NORMALIZE FAILED"
     Ok mo -> "OK: " ++ s ++ "\n" ++ normalize mo ++ " -- NORMALIZED"
 
 normalize :: Jmt -> String
-normalize = printTree . norm where
+normalize = init . printTree . norm where
 
   norm :: Tree a -> Tree a
   norm t = case t of

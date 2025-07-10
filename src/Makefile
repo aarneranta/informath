@@ -80,6 +80,12 @@ parallel:
 	cat test/top100.dk >>tmp/parallel.dk
 	./RunInformath -parallel tmp/parallel.dk >tmp/parallel-informath.jsonl
 
+parallel-def:
+	tail -150 BaseConstants.dk >tmp/parallel.dk
+	cat test/exx.dk >>tmp/parallel.dk
+	cat test/sets.dk >>tmp/parallel.dk
+	./RunInformath -parallel tmp/parallel.dk >tmp/parallel-def-train.jsonl
+
 
 
 matita:
