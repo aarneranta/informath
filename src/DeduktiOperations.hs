@@ -5,6 +5,8 @@ module DeduktiOperations where
 
 import Dedukti.AbsDedukti
 import Dedukti.PrintDedukti
+import Dedukti.ParDedukti (myLexer)
+import Dedukti.LexDedukti (Token(..), Tok(..), tsText)
 import CommonConcepts
 import ConstantData
 
@@ -294,3 +296,18 @@ stripQualifiers t = case t of
      (_, _:x) -> x
      _ -> c
 
+deduktiTokens :: String -> [String]
+deduktiTokens = map sToken . myLexer
+  where
+    sToken token = case token of
+      PT _ tok -> sTok tok
+      Err _ -> "_ERROR_"
+
+    sTok tok = case tok of
+      TK ts -> tsText ts
+      TL s -> s
+      TI s -> s
+      TV s -> s
+      TD s -> s
+      TC s -> s
+      T_QIdent s -> s

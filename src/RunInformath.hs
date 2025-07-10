@@ -11,7 +11,7 @@ import Dedukti.AbsDedukti
 import Dedukti.ErrM
 import DeduktiOperations (
   identsInTypes, dropDefinitions, stripQualifiers, identTypes, ignoreCoercions,
-  ignoreFirstArguments, peano2int, applyConstantData)
+  ignoreFirstArguments, peano2int, applyConstantData, deduktiTokens)
 import ConstantData (
   ConstantData, extractConstantData, lookBackConstantData, extractTargetConversions, convInfo, coercionFunctions)
 import SpecialDeduktiConversions (specialDeduktiConversions)
@@ -68,6 +68,8 @@ helpMsg = unlines [
   "  -peano2int      convert succ/0 natural numbers to sequences of digits",
   "  -idents         print a frequency table of identifiers in a .dk file",
   "  -idtypes        print the types identifiers in a .dk file",
+  "  -no-unlex       do not unlex the output text",
+  "  -dedukti-tokens output Dedukti code tokenized by spaces",     
   "",
   "Output is to stdout and can be redirected to a file to check with",
   "Dedukti or Agda or Coq or Lean when producing one of these."
@@ -92,7 +94,13 @@ data Env = Env {
  }
 
 ifFlag x env = elem x (flags env)
+
 ifv env act = if (ifFlag "-v" env) then act else return ()
+
+unlex env s = if (ifFlag "-no-unlex" env) then s else unlextex s
+
+printTreeEnv env t =
+  if (ifFlag "-dedukti-tokens" env) then unwords (deduktiTokens (printTree t)) else printTree t
 
 flagValue flag dfault ff = case [f | f <- ff, isPrefixOf flag (tail f)] of
   f:_ -> drop (length flag + 2) f   -- -<flag>=<value>
@@ -143,11 +151,11 @@ main = do
 	  DC.processDeduktiModule (applyConstantData (convToCoqData env) mo)
         _ | ifFlag "-to-lean" env -> 
 	  DL.processDeduktiModule (applyConstantData (convToLeanData env) mo)
-	_ | ifFlag "-to-dedukti" env -> mapM_ putStrLn [printTree j | j <- jmts] -- when modifying dedukti
+	_ | ifFlag "-to-dedukti" env -> mapM_ putStrLn [printTreeEnv env j | j <- jmts] -- when modifying dedukti
 	_ | ifFlag "-parallel" env -> parallelJSONL env{flags = "-variations":flags env} mo
 	_ | ifFlag "-idents" env -> printFrequencyTable (identsInTypes mo)
 	_ | ifFlag "-idtypes" env ->
-	      mapM_ putStrLn [printTree (JStatic c t) | (c, t) <- M.toList (identTypes mo)]
+	      mapM_ putStrLn [printTreeEnv env (JStatic c t) | (c, t) <- M.toList (identTypes mo)]
 	_ -> processDeduktiModule env mo
     filename:_  -> do
       s <- readFile filename
@@ -217,7 +225,7 @@ roundtripDeduktiJmt env cs = do
       ifv env $ putStrLn $ "## Dedukti: " ++ show t
       let gft = gf $ jmt2core t
       ifv env $ putStrLn $ "## MathCore: " ++ showExpr [] gft
-      let lin = unlextex $ linearize gr (lang env) gft
+      let lin = unlex env $ linearize gr (lang env) gft
       putStrLn lin
       processCoreJmt env lin
 
@@ -228,7 +236,7 @@ processDeduktiJmtTree env t = do
   let ct = jmt2core t
   let gft = gf ct
   ifv env $ putStrLn $ "## MathCore: " ++ showExpr [] gft
-  ifv env $ putStrLn $ "# MathCoreEng: " ++ unlextex (linearize gr (lang env) gft)
+  ifv env $ putStrLn $ "# MathCoreEng: " ++ unlex env (linearize gr (lang env) gft)
   convertCoreToInformath env ct
 
 convertCoreToInformath :: Env -> GJmt -> IO ()
@@ -238,7 +246,7 @@ convertCoreToInformath env ct = do
   let gffts = map gf fts
   flip mapM_ gffts $ \gfft -> do
     ifv env $ putStrLn $ "## Informath: " ++ showExpr [] gfft
-    putStrLn $ unlextex $ linearize fgr (lang env) gfft
+    putStrLn $ unlex env $ linearize fgr (lang env) gfft
     if (ifFlag "-to-latex-file" env) then (putStrLn "") else return ()
 
 processCoreJmt :: Env -> String -> IO ()
@@ -258,14 +266,14 @@ processCoreJmtTree :: Env -> Expr -> IO ()
 processCoreJmtTree env t = do
   let gr = cpgf env
   ifv env $ putStrLn $ "## Informath: " ++ showExpr [] t
-  ifv env $ putStrLn $ "# InformathEng: " ++ unlextex (linearize gr (lang env) t)
+  ifv env $ putStrLn $ "# InformathEng: " ++ unlex env (linearize gr (lang env) t)
   let tr = fg t
   let str = semantics tr
   let st = gf str
   ifv env $ putStrLn $ "## MathCore: " ++ showExpr [] st
-  ifv env $ putStrLn $ "# MathCoreEng: " ++ unlextex (linearize gr (lang env) st)
+  ifv env $ putStrLn $ "# MathCoreEng: " ++ unlex env (linearize gr (lang env) st)
   let d = jmt2dedukti (lookBackData env) str
-  putStrLn $ printTree d
+  putStrLn $ printTreeEnv env d
 ---  convertCoreToInformath env str
 
 processInformathJmt :: Env -> String -> IO String
@@ -296,9 +304,9 @@ processInformathJmtTree env t0 = do
   let str = semantics tr
   let st = gf str
   ifv env $ putStrLn $ "## Core     : " ++ showExpr [] st
-  ifv env $ putStrLn $ unlextex (linearize gr (lang env) st)
+  ifv env $ putStrLn $ unlex env (linearize gr (lang env) st)
   let d = jmt2dedukti (lookBackData env) str
-  let dt = printTree d
+  let dt = printTreeEnv env d
   ifv env $ putStrLn $ dt
   return dt
 
@@ -310,13 +318,13 @@ parallelJSONL env mo@(MJmts jmts) = do
       let tree = jmt2core cjmt
       let gft = gf tree
       let json = concat $ intersperse ", " $ [
-            mkJSONField "dedukti" (printTree jmt),
+            mkJSONField "dedukti" (printTreeEnv env jmt),
             mkJSONField "agda" (DA.printAgdaJmts (DA.transJmt (applyConstantData (convToAgdaData env) jmt))),
             mkJSONField "coq" (DC.printCoqJmt (DC.transJmt (applyConstantData (convToCoqData env) jmt))),
             mkJSONField "lean" (DL.printLeanJmt (DL.transJmt (applyConstantData (convToLeanData env) jmt)))
 	    ] ++ [
 	      mkJSONListField (showCId lang)
-	        [unlextex (linearize gr lang (gf t)) | t <- nlg (flags env) tree]
+	        [unlex env (linearize gr lang (gf t)) | t <- nlg (flags env) tree]
 		  | lang <- allLanguages env
 	    ]
       putStr "{"
@@ -385,7 +393,7 @@ printFrequencyTable m = do
 linearizeInEnv :: Env -> PGF.Expr -> [(Language, [String])]
 linearizeInEnv env tree = lins
  where
-  lins = [(lang, map unlextex s) | (lang, s) <- groupResults (linearizeAllLang pgf tree)]
+  lins = [(lang, map (unlex env) s) | (lang, s) <- groupResults (linearizeAllLang pgf tree)]
   pgf = cpgf env
 -}
 

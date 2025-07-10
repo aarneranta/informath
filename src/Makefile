@@ -84,7 +84,7 @@ parallel-def:
 	tail -150 BaseConstants.dk >tmp/parallel.dk
 	cat test/exx.dk >>tmp/parallel.dk
 	cat test/sets.dk >>tmp/parallel.dk
-	./RunInformath -parallel tmp/parallel.dk >tmp/parallel-def-train.jsonl
+	./RunInformath -parallel -no-unlex -dedukti-tokens tmp/parallel.dk >tmp/parallel-def-train.jsonl
 
 
 

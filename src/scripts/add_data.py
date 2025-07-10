@@ -19,7 +19,7 @@ with open(NEW_TEX_FILE) as file:
 def match(entry, line):
     dk = entry.get('dedukti', 'NONE')
     label = dk.split()[0].lower()       # Thm1 :
-    tex = line.split()[0][:-1].lower()  # Thm1.
+    tex = line.split()[0][:].lower()  # Thm1.
     return label == tex
 
     
