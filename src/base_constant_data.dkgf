@@ -29,7 +29,7 @@ neg BASE Oper neg_Oper
 log BASE Oper logarithm_Oper
 sqrt BASE Oper square_root_Oper
 succ BASE Fun successor_Fun
-abs BASE Fun absolute_value_Fun
+abs BASE Oper absolute_value_Oper
 factorial BASE Oper factorial_Oper
 gcd BASE Fun gcd_Fun
 even BASE Adj even_Adj
