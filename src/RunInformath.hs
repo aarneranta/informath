@@ -90,6 +90,7 @@ data Env = Env {
  convToLeanData :: ConstantData,
  cpgf :: PGF,
  lang :: Language,
+ morpho :: Morpho,
  termindex :: [String] -- list of terms replaced by \INDEXEDTERM{ i }
  }
 
@@ -133,7 +134,8 @@ main = do
 	convToCoqData = M.fromList [(dk, convInfo t) | ("Coq", dk, t) <- targetdata],
 	convToLeanData = M.fromList [(dk, convInfo t) | ("Lean", dk, t) <- targetdata],
 	cpgf = corepgf,
-	lang=lan,
+	lang = lan,
+	morpho = buildMorpho corepgf lan,
 	termindex = []}
   case yy of
     _ | ifFlag "-help" env -> do
@@ -221,13 +223,15 @@ roundtripDeduktiJmt env cs = do
   let gr = cpgf env
   case pJmt (myLexer cs) of
     Bad e -> putStrLn ("error: " ++ e)
-    Ok t -> do
+    Ok t0 -> do
+      let MJmts [t] = foldr ($) (MJmts [t0]) (deduktiOpers env)
       ifv env $ putStrLn $ "## Dedukti: " ++ show t
       let gft = gf $ jmt2core t
       ifv env $ putStrLn $ "## MathCore: " ++ showExpr [] gft
       let lin = unlex env $ linearize gr (lang env) gft
       putStrLn lin
-      processCoreJmt env lin
+      processInformathJmt env lin
+      return ()
 
 processDeduktiJmtTree :: Env -> Jmt -> IO ()
 processDeduktiJmtTree env t = do
@@ -249,33 +253,6 @@ convertCoreToInformath env ct = do
     putStrLn $ unlex env $ linearize fgr (lang env) gfft
     if (ifFlag "-to-latex-file" env) then (putStrLn "") else return ()
 
-processCoreJmt :: Env -> String -> IO ()
-processCoreJmt env s = do
-  let gr = cpgf env
-  let ls = lextex s
-  ifv env $ putStrLn ls
-  let (mts, msg) = parseJmt gr (lang env) jmt ls
-  ifv env $ putStrLn msg
-  case mts of
-    Just ts@(_:_) -> do
-      flip mapM_ ts $ processCoreJmtTree env
-    _ -> putStrLn ("NO PARSE: " ++ ls)
-
-
-processCoreJmtTree :: Env -> Expr -> IO ()
-processCoreJmtTree env t = do
-  let gr = cpgf env
-  ifv env $ putStrLn $ "## Informath: " ++ showExpr [] t
-  ifv env $ putStrLn $ "# InformathEng: " ++ unlex env (linearize gr (lang env) t)
-  let tr = fg t
-  let str = semantics tr
-  let st = gf str
-  ifv env $ putStrLn $ "## MathCore: " ++ showExpr [] st
-  ifv env $ putStrLn $ "# MathCoreEng: " ++ unlex env (linearize gr (lang env) st)
-  let d = jmt2dedukti (lookBackData env) str
-  putStrLn $ printTreeEnv env d
----  convertCoreToInformath env str
-
 processInformathJmt :: Env -> String -> IO String
 processInformathJmt env s = do
   let gr = cpgf env
@@ -292,6 +269,7 @@ processInformathJmt env s = do
       return s
     _ -> do
       ifv env $ putStrLn ("# NO PARSE: " ++ ils)
+      ifv env $ putStrLn ("# MISSING WORDS: " ++ unwords (morphoMissing (morpho env) (words ils)))
       return ""
 
 processInformathJmtTree :: Env -> Expr -> IO String
