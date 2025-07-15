@@ -5,7 +5,7 @@ all: Informath.pgf Dedukti Agda Coq Lean RunInformath
 .PHONY: all Informath.pgf Dedukti Agda Lean Coq RunInformath demo
 
 Informath.pgf:
-	cd grammars ; gf --make -output-format=haskell -haskell=lexical --haskell=gadt -lexical=Name,Noun,Fam,Adj,Rel,Fun,Label,Const,Oper,Compar,Set,Coercion,Relverb,Relnoun,Reladj,Comparnoun,Verb,Pred3 --probs=Informath.probs InformathEng.gf InformathFre.gf InformathSwe.gf
+	cd grammars ; gf --make -output-format=haskell -haskell=lexical --haskell=gadt -lexical=Name,Noun,Fam,Adj,Rel,Fun,Label,Const,Oper,Compar,Set,Coercion,Relverb,Relnoun,Reladj,Comparnoun,Verb,Pred3 --probs=Informath.probs InformathEng.gf InformathFre.gf InformathSwe.gf # InformathGer.gf
 	sed -i '' 's/Monad\.Identity/Monad\.Identity\nimport Control\.Monad/' grammars/Informath.hs
 	ln -sf grammars/Informath.hs
 
@@ -59,6 +59,10 @@ top100:
 	cd out ; pdflatex top100.tex ; $(OPEN) top100.pdf
 	cat BaseConstants.dk test/top100.dk >out/texx.dk 
 	dk check out/texx.dk
+
+top100ger:
+	./RunInformath -to-latex-file -lang=Ger -variations test/top100.dk >out/top100ger.tex
+	cd out ; pdflatex top100ger.tex ; $(OPEN) top100ger.pdf
 
 top100single:
 	./RunInformath -to-latex-file test/top100.dk >out/top100.tex
