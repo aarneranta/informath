@@ -1,5 +1,6 @@
 --# -path=.:morphodict:../extraction
-concrete MathTermsEng of MathTerms = CatEng ** open ExtractEng in {
+concrete MathTermsEng of MathTerms = CatEng, DerivedTermsEng ** open ExtractEng in {
+
 lincat MT = Utt ;
 lin Fermat's_Last_Theorem_Q132469_MT = variants {} ; --Fermat's Last Theorem 
 lin primary_decomposition_Q172298_CN = AdjCN (PositA primary_A) (UseN decomposition_N) ;  

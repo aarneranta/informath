@@ -1,5 +1,6 @@
 --# -path=.:morphodict:../extraction
-concrete MathTermsSwe of MathTerms = CatSwe ** open ExtractSwe in {
+concrete MathTermsSwe of MathTerms = CatSwe, DerivedTermsSwe ** open ExtractSwe in {
+
 lincat MT = Utt ;
 lin Fermat's_Last_Theorem_Q132469_MT = variants {} ; --Fermats stora sats NounGenCN (AdjCN (PositA stor_A) (UseN (CompoundN sate_N s_1_N))) (BareCN (UseN Fermats_N)) 
 lin primary_decomposition_Q172298_CN = variants {} ; --NOWIKILABEL variants {} 

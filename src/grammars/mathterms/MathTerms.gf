@@ -1,5 +1,6 @@
 --# -path=.:morphodict:../extraction
-abstract MathTerms = Cat ** {
+abstract MathTerms = Cat, DerivedTerms ** {
+
 cat MT ;
 fun Fermat's_Last_Theorem_Q132469_MT : MT ;  
 fun primary_decomposition_Q172298_CN : CN ;  

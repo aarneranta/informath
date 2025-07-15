@@ -1,5 +1,6 @@
 --# -path=.:morphodict:../extraction
-concrete MathTermsGer of MathTerms = CatGer ** open ExtractGer in {
+concrete MathTermsGer of MathTerms = CatGer, DerivedTermsGer ** open ExtractGer in {
+
 lincat MT = Utt ;
 lin Fermat's_Last_Theorem_Q132469_MT = variants {} ; --Großer Fermatscher Satz variants {} 
 lin primary_decomposition_Q172298_CN = UseN Primärzerlegung_N ;  
