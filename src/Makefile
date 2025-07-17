@@ -5,7 +5,7 @@ all: Informath.pgf Dedukti Agda Coq Lean RunInformath
 .PHONY: all Informath.pgf Dedukti Agda Lean Coq RunInformath demo
 
 Informath.pgf:
-	cd grammars ; gf --make -output-format=haskell -haskell=lexical --haskell=gadt -lexical=Name,Noun,Fam,Adj,Rel,Fun,Label,Const,Oper,Compar,Set,Coercion,Relverb,Relnoun,Reladj,Comparnoun,Verb,Pred3 --probs=Informath.probs InformathEng.gf InformathFre.gf InformathSwe.gf # InformathGer.gf
+	cd grammars ; gf --make -output-format=haskell -haskell=lexical --haskell=gadt -lexical=Name,Noun,Fam,Adj,Rel,Fun,Label,Const,Oper,Compar,Set,Coercion,Relverb,Relnoun,Reladj,Comparnoun,Verb,Pred3 --probs=Informath.probs InformathEng.gf InformathFre.gf InformathSwe.gf InformathGer.gf
 	sed -i '' 's/Monad\.Identity/Monad\.Identity\nimport Control\.Monad/' grammars/Informath.hs
 	ln -sf grammars/Informath.hs
 
@@ -29,9 +29,10 @@ RunInformath:
 	ghc -package gf RunInformath.hs
 
 demo:
-	./RunInformath -lang=Fre test/exx.dk
-	./RunInformath -lang=Swe test/exx.dk
 	./RunInformath -lang=Eng test/exx.dk
+	./RunInformath -lang=Fre test/exx.dk
+	./RunInformath -lang=Ger test/exx.dk
+	./RunInformath -lang=Swe test/exx.dk
 	./RunInformath -lang=Eng test/exx.dk >exx.txt
 	./RunInformath -lang=Eng exx.txt
 	./RunInformath -lang=Eng test/gflean-data.txt
