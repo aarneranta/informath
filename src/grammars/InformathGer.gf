@@ -17,6 +17,6 @@ in {
 oper
   postAdvS : S -> Adv -> S = \s, adv -> s ** {s = \\o => s.s ! o ++ adv.s} ;
   imply_V2 : V2 = mkV2 (mkV "implizieren") ;
-  only_if_Subj : Subj = mkSubj "nur , wenn" ;
+  only_if_Subj : Subj = mkSubj "nur dann , wenn" ;
 
 }
