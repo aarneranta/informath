@@ -18,6 +18,7 @@ concrete MathCoreGer of MathCore =
 in {
 
 oper
+  alle_Det = M.mkWeakDet "all" plural ;
 
   define_V2 : V2 = mkV2 (mkV "definieren") (mkPrep "als" nominative) ;
   assume_VS : VS = mkVS (mkV "an" I.nehmen_V) ;

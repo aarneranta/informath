@@ -2,7 +2,10 @@
 
 concrete InformathGer of Informath =
   MathCoreGer **
-  InformathFunctor - [postAdvS] with
+  InformathFunctor - [
+    postAdvS,
+    AllKindExp, AllIdentsKindExp
+  ] with
     (Syntax = SyntaxGer),
     (Symbolic = SymbolicGer),
     (Grammar = GrammarGer),
@@ -13,6 +16,10 @@ concrete InformathGer of Informath =
     Prelude,
     BaseConstantsLatex
 in {
+
+lin
+  AllKindExp kind = mkNP alle_Det (useKind kind) ;
+  AllIdentsKindExp idents kind = mkNP alle_Det (mkCN (mkCN kind.cn idents.np) kind.adv) ;
 
 oper
   postAdvS : S -> Adv -> S = \s, adv -> s ** {s = \\o => s.s ! o ++ adv.s} ;
