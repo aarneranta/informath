@@ -47,8 +47,10 @@ lin
   negation_Fun = mkFun "négation" ;
   equivalence_Fun = mkFun "équivalence" ;
 
+  digit_Noun = mkNoun (mkN "chiffre" masculine) ;
   number_Noun = mkNoun nombre_N ;
   boolean_Noun = mkNoun (mkCN (mkA "booléen") (mkN "valeur" feminine)) ;
+  cardinal_Noun = mkNoun "cardinal" ;
   list_Fam = mkFam "liste" ;
 
   natural_Set = mkSet L.natural_Set "naturel" nombre_N ;
@@ -114,6 +116,13 @@ lin
 
   congruent_Pred3 = mkPred3 (mkAP (mkA "congruent")) dative (mkPrep "modulo") ;
 
+  finite_Adj = mkAdj "fini" ;
+  infinite_Adj = mkAdj "infini" ;
+
+  combinationsFromSet_Oper = mkOper L.binomial_Oper (mkCN nombre_N (SyntaxFre.mkAdv genitive (mkNP thePl_Det combinaison_N))) ;
+  combinations_Oper = mkOper L.binomial_Oper (mkCN ensemble_N (SyntaxFre.mkAdv genitive (mkNP aPl_Det combinaison_N))) ;
+  binomial_Oper = mkOper L.binomial_Oper (mkCN (mkA "binomial") (mkN "coefficient")) ;
+
   area_Fun = mkFun "aire" ;
   radius_Fun = mkFun "rayon" ;
   circle_Noun = mkNoun (mkN "cercle" masculine) ;
@@ -123,6 +132,7 @@ lin
   resultant_Oper = mkOper L.plus_Oper (mkN "addition") ;
   perpendicular_Compar = mkCompar L.perpendicular_Compar (mkA "perpendiculaire") dative ;
   length_Oper = mkOper L.length_Oper "norme" ;
+  norm_Oper = mkOper L.length_Oper "norme" ;
   vector_Noun = mkNoun "vecteur" ;
   denumerable_Adj = mkAdj "dénombrable" ;
   cardinality_Oper = mkOper L.absolute_value_Oper "cardinalité" ;

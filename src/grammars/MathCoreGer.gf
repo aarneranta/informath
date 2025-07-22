@@ -17,6 +17,12 @@ concrete MathCoreGer of MathCore =
 
 in {
 
+-- exceptions from functor
+lin
+  Pred3Adj pred y z =
+    AdvAP pred.ap (Syntax.mkAdv pred.prep1 (mkNP y (Syntax.mkAdv pred.prep2 z))) ; --- fake structure
+
+
 oper
   alle_Det = M.mkWeakDet "all" plural ;
 

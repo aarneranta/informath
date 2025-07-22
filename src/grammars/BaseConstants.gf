@@ -7,8 +7,8 @@ cat
   Adj ;  -- Exp -> Prop -- even
   Verb ; -- Exp -> Exp -- converge
   Reladj ;  -- Exp -> Exp -> Prop -- divisible by
-  Relverb ; -- Exp -> Exp -> Exp -- divide
-  Relnoun ; -- Exp -> Exp -> Exp  -- member of
+  Relverb ; -- Exp -> Exp -> Prop -- divide
+  Relnoun ; -- Exp -> Exp -> Prop  -- divisor of
   Name ; -- Exp -- absurdity
   Fun ;  -- [Exp] -> Exp -- equivalence of
   Label ; -- Exp -- theorem 1

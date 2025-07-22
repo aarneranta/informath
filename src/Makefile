@@ -61,6 +61,10 @@ top100:
 	cat BaseConstants.dk test/top100.dk >out/texx.dk 
 	dk check out/texx.dk
 
+top100fre:
+	./RunInformath -to-latex-file -lang=Fre -variations test/top100.dk >out/top100fre.tex
+	cd out ; pdflatex top100fre.tex ; $(OPEN) top100fre.pdf
+
 top100ger:
 	./RunInformath -to-latex-file -lang=Ger -variations test/top100.dk >out/top100ger.tex
 	cd out ; pdflatex top100ger.tex ; $(OPEN) top100ger.pdf

@@ -144,6 +144,7 @@ oper
 
   nombre_N : N = mkN "nombre" masculine ;
   type_N = mkN "type" masculine ;
-  ensemble_N = (mkN "ensemble" masculine) ;
+  ensemble_N = mkN "ensemble" masculine ;
+  combinaison_N = mkN "combinaison" feminine ;
 
 }

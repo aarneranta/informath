@@ -46,9 +46,12 @@ lin
   negation_Fun = mkFun (mkN "negation" "negationer") ;
   equivalence_Fun = mkFun (mkN "ekvivalens" "ekvivalenser") ;
 
+  digit_Noun = mkNoun "siffra" ;
   number_Noun = mkNoun tal_N ;
   boolean_Noun = mkNoun "sanningsvärde" ;
+  cardinal_Noun = mkNoun (mkN "kardinal" tal_N) ;
   list_Fam = mkFam "lista" ;
+  
   natural_Set = mkSet L.natural_Set "naturlig" tal_N ;
   integer_Set = mkSet L.integer_Set (mkN "hel" tal_N) ;
   rational_Set = mkSet L.rational_Set "rationell" tal_N ;
@@ -110,6 +113,13 @@ lin
   universeset_Const = mkConst L.universeset_Const (mkNP the_Det (mkCN (mkA "universell") mängd_N)) ;
 
   congruent_Pred3 = mkPred3 (mkAP (mkA "kongruent")) with_Prep (mkPrep "modulo") ;
+  
+  finite_Adj = mkAdj "ändlig" ;
+  infinite_Adj = mkAdj "oändlig" ;
+
+  combinationsFromSet_Oper = mkOper L.binomial_Oper (mkCN (mkN "an" tal_N) (SyntaxSwe.mkAdv (mkPrep "") (mkNP aPl_Det (mkN "kombination")))) ;
+  combinations_Oper = mkOper L.binomial_Oper (mkCN mängd_N (SyntaxSwe.mkAdv possess_Prep (mkNP aPl_Det  (mkN "Kombination")))) ;
+  binomial_Oper = mkOper L.binomial_Oper (mkCN (mkN "binomialkoefficient" "binomialkoefficienter")) ;
 
   area_Fun = mkFun "area" ;
   radius_Fun = mkFun "radie" ;
@@ -119,7 +129,8 @@ lin
   square_Oper = mkOper L.square_Oper (mkN "kvadrat" "kvadrater") ;
   resultant_Oper = mkOper L.plus_Oper (mkN "resultant" "resultanter") ;
   perpendicular_Compar = mkCompar L.perpendicular_Compar "vinkelrät" "mot" ;
-  length_Oper = mkOper L.length_Oper (mkN "norm" "normer") ;
+  length_Oper = mkOper L.length_Oper (mkN "längd" "längd") ;
+  norm_Oper = mkOper L.length_Oper (mkN "norm" "normer") ;
   vector_Noun = mkNoun (mkN "vektor" "vektorer") ;
   denumerable_Adj = mkAdj "upräknelig" ;
   cardinality_Oper = mkOper L.absolute_value_Oper (mkN "kardinalitet" "kardinaliteter") ;
