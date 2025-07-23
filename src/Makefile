@@ -62,7 +62,7 @@ top100:
 	dk check out/texx.dk
 
 top100fre:
-	./RunInformath -to-latex-file -lang=Fre -variations test/top100.dk >out/top100fre.tex
+	./RunInformath -to-latex-file -lang=Fre -variations -ranking test/top100.dk >out/top100fre.tex
 	cd out ; pdflatex top100fre.tex ; $(OPEN) top100fre.pdf
 
 top100ger:

@@ -5,6 +5,7 @@ module Main where
 
 import Core2Dedukti (jmt2dedukti)
 import Dedukti2Core
+import Environment
 import Dedukti.PrintDedukti
 import Dedukti.ParDedukti
 import Dedukti.AbsDedukti
@@ -30,6 +31,7 @@ import PGF
 
 import Data.List (partition, isSuffixOf, isPrefixOf, intersperse, sortOn)
 ----import System.Random
+import Data.Char (isDigit)
 import System.Environment (getArgs)
 import System.IO
 import qualified Data.Map as M
@@ -62,6 +64,8 @@ helpMsg = unlines [
   "  -v              verbose output, e.g. syntax trees and intermediate results",
   "  -variations     when producing natural language, show all variations",
   "  -ranking        rank trees with a number of scores",
+  "  -nbest=<int>    take at most <int> best ranked variations",
+  "  -test-ambiguity test for ambiguity when ranking (can be expensive)",
   "  -idents         show frequency list of idents in a Dedukti file",
   "  -dropdefs       drop definition parts of Dedukti code",
   "  -dropqualifs    strip qualifiers of idents",
@@ -82,32 +86,10 @@ informathPGFFile = "grammars/" ++ informathPrefix ++ ".pgf"
 baseConstantDataFile = "base_constant_data.dkgf"
 Just jmt = readType "Jmt"
 
-data Env = Env {
- flags :: [String],
- constantData :: ConstantData,
- lookBackData :: M.Map String String,  -- from GFFun to DkId ---- and to more info?
- specialConversions :: [String],
- convToAgdaData :: ConstantData,
- convToCoqData :: ConstantData,
- convToLeanData :: ConstantData,
- cpgf :: PGF,
- lang :: Language,
- morpho :: Morpho,
- termindex :: [String] -- list of terms replaced by \INDEXEDTERM{ i }
- }
-
-ifFlag x env = elem x (flags env)
-
-ifv env act = if (ifFlag "-v" env) then act else return ()
-
 unlex env s = if (ifFlag "-no-unlex" env) then s else unlextex s
 
 printTreeEnv env t =
   if (ifFlag "-dedukti-tokens" env) then unwords (deduktiTokens (printTree t)) else printTree t
-
-flagValue flag dfault ff = case [f | f <- ff, isPrefixOf flag (tail f)] of
-  f:_ -> drop (length flag + 2) f   -- -<flag>=<value>
-  _ -> dfault
 
 commaSep s = words (map (\c -> if c==',' then ' ' else c) s)
 
@@ -138,6 +120,8 @@ main = do
 	cpgf = corepgf,
 	lang = lan,
 	morpho = buildMorpho corepgf lan,
+	nbest = let fv = flagValue "nbest" "none" ff
+	        in if all isDigit fv then Just (read fv) else Nothing,
 	termindex = []}
   case yy of
     _ | ifFlag "-help" env -> do
@@ -252,9 +236,10 @@ convertCoreToInformath env ct = do
   let gfts = [(gfft, unlex env (linearize fgr (lang env) gfft)) | gfft <- map gf fts]
   let gffts =
         if (ifFlag "-ranking" env)
-        then [(t, s ++ "\n% " ++ show sk) | ((t, s), sk) <- rankTreesAndStrings gfts]
+        then [(t, s ++ "\n%% " ++ show sk) | ((t, s), sk) <- rankTreesAndStrings env gfts]
         else gfts
-  flip mapM_ gffts $ \ (gfft, s) -> do
+  let gffts_nb = maybe id take (nbest env) gffts
+  flip mapM_ gffts_nb $ \ (gfft, s) -> do
     ifv env $ putStrLn $ "## Informath: " ++ showExpr [] gfft
     putStrLn s
     if (ifFlag "-to-latex-file" env) then (putStrLn "") else return ()

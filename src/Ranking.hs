@@ -1,7 +1,9 @@
 module Ranking (rankTreesAndStrings) where
 
 import PGF
+import Environment
 import Lexing
+import ParseInformath
 import Data.List (sortOn)
 
 -- ranking trees and their linearizations with a set of scores
@@ -16,17 +18,22 @@ data Scores = Scores {
   parses :: Int
   } deriving Show
 
-scoreString :: String -> Scores
-scoreString s = Scores {
+scoreString :: Env -> String -> Scores
+scoreString env s = Scores {
   tree_length = 0, -- computed separately
   tree_depth = 0,  -- 
   characters = length s,
   tokens = length toks,
   subsequent_dollars = subdollars toks,
   initial_dollars = initdollars toks + if head toks == "$" then 1 else 0,
-  parses = 1 ---- TODO
+  parses =
+    if (ifFlag "-test-ambiguity" env)
+    then maybe 0 (length . take 3) (fst (parseJmt (cpgf env) (lang env) jmt inds))
+    else 1
   }
  where
+   (inds, _) = indexTex (lextex s)
+   Just jmt = readType "Jmt"
    toks = words (lextex s)
    subdollars ts = case ts of
      "$":"$":tt -> 1 + subdollars tt
@@ -50,16 +57,17 @@ treeDepth t = case unApp t of
   _ -> 1
 
 -- returns all scores and their sum
-scoreTreeAndString :: (Expr, String) -> (Scores, Int)
-scoreTreeAndString (t, s) =
-  let scores = (scoreString s){tree_length = treeLength t, tree_depth = treeDepth t}
+scoreTreeAndString :: Env -> (Expr, String) -> (Scores, Int)
+scoreTreeAndString env (t, s) =
+  let scores = (scoreString env s){
+        tree_length = treeLength t, tree_depth = treeDepth t}
   in (scores,
       sum (map (\f -> f scores)
                [tree_length, tree_depth, characters, tokens,
                 subsequent_dollars, initial_dollars, parses]))
 
 -- sorts trees from lowest to highest total score
-rankTreesAndStrings :: [(Expr, String)] -> [((Expr, String), (Scores, Int))] 
-rankTreesAndStrings tss = sortOn (snd . snd) [(ts, scoreTreeAndString ts) | ts <- tss]
+rankTreesAndStrings :: Env -> [(Expr, String)] -> [((Expr, String), (Scores, Int))] 
+rankTreesAndStrings env tss = sortOn (snd . snd) [(ts, scoreTreeAndString env ts) | ts <- tss]
 
 
