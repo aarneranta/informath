@@ -24,6 +24,7 @@ import MkConstants (mkConstants)
 import qualified Dedukti2Agda as DA
 import qualified Dedukti2Coq as DC
 import qualified Dedukti2Lean as DL
+import Ranking
 
 import PGF
 
@@ -60,6 +61,7 @@ helpMsg = unlines [
   "  -parallel       generate a jsonl list with all languages and variations",
   "  -v              verbose output, e.g. syntax trees and intermediate results",
   "  -variations     when producing natural language, show all variations",
+  "  -ranking        rank trees with a number of scores",
   "  -idents         show frequency list of idents in a Dedukti file",
   "  -dropdefs       drop definition parts of Dedukti code",
   "  -dropqualifs    strip qualifiers of idents",
@@ -247,10 +249,14 @@ convertCoreToInformath :: Env -> GJmt -> IO ()
 convertCoreToInformath env ct = do
   let fgr = cpgf env
   let fts = nlg (flags env) ct
-  let gffts = map gf fts
-  flip mapM_ gffts $ \gfft -> do
+  let gfts = [(gfft, unlex env (linearize fgr (lang env) gfft)) | gfft <- map gf fts]
+  let gffts =
+        if (ifFlag "-ranking" env)
+        then [(t, s ++ "\n% " ++ show sk) | ((t, s), sk) <- rankTreesAndStrings gfts]
+        else gfts
+  flip mapM_ gffts $ \ (gfft, s) -> do
     ifv env $ putStrLn $ "## Informath: " ++ showExpr [] gfft
-    putStrLn $ unlex env $ linearize fgr (lang env) gfft
+    putStrLn s
     if (ifFlag "-to-latex-file" env) then (putStrLn "") else return ()
 
 processInformathJmt :: Env -> String -> IO String
