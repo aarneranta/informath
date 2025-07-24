@@ -12,7 +12,7 @@ import Dedukti.AbsDedukti
 import Dedukti.ErrM
 import DeduktiOperations (
   identsInTypes, dropDefinitions, stripQualifiers, identTypes, ignoreCoercions,
-  ignoreFirstArguments, peano2int, applyConstantData, deduktiTokens)
+  ignoreFirstArguments, eliminateLocalDefinitions, peano2int, applyConstantData, deduktiTokens)
 import ConstantData (
   ConstantData, extractConstantData, lookBackConstantData, extractTargetConversions, convInfo, coercionFunctions)
 import SpecialDeduktiConversions (specialDeduktiConversions)
@@ -169,6 +169,9 @@ loop env = do
   case ss of
     '?':s -> processInformathJmt env s >>= putStrLn
     '=':s -> roundtripDeduktiJmt env s >> return ()
+    '-':s -> case pModule (myLexer s) of
+      Bad e -> putStrLn "parse error"
+      Ok m -> putStrLn $ printTree $ eliminateLocalDefinitions m
     _     -> parseDeduktiModule env ss >>= processDeduktiModule env
   loop env
 

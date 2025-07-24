@@ -106,6 +106,16 @@ ignoreFirstArguments cns t = case t of
   _ -> composOp (ignoreFirstArguments cns) t
 
 
+eliminateLocalDefinitions :: Tree a -> Tree a
+eliminateLocalDefinitions = elim [] where
+  elim :: [(QIdent, Exp)] -> Tree a -> Tree a
+  elim defs t = case t of
+    EIdent x -> maybe t id (lookup x defs)
+    ELet (LExp x d) e -> elim ((x, elim defs d):defs) e
+    ELet (LTyped x _ d) e -> elim defs (ELet (LExp x d) e)
+    _ -> composOp (elim defs) t
+    
+
 peano2int :: Tree a -> Tree a
 peano2int t = case t of
   EApp f x -> case splitApp t of

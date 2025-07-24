@@ -28,6 +28,7 @@ EIdent.  Exp9 ::= QIdent ;
 EApp.    Exp5 ::= Exp5 Exp6 ;
 EAbs.    Exp2 ::= Bind "=>" Exp2 ;
 EFun.    Exp1 ::= Hypo "->" Exp1 ;
+ELet.    Exp1 ::= Local "->" Exp1 ;
 
 coercions Exp 9 ;
 
@@ -40,6 +41,11 @@ PBTyped. Pattbind ::= QIdent ":" Exp ;
 HExp.    Hypo ::= Exp3 ;
 HVarExp. Hypo ::= QIdent ":" Exp3 ;
 HParVarExp. Hypo ::= "(" QIdent ":" Exp ")" ;
+
+LExp.    Local ::= "(" QIdent "=" Exp ")" ;
+LTyped.  Local ::= "(" QIdent ":" Exp "=" Exp ")" ;
+
+-- separator nonempty QIdent "," ;
 
 PVar.   Patt3 ::= QIdent ;
 PBracket. Patt3 ::= "{" Patt "}" ;
