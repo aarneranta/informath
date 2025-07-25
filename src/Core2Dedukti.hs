@@ -13,7 +13,7 @@ import qualified Data.Map as M
 
 
 jmt2dedukti :: M.Map String String -> GJmt -> Jmt
-jmt2dedukti lb = applyLookBack lb . jmt2jmt
+jmt2dedukti lb = eliminateLocalDefinitions . applyLookBack lb . jmt2jmt
 
 applyLookBack ::  M.Map String String -> Dedukti.AbsDedukti.Tree a -> Dedukti.AbsDedukti.Tree a
 applyLookBack mb t = case t of
@@ -121,6 +121,10 @@ hypo2dedukti hypo = case hypo of
     [HExp (prop2dedukti prop)]
   GIndexedLetFormulaHypo (GInt i) ->
     [HExp (EIdent (unresolvedIndexIdent i))]
+  GLetHypo ident kind exp ->
+    [HLetTyped (ident2ident ident) (kind2dedukti kind) (exp2dedukti exp)]
+  GBareLetHypo ident exp ->
+    [HLetExp (ident2ident ident) (exp2dedukti exp)]
 
 argkind2dedukti :: GArgKind -> [(Exp, QIdent)]
 argkind2dedukti argkind = case argkind of

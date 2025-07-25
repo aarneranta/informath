@@ -111,8 +111,8 @@ eliminateLocalDefinitions = elim [] where
   elim :: [(QIdent, Exp)] -> Tree a -> Tree a
   elim defs t = case t of
     EIdent x -> maybe t id (lookup x defs)
-    ELet (LExp x d) e -> elim ((x, elim defs d):defs) e
-    ELet (LTyped x _ d) e -> elim defs (ELet (LExp x d) e)
+    EFun (HLetExp x d) e -> elim ((x, elim defs d):defs) e
+    EFun (HLetTyped x _ d) e -> elim defs (EFun (HLetExp x d) e)
     _ -> composOp (elim defs) t
     
 
@@ -287,6 +287,8 @@ hypo2vars :: Hypo -> [QIdent]
 hypo2vars hypo = case hypo of
   HVarExp v _ -> [v]
   HParVarExp v _ -> [v]
+  HLetExp v _ -> [v]
+  HLetTyped v _ _ -> [v]
   HExp v -> []
 
 pattbindIdents :: [Pattbind] -> [QIdent]

@@ -41,7 +41,7 @@ fun
   IndexedFormulaProp : Int -> Prop ;
   IndexedLetFormulaHypo : Int -> Hypo ;
 
--- for Pathak's examples
+-- for Pathak's examples (and more)
 
   LetFormulaHypo : Formula -> Hypo ;
   PostQuantProp : Prop -> Exp -> Prop ;
