@@ -1,0 +1,8 @@
+*.pgf
+*.gfo
+*.bak
+*.hi
+*.o
+*.x
+src/typetheory/*/
+src/grammars/Informath.hs
