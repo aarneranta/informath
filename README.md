@@ -4,11 +4,11 @@
 
 ## NEW
 
-[Slides from ENS Saclay 10 April 2025](./doc/dedukti-gf-2025.pdf)
+[Updated slides shown in Saclay, Prague, and some other places in 2025](./doc/dedukti-gf-2025.pdf)
 
 ## The Informath project
 
-The Informath project addresses the problem of translating between formal and informal languages for mathematics. It aims to translate between multiple formal and informal languages in all directions. The formal languages included are Agda, Rocq (formerly Coq), Dedukti, and Lean. The informal languages are English, French, and Swedish. More languages will be added later. Also the scope of language structures is at the moment theorem statements and definitions; proofs are included for the sake of completeness, but will require more work to enable more natural verbalizations.
+The Informath project addresses the problem of translating between formal and informal languages for mathematics. It aims to translate between multiple formal and informal languages in all directions. The formal languages included are Agda, Rocq (formerly Coq), Dedukti, and Lean. The informal languages are English, French, German, and Swedish. More languages will be added later. Also the scope of language structures is at the moment theorem statements and definitions; proofs are included for the sake of completeness, but will require more work to enable more natural verbalizations.
 
 Informath started in 2024, but it has a background of a long tradition of translating between formal and informal languages by using GF, Grammatical Framework. New relevance for this task has been created by recent attempts to "teach mathematics" to Artificial Intelligence (AI) systems. These contemporary systems, such as Google's AlphaProof, combine machine learning (e.g. large language models) with formal proof systems, to guarantee the correctness of results. In this context,
 
@@ -27,7 +27,16 @@ to build an executable `RunInformath`. After that, you can do
 ```
   $ make demo
 ```
-which illustrates different functionalities: translating between Dedukti and natural languages, as well as from Dedukti to Agda, Coq, and Lean. Building the system requires some more software, as discribed below in [Requirements](#requirements).
+which illustrates different functionalities: translating between Dedukti and natural languages, as well as from Dedukti to Agda, Rocq, and Lean. Building the system requires some more software, as discribed below in [Requirements](#requirements).
+
+**Requirements**: you need 
+- [GF](https://www.grammaticalframework.org/) (both asexecutable and as the PGF library) 
+- [BNFC](https://bnfc.digitalgrammars.com/) (executable)
+- [GHC](https://www.haskell.org/ghcup/) (executable, with some common libraries)
+
+to do this.
+
+**Caution**: At the moment, making RunInformath is very sensitive to GCH compiler and Haskell library versions. Cabal and Stack configurations are planned to solve these issues soon.
  
 ## Generating synthetic data
 
@@ -55,12 +64,14 @@ The [src](./src/) directory contains
 - partial grammars of [Agda](https://wiki.portal.chalmers.se/agda/pmwiki.php), [Coq](https://coq.inria.fr/), and [Lean](https://lean-lang.org/) in [typetheory](./src/typetheory/) with generated parsers and printers
 - translations between MathCore and Informath
 - [BaseConstants.dk](./src/BaseConstants.dk) of logical and numeric operations assumed in the translations, and correspoonding files for Agda, Coq, and Lean
+- [base_constant_data.dkgf](./src/base_constant_data.dkgf), a symbol table for converting Dedukti constants to GF abstract syntax functions (read from this file by the conversion program)
 - some test material and scripts in [test/](./src/test/).
 
 The structure of the project is shown in the following picture:
 
 ![Informath](./informath-dedukti-core.png)
 
+(to be updated with Rocq and German).
 Here is an example statement involving all of the currently available languages. The Dedukti statement has been used as the source of all the other formats. Both MathCore and Informath could also be used as source, by parsing them and converting to Dedukti.
 ```
 Dedukti: prop110 : (a : Elem Int) -> (c : Elem Int) -> 
@@ -71,22 +82,22 @@ Dedukti: prop110 : (a : Elem Int) -> (c : Elem Int) ->
 
 MathCoreEng: Prop110. Let $a$ and $c$ be instances of integers. Assume that we can prove that $a$ is odd and $c$ is odd. Then we can prove that for all integers $b$, the sum of the product of $a$ and $b$ and the product of $b$ and $c$ is even.
 
-InformathEng: Let $a$ and $c$ be integers. Assume that both $a$ and $c$ are odd. Then for all integers $b$, $a b + b c$ is even.
+InformathEng: Let $a$ and $c$ be integers. Assume that both $a$ and $c$ are odd. Then $a b + b c$ is even for all integers $b$. 
 
 MathCoreFre: Prop110. Soient $a$ et $c$ des instances d'entiers. Supposons que nous pouvons démontrer que $a$ est impair et $c$ est impair. Alors nous pouvons démontrer que pour tous les entiers $b$, la somme du produit de $a$ et de $b$ et du produit de $b$ et de $c$ est paire.
 
-InformathFre: Prop110. Soient $a$ et $c$ des entiers. Supposons qu'et $a$ et $c$ sont impairs. Alors pour tous les entiers $b$, $a b + b c$ est pair.
+InformathFre: Prop110. Soient $a$ et $c$ des entiers. Supposons qu'et $a$ et $c$ sont impairs. Alors $a b + b c$ est pair pour tous les entiers $b$.
 
 MathCoreSwe: Prop110. Låt $a$ och $c$ vara instanser av heltal. Anta att vi kan bevisa att $a$ är udda och $c$ är udda. Då kan vi bevisa att för alla heltal $b$, är summan av produkten av $a$ och $b$ och produkten av $b$ och $c$ jämn.
 
-InformathSwe: Prop110. Låt $a$ och $c$ vara heltal. Anta att både $a$ och $c$ är udda. Då för alla heltal $b$, är $a b + b c$ jämnt.
+InformathSwe: Prop110. Låt $a$ och $c$ vara heltal. Anta att både $a$ och $c$ är udda. Då är $a b + b c$ jämnt för alla heltal $b$.
 
 ```
 Agda: postulate prop110 : (a : Int) -> (c : Int) -> 
   and (odd a) (odd c) -> 
   all Int (\ b -> even (plus (times a b) (times b c)))
 
-Coq: Axiom prop110 : forall a : Int, forall c : Int, 
+Rocq: Axiom prop110 : forall a : Int, forall c : Int, 
   (odd a /\ odd c -> forall b : Int, even (a * b + b * c)) .
 
 Lean: axiom prop110 (a c : Int) (x : odd a ∧ odd c) : 
@@ -104,11 +115,12 @@ MathCore renderings are designed to be unique for each Dedukti judgement. But th
 - Prop110. Let $a , c \in Z$. then if both $a$ and $c$ are odd, then for all integers $b$, $a b + b c$ is even.
 - Prop110. Let $a$ and $c$ be integers. Assume that both $a$ and $c$ are odd. Then for all integers $b$, $a b + b c$ is even.
 - Prop110. Let $a , c \in Z$. assume that both $a$ and $c$ are odd. Then for all integers $b$, $a b + b c$ is even.
+Prop110. Let $a , c \in Z$. assume that both $a$ and $c$ are odd. Then $a b + b c$ is even for all integers $b$.
 
 
 ### Dedukti
 
-[Dedukti](https://deducteam.github.io/) is a minimalistic logical framework aimed as an interlingua between different proof systems such as Agda, Coq, Isabelle, and Lean.
+[Dedukti](https://deducteam.github.io/) is a minimalistic logical framework aimed as an interlingua between different proof systems such as Agda, Rocq (formerly Coq), Isabelle, and Lean.
 Its purpose is to help share formalizations between these systems.
 Dedukti comes with an efficient proof checker and evaluator.
 Translations from many other proof system to Dedukti have been built, and this work is ongoing.
@@ -119,13 +131,13 @@ Thereby, it is also similar to the ALF system of 1990's and to the abstract synt
 
 Due to its simplicity and expressivity, together with an existing implementation and conversions, we have chosen Dedukti as the interlingua for other proof systems.
 
-### Agda, Coq, and Lean
+### Agda, Rocq, and Lean
 
-Agda, Coq, and Lean are type-theoretical proof systems just like Dedukti. But all of them have a richer syntax than Dedukti, because they are intended to be hand-written by mathematicians and programmers, whereas Dedukti has an austere syntax suitable for automatic generation for code.
+Agda, Rocq, and Lean are type-theoretical proof systems just like Dedukti. But all of them have a richer syntax than Dedukti, because they are intended to be hand-written by mathematicians and programmers, whereas Dedukti has an austere syntax suitable for automatic generation for code.
 
-Translators from both Agda, Coq, and Lean to Dedukti are available, and we have no plans to write our own ones. However, translators from Dedukti to these formalisms are included in the current directory. They are very partial, because they only have to target fragments of the Agda, Coq, and Lean. This is all we need for the purpose of autoformalization, if the generated code is just to be machine-checked and not to be read by humans. 
+Translators from each of Agda, Rocq, and Lean to Dedukti are available, and we have no plans to write our own ones. However, translators from Dedukti to these formalisms are included in the current directory. They are very partial, because they only have to target fragments of the Agda, Rocq, and Lean. This is all we need for the purpose of autoformalization, if the generated code is just to be machine-checked and not to be read by humans. 
 
-However, if Informath is to be used as an input tool by Agda, Coq, and Lean users, nice-looking syntax is desirable. In the case of Coq and Lean, we have tried to include some syntactic sugar, such as infix notations. In Agda, this has not yet been done, partly because the syntactic sugar is not as standardized as in Coq and Lean.
+However, if Informath is to be used as an input tool by Agda, Rocq, and Lean users, nice-looking syntax is desirable. In the case of Rocq and Lean, we have tried to include some syntactic sugar, such as infix notations. In Agda, this has not yet been done, partly because the syntactic sugar is not as standardized as in Rocq and Lean.
 
 Another caveat is that Dedukti is, by design, more liberal than the other systems. Type checking of code generated from type-correct Dedukti code can therefore fail in them. This can sometimes be repaired by inserting extra code such as coercions, but this is still mostly future work.
 
