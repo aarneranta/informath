@@ -10,19 +10,19 @@ Informath.pgf:
 	ln -sf grammars/Informath.hs
 
 Dedukti:
-	cd typetheory ; bnfc -m -p Dedukti --haskell-gadt Dedukti.bnf ; make
+	cd typetheory ; bnfc -m -p Dedukti --haskell-gadt Dedukti.bnf ; ./insert-monadplus-import.sh Dedukti/ComposOp.hs ; make
 	ln -sf typetheory/Dedukti
 
 Agda:
-	cd typetheory ; bnfc -m -p Agda --haskell-gadt Agda.bnf ; make
+	cd typetheory ; bnfc -m -p Agda --haskell-gadt Agda.bnf ; ./insert-monadplus-import.sh Agda/ComposOp.hs ; make
 	ln -sf typetheory/Agda
 
 Lean:
-	cd typetheory ; bnfc -m -p Lean --haskell-gadt Lean.bnf ; make
+	cd typetheory ; bnfc -m -p Lean --haskell-gadt Lean.bnf ; ./insert-monadplus-import.sh Lean/ComposOp.hs ;make
 	ln -sf typetheory/Lean
 
 Coq:
-	cd typetheory ; bnfc -m -p Coq --haskell-gadt Coq.bnf ; make
+	cd typetheory ; bnfc -m -p Coq --haskell-gadt Coq.bnf ; ./insert-monadplus-import.sh Coq/ComposOp.hs ; make
 	ln -sf typetheory/Coq
 
 RunInformath: 
