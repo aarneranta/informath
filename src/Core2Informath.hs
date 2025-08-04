@@ -182,7 +182,7 @@ variations tree = case tree of
           (hypos1, hypos2) <- splits,
 	  hypos11 <- sequence (map variations hypos1),
 	  prop2 <- variations prop,
-	  hypoprop <- variations (hypoProp hypos2 prop2)
+	  hypoprop <- concatMap variations (hypoProp hypos2 prop2)
 	  ]
   GVarsHypo (GListIdent xs) (GSetKind set) ->
     [tree, GLetDeclarationHypo (GDElem (GListTerm [GTIdent x | x <- xs]) (GSetTerm set))]
@@ -214,11 +214,13 @@ existExpVariations argkind = case argkind of
   GIdentsArgKind kind xs -> [GSomeIdentsKindExp xs kind]
   _ -> []
 
-hypoProp :: [GHypo] -> GProp -> GProp
+hypoProp :: [GHypo] -> GProp -> [GProp]
 hypoProp hypos prop = case hypos of
-  GPropHypo p : hs -> GSimpleIfProp p (hypoProp hs prop)
-  GVarsHypo xs k : hs -> GAllProp (GListArgKind [GIdentsArgKind k xs]) (hypoProp hs prop)
-  _ -> prop
+  GPropHypo p : hs -> [GSimpleIfProp p q | q <- hypoProp hs prop]
+  GVarsHypo xs k : hs -> [GAllProp (GListArgKind [GIdentsArgKind k xs]) q | q <- hypoProp hs prop]
+  _:_ -> [] ---- TODO: prop for let hypos
+--  h:hs -> PostHyposProp hypos prop
+  [] -> [prop]
 
 
 ---- a very simple special case of in situ so far

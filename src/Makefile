@@ -66,7 +66,7 @@ top100fre:
 	cd out ; pdflatex top100fre.tex ; $(OPEN) top100fre.pdf
 
 top100ger:
-	./RunInformath -to-latex-file -lang=Ger -variations test/top100.dk >out/top100ger.tex
+	./RunInformath -to-latex-file -lang=Ger -variations -ranking test/top100.dk >out/top100ger.tex
 	cd out ; pdflatex top100ger.tex ; $(OPEN) top100ger.pdf
 
 top100single:
