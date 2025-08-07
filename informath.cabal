@@ -18,7 +18,7 @@ executable RunInformath
     Core2Dedukti
     Core2Informath
     Dedukti2Agda
-    Dedukti2Coq
+    Dedukti2Rocq
     Dedukti2Core
     Dedukti2Lean
     DeduktiOperations
@@ -33,9 +33,9 @@ executable RunInformath
     Agda.AbsAgda
     Agda.ComposOp
     Agda.PrintAgda
-    Coq.AbsCoq
-    Coq.ComposOp
-    Coq.PrintCoq
+    Rocq.AbsRocq
+    Rocq.ComposOp
+    Rocq.PrintRocq
     Dedukti.AbsDedukti
     Dedukti.ComposOp
     Dedukti.ErrM

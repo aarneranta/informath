@@ -3,9 +3,9 @@ RUN  := cabal run RunInformath --
 OPEN := open  # pdf viewer command
 GF_FILES := $(wildcard grammars/*.gf)
 
-all: grammars/Informath.pgf Dedukti Agda Coq Lean RunInformath
+all: grammars/Informath.pgf Dedukti Agda Rocq Lean RunInformath
 
-.PHONY: all Dedukti Agda Lean Coq demo RunInformath
+.PHONY: all Dedukti Agda Lean Rocq demo RunInformath
 
 grammars/Informath.pgf: $(GF_FILES)
 	cd grammars ; gf --make -output-format=haskell -haskell=lexical --haskell=gadt -lexical=Name,Noun,Fam,Adj,Rel,Fun,Label,Const,Oper,Compar,Set,Coercion,Relverb,Relnoun,Reladj,Comparnoun,Verb,Pred3 --probs=Informath.probs InformathEng.gf InformathFre.gf InformathSwe.gf InformathGer.gf
@@ -21,15 +21,15 @@ Agda:
 Lean:
 	cd src/typetheory ; bnfc -m -p Lean --haskell-gadt Lean.bnf ; make
 
-Coq:
-	cd src/typetheory ; bnfc -m -p Coq --haskell-gadt Coq.bnf ; make
+Rocq:
+	cd src/typetheory ; bnfc -m -p Rocq --haskell-gadt Rocq.bnf ; make
 
 RunInformath:
 	cabal install --overwrite-policy=always
 
 clean:
 	cd src/typetheory && \
-	for dir in Agda Coq Dedukti Lean; do \
+	for dir in Agda Rocq Dedukti Lean; do \
 		rm -rf "$$dir"/*; \
 	done
 
