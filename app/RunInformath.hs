@@ -83,7 +83,7 @@ helpMsg = unlines [
 
 informathPrefix = "Informath"
 informathPGFFile = "grammars/" ++ informathPrefix ++ ".pgf"
-baseConstantDataFile = "base_constant_data.dkgf"
+baseConstantDataFile = "src/base_constant_data.dkgf"
 Just jmt = readType "Jmt"
 
 unlex env s = if (ifFlag "-no-unlex" env) then s else unlextex s

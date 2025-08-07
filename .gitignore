@@ -4,5 +4,7 @@
 *.hi
 *.o
 *.x
+dist*/
+out/*
 src/typetheory/*/
-src/grammars/Informath.hs
+grammars/Informath.hs

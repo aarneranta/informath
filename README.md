@@ -29,11 +29,12 @@ to build an executable `RunInformath`. After that, you can do
 ```
 which illustrates different functionalities: translating between Dedukti and natural languages, as well as from Dedukti to Agda, Rocq, and Lean. Building the system requires some more software, as discribed below in [Requirements](#requirements).
 
-**Requirements**: you need 
-- [GF](https://www.grammaticalframework.org/) (both asexecutable and as the PGF library) 
-- [BNFC](https://bnfc.digitalgrammars.com/) (executable)
-- [GHC](https://www.haskell.org/ghcup/) (executable, with some common libraries)
-
+**Requirements**: you need
+- [GF](https://www.grammaticalframework.org/) == 3.12 (both as executable and as the PGF library)
+- [BNFC](https://bnfc.digitalgrammars.com/) >= 2.9 (executable)
+- [GHC](https://www.haskell.org/ghcup/) >= 9.6 (executable, with some common libraries)
+- [alex](https://www.haskell.org/alex/) (executable, tested with 3.5.4)
+- [happy](https://www.haskell.org/happy/) (executable)
 to do this.
 
 **Caution**: At the moment, making RunInformath is very sensitive to GCH compiler and Haskell library versions. Cabal and Stack configurations are planned to solve these issues soon.
@@ -56,16 +57,18 @@ The currently available values of `<formal>` and `<informal>` are the keys in `<
 
 The [src](./src/) directory contains
 - Haskell and other sources
-- [MathCore](./src/grammars/MathCore.gf), a minimal CNL for mathematics
-- MathCoreEng, Fre, Swe - concrete syntaxes of MathCore in [gramamrs](./src/grammars/).
-- [Informath](./src/grammars/Informath.gf), an extension of MathCore with alternative expressions
-- a [grammar](./src/typetheory/Dedukti.bnf) with generated parser and printer for the proof system [Dedukti](https://deducteam.github.io/)
+- a BNFC [grammar](./src/typetheory/Dedukti.bnf) with generated parser and printer for the proof system [Dedukti](https://deducteam.github.io/)
+- partial BNFC grammars of [Agda](https://wiki.portal.chalmers.se/agda/pmwiki.php), [Coq](https://coq.inria.fr/), and [Lean](https://lean-lang.org/) in [typetheory](./src/typetheory/) with generated parsers and printers
 - a translator from MathCore to Dedukti and vice-versa
-- partial grammars of [Agda](https://wiki.portal.chalmers.se/agda/pmwiki.php), [Coq](https://coq.inria.fr/), and [Lean](https://lean-lang.org/) in [typetheory](./src/typetheory/) with generated parsers and printers
 - translations between MathCore and Informath
 - [BaseConstants.dk](./src/BaseConstants.dk) of logical and numeric operations assumed in the translations, and correspoonding files for Agda, Coq, and Lean
 - [base_constant_data.dkgf](./src/base_constant_data.dkgf), a symbol table for converting Dedukti constants to GF abstract syntax functions (read from this file by the conversion program)
 - some test material and scripts in [test/](./src/test/).
+
+The [grammars](./grammars) directory contains
+- [MathCore](./grammars/MathCore.gf), a minimal CNL for mathematics
+- MathCoreEng, Fre, Swe - concrete syntaxes of MathCore in [grammars](./grammars/).
+- [Informath](./grammars/Informath.gf), an extension of MathCore with alternative expressions
 
 The structure of the project is shown in the following picture:
 
@@ -209,15 +212,16 @@ If you want to check the formal code in any of the proof systems, you must also 
 
 In order for this to work, you need to compile the formal (Dedukti, Agda, Coq, Lean) and the Informath grammars:
 ```
-$ make 
+$ make
 ```
 An example of a readily available demo case is
 ```
 $ make demo
 ```
-Consult the [Makefile](./src/Makefile) to see what these commands exactly do.
+Consult the [Makefile](./Makefile) to see what these commands exactly do.
 
 **Note**: with some versions of GHC libraries, `make Informath.pgf` results into a `Informath.hs` that gives an error about an undefined monad operation. This is fixed by adding the line `import Control.Monad` to the import list. The current Makefile does this with a `sed` command - which may cause an error with some other versions of GHC libraries. If this happens, you can comment out the `sed` command from the Makefile.
+* (NB: once we release GF 3.12, that should fix the problem? /IL)
 
 ## Usage
 
@@ -234,13 +238,13 @@ to see the currently available functionalities.
 
 _Under construction, not guaranteed always to work like this_
 
-The lexicon part part of the GF grammar (files src/grammars/BaseConstants*, UserConstants*) give verbalizations to defined constants in .dk files. The UseConstants* files can be dynamically generated with the command
+The lexicon part part of the GF grammar (files grammars/BaseConstants*, UserConstants*) give verbalizations to defined constants in .dk files. The UseConstants* files can be dynamically generated with the command
 ```
 $ ./RunInformath <file>.dkgf
 ```
 which with the default lang=Eng generates at least two files:
-- [UserConstants.gf](src/grammars/UserConstants.gf)
-- [UserConstantsEng.gf](src/grammars/UserConstantsEng.gf) and similarly for other languages addressed in the .dkgf file
+- [UserConstants.gf](grammars/UserConstants.gf)
+- [UserConstantsEng.gf](grammars/UserConstantsEng.gf) and similarly for other languages addressed in the .dkgf file
 
 after which
 ```
