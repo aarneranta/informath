@@ -44,19 +44,19 @@ demo:
 	$(RUN) -lang=Eng test/exx.dk >exx.txt
 	$(RUN) -lang=Eng exx.txt
 	$(RUN) -lang=Eng test/gflean-data.txt
-	cat BaseConstants.dk test/exx.dk >bexx.dk
+	cat src/BaseConstants.dk test/exx.dk >bexx.dk
 	dk check bexx.dk
-	$(RUN) -to-agda test/exx.dk >exx.agda
-	agda --prop exx.agda
+	$(RUN) -to-agda test/exx.dk >src/exx.agda
+	cd src ; agda --prop exx.agda
 	$(RUN) -to-coq test/exx.dk >exx.v
-	cat BaseConstants.v exx.v >bexx.v
+	cat src/BaseConstants.v exx.v >bexx.v
 	coqc bexx.v
 	$(RUN) -to-lean test/exx.dk >exx.lean
-	cat BaseConstants.lean exx.lean >bexx.lean
+	cat src/BaseConstants.lean exx.lean >bexx.lean
 	lean bexx.lean
-	cat BaseConstants.dk test/top100.dk >out/texx.dk
+	cat src/BaseConstants.dk test/top100.dk >out/texx.dk
 	dk check out/texx.dk
-	cat BaseConstants.dk test/sets.dk >out/sexx.dk
+	cat src/BaseConstants.dk test/sets.dk >out/sexx.dk
 	dk check out/sexx.dk
 	$(RUN) -to-latex-file -variations test/top100.dk >out/top100.tex
 	echo "consider pdflatex out/top100.tex"
@@ -66,7 +66,7 @@ demo:
 top100:
 	$(RUN) -to-latex-file -variations test/top100.dk >out/top100.tex
 	cd out ; pdflatex top100.tex ; $(OPEN) top100.pdf
-	cat BaseConstants.dk test/top100.dk >out/texx.dk
+	cat src/BaseConstants.dk test/top100.dk >out/texx.dk
 	dk check out/texx.dk
 
 top100fre:
@@ -80,25 +80,25 @@ top100ger:
 top100single:
 	$(RUN) -to-latex-file test/top100.dk >out/top100.tex
 	cd out ; pdflatex top100.tex ; $(OPEN) top100.pdf
-	cat BaseConstants.dk test/top100.dk >out/texx.dk
+	cat src/BaseConstants.dk test/top100.dk >out/texx.dk
 	dk check out/texx.dk
 
 baseconstants:
-#	tail -150 BaseConstants.dk >tmp/baseconstants.dk
-	cat BaseConstants.dk >tmp/baseconstants.dk
+#	tail -150 src/BaseConstants.dk >tmp/baseconstants.dk
+	cat src/BaseConstants.dk >tmp/baseconstants.dk
 
 	$(RUN) -to-latex-file -variations tmp/baseconstants.dk >out/baseconstants.tex
 	cd out ; pdflatex baseconstants.tex ; $(OPEN) baseconstants.pdf
 
 parallel:
-	tail -150 BaseConstants.dk >tmp/parallel.dk
+	tail -150 src/BaseConstants.dk >tmp/parallel.dk
 	cat test/exx.dk >>tmp/parallel.dk
 	cat test/sets.dk >>tmp/parallel.dk
 	cat test/top100.dk >>tmp/parallel.dk
 	$(RUN) -parallel tmp/parallel.dk >tmp/parallel-informath.jsonl
 
 parallel-def:
-	tail -150 BaseConstants.dk >tmp/parallel.dk
+	tail -150 src/BaseConstants.dk >tmp/parallel.dk
 	cat test/exx.dk >>tmp/parallel.dk
 	cat test/sets.dk >>tmp/parallel.dk
 	$(RUN) -parallel -no-unlex -dedukti-tokens tmp/parallel.dk >tmp/parallel-def-train.jsonl
